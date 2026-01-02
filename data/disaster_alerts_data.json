@@ -1,0 +1,51 @@
+{
+  "active_alerts": [
+    {
+      "alert_id": "DA001",
+      "disaster_type": "Heavy Rainfall",
+      "severity": "High",
+      "affected_regions": ["Punjab", "Haryana", "Western UP"],
+      "start_date": "2024-01-20",
+      "end_date": "2024-01-25",
+      "description": "Heavy to very heavy rainfall expected, may cause waterlogging in low-lying areas",
+      "crops_at_risk": ["Wheat", "Mustard", "Peas"],
+      "preventive_measures": [
+        "Ensure proper drainage in fields",
+        "Avoid fertilizer application during rain",
+        "Harvest mature crops immediately"
+      ],
+      "estimated_loss": 25000000
+    }
+  ],
+  "historical_disasters": [
+    {
+      "year": 2023,
+      "disaster_type": "Drought",
+      "affected_area_hectares": 2500000,
+      "crop_loss_percentage": 35,
+      "economic_loss": 15000000000,
+      "recovery_time_months": 8
+    }
+  ],
+  "risk_assessment": [
+    {
+      "region": "Maharashtra",
+      "drought_risk": 0.7,
+      "flood_risk": 0.4,
+      "cyclone_risk": 0.3,
+      "hailstorm_risk": 0.2,
+      "overall_risk_score": 0.65
+    }
+  ],
+  "insurance_claims": [
+    {
+      "claim_id": "IC2024001",
+      "farmer_id": "F12345",
+      "disaster_type": "Hailstorm",
+      "crop_affected": "Apple",
+      "area_affected": 2.5,
+      "claim_amount": 125000,
+      "status": "Approved"
+    }
+  ]
+}

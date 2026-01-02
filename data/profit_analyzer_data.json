@@ -1,0 +1,64 @@
+{
+  "cost_analysis": [
+    {
+      "crop": "Rice",
+      "variety": "Basmati 1121",
+      "area_acres": 5,
+      "input_costs": {
+        "seeds": 3500,
+        "fertilizers": 8000,
+        "pesticides": 4500,
+        "irrigation": 6000,
+        "labor": 15000,
+        "machinery": 5000,
+        "total": 42000
+      },
+      "revenue": {
+        "yield_quintals": 125,
+        "price_per_quintal": 3500,
+        "total_revenue": 437500
+      },
+      "profit_analysis": {
+        "gross_profit": 395500,
+        "net_profit": 385500,
+        "profit_margin": 88.1,
+        "roi_percentage": 917.9
+      }
+    }
+  ],
+  "optimization_suggestions": [
+    {
+      "category": "Input Cost Reduction",
+      "suggestions": [
+        {
+          "area": "Fertilizer",
+          "current_cost": 8000,
+          "optimized_cost": 6500,
+          "savings": 1500,
+          "method": "Soil testing based application"
+        },
+        {
+          "area": "Labor",
+          "current_cost": 15000,
+          "optimized_cost": 12000,
+          "savings": 3000,
+          "method": "Mechanization and efficient scheduling"
+        }
+      ]
+    }
+  ],
+  "market_scenarios": [
+    {
+      "scenario": "Best Case",
+      "price_increase": 15,
+      "yield_increase": 10,
+      "projected_profit": 456750
+    },
+    {
+      "scenario": "Worst Case",
+      "price_decrease": 20,
+      "yield_decrease": 15,
+      "projected_profit": 285600
+    }
+  ]
+}

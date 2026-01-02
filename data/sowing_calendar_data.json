@@ -1,0 +1,55 @@
+{
+  "crop_calendar": [
+    {
+      "crop": "Rice",
+      "variety": "Basmati 1121",
+      "region": "North India",
+      "optimal_sowing_window": {
+        "start_date": "2024-06-15",
+        "end_date": "2024-07-15",
+        "best_date": "2024-06-25"
+      },
+      "weather_requirements": {
+        "temperature_range": "25-35°C",
+        "rainfall_required": "1000-1500mm",
+        "humidity": "70-80%"
+      },
+      "soil_conditions": {
+        "soil_type": "Clay loam",
+        "ph_range": "6.0-7.5",
+        "moisture_content": "Field capacity"
+      },
+      "growth_stages": [
+        {
+          "stage": "Germination",
+          "days_after_sowing": "7-10",
+          "care_instructions": "Maintain 2-3 cm water level"
+        },
+        {
+          "stage": "Tillering",
+          "days_after_sowing": "20-45",
+          "care_instructions": "Apply nitrogen fertilizer"
+        }
+      ]
+    }
+  ],
+  "weather_forecast": [
+    {
+      "date": "2024-01-20",
+      "temperature_max": 28,
+      "temperature_min": 15,
+      "rainfall_mm": 0,
+      "humidity": 65,
+      "wind_speed": 8,
+      "sowing_suitability": "Good"
+    }
+  ],
+  "regional_variations": [
+    {
+      "state": "Punjab",
+      "recommended_varieties": ["PR-126", "PR-121"],
+      "sowing_adjustment_days": 0,
+      "special_considerations": "Ensure proper puddling before transplanting"
+    }
+  ]
+}

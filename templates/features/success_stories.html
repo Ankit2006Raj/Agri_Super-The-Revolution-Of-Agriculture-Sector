@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Success Stories{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Farmer Success Stories</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Featured Success Stories</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for story in featured_stories[:3] %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ story.title }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ story.farmer_name }}</h6>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            <i class="fas fa-map-marker-alt"></i> {{ story.location }}
+                                        </small>
+                                    </p>
+                                    <p class="card-text">
+                                        <span class="badge bg-info">{{ story.crop }}</span>
+                                        <span class="badge bg-secondary">{{ story.technique }}</span>
+                                    </p>
+                                    <p class="card-text">Income increased from ₹{{ story.before_metrics.income }} to ₹{{ story.after_metrics.income }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-primary btn-sm">Read Full Story</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Filter Stories</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Region</h6>
+                    <select class="form-select mb-3">
+                        <option selected>All Regions</option>
+                        <option>Punjab</option>
+                        <option>Haryana</option>
+                        <option>Uttar Pradesh</option>
+                        <option>Maharashtra</option>
+                        <option>Karnataka</option>
+                    </select>
+                    
+                    <h6>Crop Type</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="rice">
+                        <label class="form-check-label" for="rice">Rice</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="wheat">
+                        <label class="form-check-label" for="wheat">Wheat</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="cotton">
+                        <label class="form-check-label" for="cotton">Cotton</label>
+                    </div>
+                    
+                    <h6 class="mt-3">Technique</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="organic">
+                        <label class="form-check-label" for="organic">Organic Farming</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="precision">
+                        <label class="form-check-label" for="precision">Precision Agriculture</label>
+                    </div>
+                    
+                    <button class="btn btn-primary mt-3">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">All Success Stories</h5>
+                </div>
+                <div class="card-body">
+                    {% for story in stories %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h5 class="card-title">{{ story.title }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ story.farmer_name }} | {{ story.location }}</h6>
+                                    <p class="card-text">
+                                        <span class="badge bg-info">{{ story.crop }}</span>
+                                        <span class="badge bg-secondary">{{ story.technique }}</span>
+                                    </p>
+                                    <p class="card-text">{{ story.summary }}</p>
+                                    <a href="#" class="btn btn-primary btn-sm">Read More</a>
+                                    <button class="btn btn-outline-secondary btn-sm">
+                                        <i class="far fa-thumbs-up"></i> Like
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm">
+                                        <i class="far fa-comment"></i> Comment
+                                    </button>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6>Before & After</h6>
+                                            <table class="table table-sm">
+                                                <tr>
+                                                    <td>Yield:</td>
+                                                    <td>{{ story.before_metrics.yield }} → {{ story.after_metrics.yield }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Income:</td>
+                                                    <td>₹{{ story.before_metrics.income }} → ₹{{ story.after_metrics.income }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

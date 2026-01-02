@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section bg-gradient-success text-white p-4 rounded mb-4">
+                <h1 class="display-5 fw-bold mb-2">Organic Marketplace</h1>
+                <p class="lead mb-0">Premium organic produce trading with certification verification</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-lg-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-filter me-2"></i>Filters</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="cropFilter">Crop Type</label>
+                        <select class="form-select" id="cropFilter" title="Filter by crop type" aria-label="Select crop type">
+                            <option value="">All Crops</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="grains">Grains</option>
+                            <option value="spices">Spices</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="certificationFilter">Certification</label>
+                        <select class="form-select" id="certificationFilter" title="Filter by certification type" aria-label="Select certification type">
+                            <option value="">All Certifications</option>
+                            <option value="usda">USDA Organic</option>
+                            <option value="india_organic">India Organic</option>
+                            <option value="eu_organic">EU Organic</option>
+                            <option value="jas_organic">JAS Organic</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Price Range (₹/kg)</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="number" class="form-control" placeholder="Min" id="minPrice">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" class="form-control" placeholder="Max" id="maxPrice">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-success w-100" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>Organic Products <span class="badge bg-success" id="productCount">0</span></h4>
+                <div class="btn-group">
+                    <button class="btn btn-outline-success" onclick="toggleView('grid')" title="Grid view" aria-label="Switch to grid view">
+                        <i class="fas fa-th" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-outline-success" onclick="toggleView('list')" title="List view" aria-label="Switch to list view">
+                        <i class="fas fa-list" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="productsContainer" class="row g-4">
+                <!-- Products will be loaded here -->
+            </div>
+
+            <!-- Pagination -->
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center" id="pagination">
+                    <!-- Pagination will be generated here -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Product Details Modal -->
+<div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalTitle">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" title="Close details" aria-label="Close product details"></button>
+            </div>
+            <div class="modal-body" id="productModalBody">
+                <!-- Product details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="contactSeller()">Contact Seller</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentPage = 1;
+let currentView = 'grid';
+let allProducts = [];
+
+// Load organic products
+async function loadProducts() {
+    try {
+        const response = await fetch('/api/organic_marketplace/products');
+        const data = await response.json();
+        allProducts = data.products;
+        displayProducts(allProducts);
+        updateProductCount(allProducts.length);
+    } catch (error) {
+        console.error('Error loading products:', error);
+    }
+}
+
+// Display products
+function displayProducts(products) {
+    const container = document.getElementById('productsContainer');
+    const itemsPerPage = 12;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageProducts = products.slice(startIndex, endIndex);
+
+    if (currentView === 'grid') {
+        container.className = 'row g-4';
+        container.innerHTML = pageProducts.map(product => `
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 shadow-sm product-card" onclick="showProductDetails('${product.id}')">
+                    <div class="position-relative">
+                        <img src="${product.image}" class="card-img-top" alt="${product.name}" style="height: 200px; object-fit: cover;">
+                        <span class="badge bg-success position-absolute top-0 end-0 m-2">${product.certification}</span>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title">${product.name}</h6>
+                        <p class="text-muted small mb-2">${product.farmer_name} • ${product.location}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 text-success mb-0">₹${product.price}/kg</span>
+                            <small class="text-muted">${product.quantity} kg available</small>
+                        </div>
+                        <div class="mt-2">
+                            <div class="d-flex align-items-center">
+                                <div class="stars me-2">
+                                    ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}
+                                </div>
+                                <small class="text-muted">(${product.reviews} reviews)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    } else {
+        container.className = 'list-group';
+        container.innerHTML = pageProducts.map(product => `
+            <div class="list-group-item list-group-item-action" onclick="showProductDetails('${product.id}')">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <img src="${product.image}" class="img-fluid rounded" alt="${product.name}" style="height: 80px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="mb-1">${product.name}</h6>
+                        <p class="text-muted small mb-1">${product.farmer_name} • ${product.location}</p>
+                        <span class="badge bg-success">${product.certification}</span>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <span class="h5 text-success">₹${product.price}/kg</span>
+                    </div>
+                    <div class="col-md-2 text-end">
+                        <small class="text-muted">${product.quantity} kg available</small>
+                        <div class="stars">
+                            ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    generatePagination(products.length, itemsPerPage);
+}
+
+// Apply filters
+function applyFilters() {
+    const cropFilter = document.getElementById('cropFilter').value;
+    const certificationFilter = document.getElementById('certificationFilter').value;
+    const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+    const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+
+    const filteredProducts = allProducts.filter(product => {
+        return (!cropFilter || product.category === cropFilter) &&
+               (!certificationFilter || product.certification.toLowerCase().includes(certificationFilter)) &&
+               (product.price >= minPrice && product.price <= maxPrice);
+    });
+
+    currentPage = 1;
+    displayProducts(filteredProducts);
+    updateProductCount(filteredProducts.length);
+}
+
+// Show product details
+async function showProductDetails(productId) {
+    try {
+        const response = await fetch(`/api/organic_marketplace/product/${productId}`);
+        const product = await response.json();
+        
+        document.getElementById('productModalTitle').textContent = product.name;
+        document.getElementById('productModalBody').innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="${product.image}" class="img-fluid rounded" alt="${product.name}">
+                </div>
+                <div class="col-md-6">
+                    <h5>${product.name}</h5>
+                    <p class="text-muted">${product.description}</p>
+                    <div class="mb-3">
+                        <strong>Farmer:</strong> ${product.farmer_name}<br>
+                        <strong>Location:</strong> ${product.location}<br>
+                        <strong>Certification:</strong> <span class="badge bg-success">${product.certification}</span><br>
+                        <strong>Price:</strong> <span class="h5 text-success">₹${product.price}/kg</span><br>
+                        <strong>Available:</strong> ${product.quantity} kg
+                    </div>
+                    <div class="mb-3">
+                        <strong>Certification Details:</strong>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Certificate ID: ${product.cert_id}</li>
+                            <li><i class="fas fa-check text-success"></i> Valid Until: ${product.cert_expiry}</li>
+                            <li><i class="fas fa-check text-success"></i> Certifying Body: ${product.cert_body}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        new bootstrap.Modal(document.getElementById('productModal')).show();
+    } catch (error) {
+        console.error('Error loading product details:', error);
+    }
+}
+
+// Toggle view
+function toggleView(view) {
+    currentView = view;
+    displayProducts(allProducts);
+}
+
+// Update product count
+function updateProductCount(count) {
+    document.getElementById('productCount').textContent = count;
+}
+
+// Generate pagination
+function generatePagination(totalItems, itemsPerPage) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pagination = document.getElementById('pagination');
+    
+    let paginationHTML = '';
+    
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+            </li>
+        `;
+    }
+    
+    pagination.innerHTML = paginationHTML;
+}
+
+// Change page
+function changePage(page) {
+    currentPage = page;
+    displayProducts(allProducts);
+}
+
+// Contact seller
+function contactSeller() {
+    alert('Contact seller functionality will be implemented');
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    loadProducts();
+});
+</script>
+
+<style>
+.product-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.stars {
+    color: #ffc107;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+</style>
+{% endblock %}

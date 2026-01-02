@@ -1,0 +1,587 @@
+{% extends "base.html" %}
+
+{% block title %}Account Settings - AgriSuper{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/settings.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-4 mb-lg-0">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="avatar-circle mx-auto mb-3">
+                            <span class="avatar-initials">JS</span>
+                        </div>
+                        <h5 class="mb-1">John Smith</h5>
+                        <p class="text-muted small mb-0">Farmer, Punjab</p>
+                    </div>
+                    
+                    <div class="list-group list-group-flush">
+                        <a href="{{ url_for('user_profile') }}" class="list-group-item list-group-item-action border-0 px-3 py-2">
+                            <i class="fas fa-user-circle me-2"></i> Profile
+                        </a>
+                        <a href="{{ url_for('user_settings') }}" class="list-group-item list-group-item-action border-0 px-3 py-2 active">
+                            <i class="fas fa-cog me-2"></i> Settings
+                        </a>
+                        <a href="{{ url_for('dashboard') }}" class="list-group-item list-group-item-action border-0 px-3 py-2">
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-action border-0 px-3 py-2 text-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0"><i class="fas fa-cog me-2"></i>Account Settings</h5>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Settings Tabs -->
+                    <ul class="nav nav-tabs" id="settingsTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="true">
+                                <i class="fas fa-user-cog me-2"></i>Account
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab" aria-controls="security" aria-selected="false">
+                                <i class="fas fa-shield-alt me-2"></i>Security
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button" role="tab" aria-controls="notifications" aria-selected="false">
+                                <i class="fas fa-bell me-2"></i>Notifications
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="preferences-tab" data-bs-toggle="tab" data-bs-target="#preferences" type="button" role="tab" aria-controls="preferences" aria-selected="false">
+                                <i class="fas fa-sliders-h me-2"></i>Preferences
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tab Content -->
+                    <div class="tab-content pt-4" id="settingsTabContent">
+                        <!-- Account Settings -->
+                        <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+                            <form id="accountSettingsForm">
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" name="first_name" id="first_name" value="John" aria-label="First Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" name="last_name" id="last_name" value="Smith" aria-label="Last Name">
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" name="phone" id="phone" value="+91 98765 43210" aria-label="Phone Number">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" id="email" value="john.smith@example.com" aria-label="Email Address">
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label class="form-label">Language</label>
+                                        <select class="form-select" name="language" id="language" aria-label="Select Language">
+                                            <option value="en" selected>English</option>
+                                            <option value="hi">हिन्दी (Hindi)</option>
+                                            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+                                            <option value="mr">मराठी (Marathi)</option>
+                                            <option value="gu">ગુજરાતી (Gujarati)</option>
+                                            <option value="bn">বাংলা (Bengali)</option>
+                                            <option value="te">తెలుగు (Telugu)</option>
+                                            <option value="ta">தமிழ் (Tamil)</option>
+                                            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Time Zone</label>
+                                        <select class="form-select" name="timezone" id="timezone" aria-label="Select Timezone">
+                                            <option value="Asia/Kolkata" selected>Indian Standard Time (IST)</option>
+                                            <option value="UTC">Coordinated Universal Time (UTC)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Profile Picture</label>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle me-3">
+                                            <span class="avatar-initials">JS</span>
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/*" aria-label="Profile Picture">
+                                            <button class="btn btn-outline-secondary" type="button">Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Security Settings -->
+                        <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                            <form id="securitySettingsForm">
+                                <h6 class="mb-3">Change Password</h6>
+                                <div class="mb-3">
+                                    <label class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" name="current_password" id="current_password" aria-label="Current Password">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">New Password</label>
+                                    <input type="password" class="form-control" name="new_password" id="newPassword" aria-label="New Password">
+                                    <div class="password-strength mt-2" id="passwordStrength">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Password strength indicator"></div>
+                                        </div>
+                                        <small class="text-muted">Password strength: <span id="strengthText">Very Weak</span></small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" name="confirm_password" id="confirmPassword" aria-label="Confirm Password">
+                                    <div id="passwordMatch" class="form-text"></div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-end mb-5">
+                                    <button type="submit" class="btn btn-success">Update Password</button>
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3">Two-Factor Authentication</h6>
+                                <div class="mb-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="twoFactorToggle">
+                                        <label class="form-check-label" for="twoFactorToggle">Enable Two-Factor Authentication</label>
+                                    </div>
+                                    <small class="text-muted">Enhance your account security by requiring both your password and a verification code sent to your phone.</small>
+                                </div>
+                                
+                                <div id="twoFactorSetup" class="mb-4 d-none">
+                                    <p>We'll send a verification code to your registered phone number: +91 98765 43210</p>
+                                    <button type="button" class="btn btn-outline-primary" id="sendVerificationBtn">Send Verification Code</button>
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3">Login Sessions</h6>
+                                <div class="mb-4">
+                                    <div class="card border">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">Current Session</h6>
+                                                    <p class="text-muted small mb-0">Windows • Chrome • Punjab, India</p>
+                                                    <small class="text-success">Active now</small>
+                                                </div>
+                                                <span class="badge bg-success">Current</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-danger">Log Out of All Devices</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Notification Settings -->
+                        <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                            <form id="notificationSettingsForm">
+                                <h6 class="mb-3">Notification Channels</h6>
+                                <div class="mb-4">
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="smsNotifications" checked>
+                                        <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="emailNotifications">
+                                        <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="pushNotifications" checked>
+                                        <label class="form-check-label" for="pushNotifications">Push Notifications</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="whatsappNotifications" checked>
+                                        <label class="form-check-label" for="whatsappNotifications">WhatsApp Notifications</label>
+                                    </div>
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3">Notification Types</h6>
+                                
+                                <div class="mb-3">
+                                    <h6 class="text-muted small fw-bold mb-2">MARKET UPDATES</h6>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="priceAlerts" checked>
+                                        <label class="form-check-label" for="priceAlerts">Price Alerts</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="demandForecasts" checked>
+                                        <label class="form-check-label" for="demandForecasts">Demand Forecasts</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="marketTrends">
+                                        <label class="form-check-label" for="marketTrends">Market Trends</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <h6 class="text-muted small fw-bold mb-2">FARMING</h6>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="weatherAlerts" checked>
+                                        <label class="form-check-label" for="weatherAlerts">Weather Alerts</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="pestAlerts" checked>
+                                        <label class="form-check-label" for="pestAlerts">Pest & Disease Alerts</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="cropCycleReminders" checked>
+                                        <label class="form-check-label" for="cropCycleReminders">Crop Cycle Reminders</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h6 class="text-muted small fw-bold mb-2">ACCOUNT</h6>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="securityAlerts" checked>
+                                        <label class="form-check-label" for="securityAlerts">Security Alerts</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="transactionUpdates" checked>
+                                        <label class="form-check-label" for="transactionUpdates">Transaction Updates</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="featureUpdates">
+                                        <label class="form-check-label" for="featureUpdates">New Features & Updates</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-outline-secondary me-2">Reset to Default</button>
+                                    <button type="submit" class="btn btn-success">Save Preferences</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Preferences Settings -->
+                        <div class="tab-pane fade" id="preferences" role="tabpanel" aria-labelledby="preferences-tab">
+                            <form id="preferencesSettingsForm">
+                                <h6 class="mb-3">Display Settings</h6>
+                                <div class="mb-4">
+                                    <label class="form-label">Theme</label>
+                                    <div class="d-flex">
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="theme" id="lightTheme" value="light" checked>
+                                            <label class="form-check-label" for="lightTheme">Light</label>
+                                        </div>
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="theme" id="darkTheme" value="dark">
+                                            <label class="form-check-label" for="darkTheme">Dark</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="theme" id="systemTheme" value="system">
+                                            <label class="form-check-label" for="systemTheme">System Default</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Dashboard Layout</label>
+                                    <select class="form-select" name="dashboard_layout" id="dashboard_layout" aria-label="Select Dashboard Layout">
+                                        <option value="grid" selected>Grid View</option>
+                                        <option value="list">List View</option>
+                                        <option value="compact">Compact View</option>
+                                    </select>
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3">Farm Preferences</h6>
+                                <div class="mb-3">
+                                    <label class="form-label">Default Crop</label>
+                                    <select class="form-select" name="default_crop" id="default_crop" aria-label="Select Default Crop">
+                                        <option value="wheat" selected>Wheat</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="maize">Maize</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                        <option value="pulses">Pulses</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Measurement Units</label>
+                                    <div class="d-flex">
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="units" id="metricUnits" value="metric" checked>
+                                            <label class="form-check-label" for="metricUnits">Metric (kg, hectare)</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="units" id="imperialUnits" value="imperial">
+                                            <label class="form-check-label" for="imperialUnits">Imperial (lb, acre)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">Currency</label>
+                                    <select class="form-select" name="currency" id="currency" aria-label="Select Currency">
+                                        <option value="INR" selected>Indian Rupee (₹)</option>
+                                        <option value="USD">US Dollar ($)</option>
+                                        <option value="EUR">Euro (€)</option>
+                                    </select>
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <h6 class="mb-3">Privacy Settings</h6>
+                                <div class="mb-4">
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="shareDataForResearch" checked>
+                                        <label class="form-check-label" for="shareDataForResearch">Share anonymized data for agricultural research</label>
+                                    </div>
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="showProfileInCommunity" checked>
+                                        <label class="form-check-label" for="showProfileInCommunity">Show my profile in community forums</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="allowLocationTracking">
+                                        <label class="form-check-label" for="allowLocationTracking">Allow precise location tracking for weather alerts</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Save Preferences</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Password strength checker
+        $('#newPassword').on('input', function() {
+            const password = $(this).val();
+            let strength = 0;
+            let progressColor = '';
+            
+            if (password.length >= 8) strength += 1;
+            if (password.match(/[a-z]+/)) strength += 1;
+            if (password.match(/[A-Z]+/)) strength += 1;
+            if (password.match(/[0-9]+/)) strength += 1;
+            if (password.match(/[^a-zA-Z0-9]+/)) strength += 1;
+            
+            switch (strength) {
+                case 0:
+                case 1:
+                    progressColor = 'bg-danger';
+                    $('#strengthText').text('Very Weak').addClass('text-danger').removeClass('text-warning text-info text-success');
+                    break;
+                case 2:
+                    progressColor = 'bg-warning';
+                    $('#strengthText').text('Weak').addClass('text-warning').removeClass('text-danger text-info text-success');
+                    break;
+                case 3:
+                    progressColor = 'bg-info';
+                    $('#strengthText').text('Medium').addClass('text-info').removeClass('text-danger text-warning text-success');
+                    break;
+                case 4:
+                    progressColor = 'bg-success';
+                    $('#strengthText').text('Strong').addClass('text-success').removeClass('text-danger text-warning text-info');
+                    break;
+                case 5:
+                    progressColor = 'bg-success';
+                    $('#strengthText').text('Very Strong').addClass('text-success').removeClass('text-danger text-warning text-info');
+                    break;
+            }
+            
+            const progressBar = $('#passwordStrength .progress-bar');
+            progressBar.removeClass('bg-danger bg-warning bg-info bg-success').addClass(progressColor);
+            progressBar.css('width', (strength * 20) + '%');
+            progressBar.attr('aria-valuenow', strength * 20);
+            
+            checkPasswordMatch();
+        });
+        
+        // Password match checker
+        $('#confirmPassword').on('input', function() {
+            checkPasswordMatch();
+        });
+        
+        function checkPasswordMatch() {
+            const password = $('#newPassword').val();
+            const confirmPassword = $('#confirmPassword').val();
+            
+            if (confirmPassword === '') {
+                $('#passwordMatch').text('');
+                return;
+            }
+            
+            if (password === confirmPassword) {
+                $('#passwordMatch').text('Passwords match').addClass('text-success').removeClass('text-danger');
+            } else {
+                $('#passwordMatch').text('Passwords do not match').addClass('text-danger').removeClass('text-success');
+            }
+        }
+        
+        // Two-factor authentication toggle
+        $('#twoFactorToggle').change(function() {
+            if ($(this).is(':checked')) {
+                $('#twoFactorSetup').slideDown();
+            } else {
+                $('#twoFactorSetup').slideUp();
+            }
+        });
+        
+        // Send verification code
+        $('#sendVerificationBtn').click(function() {
+            $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...');
+            $(this).prop('disabled', true);
+            
+            // Simulate sending verification code
+            setTimeout(function() {
+                $('#sendVerificationBtn').html('Verification Code Sent');
+                
+                // Show verification code input
+                $('#twoFactorSetup').append(`
+                    <div class="mt-3">
+                        <label class="form-label">Enter Verification Code</label>
+                        <div class="d-flex">
+                            <input type="text" class="form-control me-2" id="verificationCode" placeholder="6-digit code">
+                            <button type="button" class="btn btn-success" id="verifyCodeBtn">Verify</button>
+                        </div>
+                        <small class="text-muted">A 6-digit code has been sent to your phone</small>
+                    </div>
+                `);
+                
+                // Verify code button click handler
+                $('#verifyCodeBtn').click(function() {
+                    const code = $('#verificationCode').val();
+                    if (code && code.length === 6) {
+                        $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+                        $(this).prop('disabled', true);
+                        
+                        // Simulate verification
+                        setTimeout(function() {
+                            $('#twoFactorSetup').html('<div class="alert alert-success">Two-factor authentication has been enabled successfully!</div>');
+                        }, 1500);
+                    }
+                });
+            }, 2000);
+        });
+        
+        // Form submissions
+        $('#accountSettingsForm, #securitySettingsForm, #notificationSettingsForm, #preferencesSettingsForm').submit(function(e) {
+            e.preventDefault();
+            
+            const form = $(this);
+            const submitBtn = form.find('button[type="submit"]');
+            const originalBtnText = submitBtn.html();
+            
+            submitBtn.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
+            submitBtn.prop('disabled', true);
+            
+            // Simulate form submission
+            setTimeout(function() {
+                // Show success message
+                form.before('<div class="alert alert-success alert-dismissible fade show mb-4" role="alert">Settings updated successfully!<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                
+                // Reset button
+                submitBtn.html(originalBtnText);
+                submitBtn.prop('disabled', false);
+                
+                // Auto-dismiss alert after 5 seconds
+                setTimeout(function() {
+                    $('.alert').alert('close');
+                }, 5000);
+            }, 1500);
+        });
+    });
+</script>
+
+<style>
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        background-color: #28a745;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .avatar-initials {
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+    }
+    
+    .nav-tabs .nav-link {
+        color: #495057;
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 0.5rem 1rem;
+    }
+    
+    .nav-tabs .nav-link.active {
+        color: #28a745;
+        background-color: transparent;
+        border-bottom: 2px solid #28a745;
+    }
+    
+    .nav-tabs .nav-link:hover:not(.active) {
+        border-bottom: 2px solid #e9ecef;
+    }
+    
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #dee2e6;
+    }
+</style>
+{% endblock %}

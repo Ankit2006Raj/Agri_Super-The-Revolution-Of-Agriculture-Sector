@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Bulk Deal Aggregation - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-boxes me-2"></i>Bulk Deal Aggregation</h4>
+                    <p class="mb-0 opacity-75">Combine orders for better pricing and shared logistics</p>
+                </div>
+                <div class="card-body">
+                    <!-- Active Bulk Deals -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="text-success">Active Bulk Deals</h5>
+                            <div id="activeBulkDeals" class="list-group">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-primary">Create New Bulk Deal</h5>
+                            <form id="bulkDealForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Crop Type</label>
+                                    <select class="form-select" id="cropType" name="cropType" aria-label="Select Crop Type" required>
+                                        <option value="">Select Crop</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Quantity (tons)</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" aria-label="Quantity in tons" placeholder="Enter quantity in tons" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Target Price (₹/ton)</label>
+                                    <input type="number" class="form-control" id="targetPrice" name="targetPrice" aria-label="Target Price per ton" placeholder="Enter target price per ton" required>
+                                </div>
+                                <button type="submit" class="btn btn-success">Create Bulk Deal</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Deal Statistics -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <h3 id="totalDeals">0</h3>
+                                    <p class="mb-0">Active Deals</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h3 id="totalSavings">₹0</h3>
+                                    <p class="mb-0">Total Savings</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h3 id="participatingFarmers">0</h3>
+                                    <p class="mb-0">Participating Farmers</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h3 id="avgDiscount">0%</h3>
+                                    <p class="mb-0">Average Discount</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    loadBulkDeals();
+    loadStatistics();
+
+    $('#bulkDealForm').on('submit', function(e) {
+        e.preventDefault();
+        createBulkDeal();
+    });
+});
+
+function loadBulkDeals() {
+    $.get('/api/bulk_deals', function(data) {
+        const container = $('#activeBulkDeals');
+        container.empty();
+        
+        data.active_deals.forEach(deal => {
+            const dealHtml = `
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">${deal.crop_type} - ${deal.quantity} tons</h6>
+                            <p class="mb-1">Target: ₹${deal.target_price}/ton</p>
+                            <small>Progress: ${deal.current_quantity}/${deal.quantity} tons</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-success">₹${deal.potential_savings} savings</span>
+                            <br>
+                            <button class="btn btn-sm btn-primary mt-1" onclick="joinBulkDeal(${deal.id})">Join Deal</button>
+                        </div>
+                    </div>
+                    <div class="progress mt-2" style="height: 5px;">
+                        <div class="progress-bar" style="width: ${(deal.current_quantity/deal.quantity)*100}%"></div>
+                    </div>
+                </div>
+            `;
+            container.append(dealHtml);
+        });
+    });
+}
+
+function loadStatistics() {
+    $.get('/api/bulk_deals/statistics', function(data) {
+        $('#totalDeals').text(data.total_active_deals);
+        $('#totalSavings').text('₹' + data.total_savings.toLocaleString());
+        $('#participatingFarmers').text(data.participating_farmers);
+        $('#avgDiscount').text(data.average_discount + '%');
+    });
+}
+
+function createBulkDeal() {
+    const formData = {
+        crop_type: $('#cropType').val(),
+        quantity: $('#quantity').val(),
+        target_price: $('#targetPrice').val()
+    };
+
+    $.post('/api/bulk_deals/create', formData, function(response) {
+        if (response.success) {
+            alert('Bulk deal created successfully!');
+            $('#bulkDealForm')[0].reset();
+            loadBulkDeals();
+            loadStatistics();
+        }
+    });
+}
+
+function joinBulkDeal(dealId) {
+    $.post('/api/bulk_deals/join', {deal_id: dealId}, function(response) {
+        if (response.success) {
+            alert('Successfully joined bulk deal!');
+            loadBulkDeals();
+            loadStatistics();
+        }
+    });
+}
+</script>
+{% endblock %}

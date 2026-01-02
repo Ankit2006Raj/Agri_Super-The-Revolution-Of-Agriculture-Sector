@@ -1,0 +1,56 @@
+/* Progress bar styles */
+.progress {
+    height: 8px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+.progress-bar.bg-success {
+    background-color: #28a745;
+}
+
+.progress-bar.bg-warning {
+    background-color: #ffc107;
+}
+
+.progress-bar.bg-danger {
+    background-color: #dc3545;
+}
+
+/* Equipment efficiency section */
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem !important;
+}
+
+.d-flex.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Search and filter section */
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.form-select,
+.form-control {
+    height: calc(1.5em + 0.75rem + 2px);
+}
+
+/* Card styling */
+.card-footer {
+    padding: 0.75rem 1.25rem;
+}
+
+.text-muted i {
+    margin-right: 0.25rem;
+}

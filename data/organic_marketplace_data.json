@@ -1,0 +1,86 @@
+{
+  "organic_products": [
+    {
+      "id": 1,
+      "product_name": "Organic Basmati Rice",
+      "category": "Grains",
+      "farmer_name": "Organic Farms Punjab",
+      "location": "Patiala, Punjab",
+      "certification": "India Organic",
+      "certification_number": "IO-001-2023",
+      "price_per_kg": 120,
+      "available_quantity": 5000,
+      "harvest_date": "2023-11-15",
+      "expiry_date": "2025-11-15",
+      "rating": 4.9,
+      "total_orders": 342,
+      "images": ["/images/organic_rice.jpg", "/images/rice_certification.jpg"],
+      "description": "Premium quality organic basmati rice grown without chemicals or pesticides.",
+      "nutritional_info": {
+        "protein": "7.1g per 100g",
+        "carbohydrates": "78g per 100g",
+        "fiber": "1.3g per 100g",
+        "calories": "345 per 100g"
+      },
+      "farming_practices": ["No Chemical Fertilizers", "No Pesticides", "Traditional Methods", "Soil Health Maintained"]
+    },
+    {
+      "id": 2,
+      "product_name": "Organic Wheat Flour",
+      "category": "Flour & Grains",
+      "farmer_name": "Green Valley Organics",
+      "location": "Haryana, India",
+      "certification": "NPOP Certified",
+      "certification_number": "NPOP-002-2023",
+      "price_per_kg": 65,
+      "available_quantity": 8000,
+      "harvest_date": "2023-04-20",
+      "expiry_date": "2024-10-20",
+      "rating": 4.7,
+      "total_orders": 567,
+      "images": ["/images/organic_wheat_flour.jpg"],
+      "description": "Stone-ground organic wheat flour from heritage wheat varieties.",
+      "nutritional_info": {
+        "protein": "12g per 100g",
+        "carbohydrates": "71g per 100g",
+        "fiber": "12g per 100g",
+        "calories": "340 per 100g"
+      },
+      "farming_practices": ["Crop Rotation", "Organic Compost", "Natural Pest Control", "Water Conservation"]
+    }
+  ],
+  "certification_bodies": [
+    {
+      "name": "India Organic",
+      "code": "IO",
+      "description": "Government of India's organic certification program",
+      "validity_period": "3 years",
+      "inspection_frequency": "Annual"
+    },
+    {
+      "name": "NPOP (National Programme for Organic Production)",
+      "code": "NPOP",
+      "description": "India's national standards for organic products",
+      "validity_period": "3 years",
+      "inspection_frequency": "Annual"
+    }
+  ],
+  "premium_buyers": [
+    {
+      "buyer_name": "Organic India Ltd",
+      "buyer_type": "Processor",
+      "location": "Delhi",
+      "preferred_products": ["Organic Grains", "Organic Spices"],
+      "avg_order_value": 500000,
+      "payment_terms": "30 days"
+    },
+    {
+      "buyer_name": "Nature's Basket",
+      "buyer_type": "Retailer",
+      "location": "Mumbai",
+      "preferred_products": ["Organic Vegetables", "Organic Fruits"],
+      "avg_order_value": 200000,
+      "payment_terms": "15 days"
+    }
+  ]
+}

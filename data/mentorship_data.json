@@ -1,0 +1,98 @@
+{
+  "mentors": [
+    {
+      "id": 1,
+      "name": "Suresh Patel",
+      "age": 45,
+      "location": "Anand, Gujarat",
+      "farming_experience": 20,
+      "specialization": ["Dairy Farming", "Organic Vegetables", "Crop Rotation"],
+      "success_story": "Increased farm income by 300% through integrated farming",
+      "mentees_count": 25,
+      "rating": 4.9,
+      "languages": ["Hindi", "Gujarati", "English"],
+      "availability": "Weekends and evenings",
+      "contact_preference": "Video Call",
+      "achievements": ["Best Farmer Award 2022", "Organic Certification Expert", "Progressive Farmer Recognition"],
+      "profile_image": "/images/mentor1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Kavita Singh",
+      "age": 38,
+      "location": "Ludhiana, Punjab",
+      "farming_experience": 15,
+      "specialization": ["Wheat Cultivation", "Modern Machinery", "Precision Agriculture"],
+      "success_story": "Adopted precision agriculture techniques, reduced input costs by 25%",
+      "mentees_count": 18,
+      "rating": 4.8,
+      "languages": ["Hindi", "Punjabi", "English"],
+      "availability": "Flexible hours",
+      "contact_preference": "Phone Call",
+      "achievements": ["Technology Adoption Leader", "Women Farmer Excellence Award", "Sustainable Farming Advocate"],
+      "profile_image": "/images/mentor2.jpg"
+    }
+  ],
+  "mentorship_programs": [
+    {
+      "id": 1,
+      "program_name": "New Farmer Guidance",
+      "duration": "6 months",
+      "description": "Complete guidance for farmers starting their agricultural journey",
+      "topics_covered": [
+        "Crop Selection",
+        "Soil Preparation",
+        "Seed Selection",
+        "Irrigation Planning",
+        "Pest Management",
+        "Marketing Strategies"
+      ],
+      "mentor_id": 1,
+      "max_mentees": 10,
+      "current_mentees": 8,
+      "program_fee": 5000,
+      "success_rate": 85
+    },
+    {
+      "id": 2,
+      "program_name": "Organic Farming Transition",
+      "duration": "12 months",
+      "description": "Complete support for transitioning from conventional to organic farming",
+      "topics_covered": [
+        "Organic Certification Process",
+        "Natural Pest Control",
+        "Organic Fertilizers",
+        "Soil Health Management",
+        "Organic Market Access",
+        "Premium Pricing Strategies"
+      ],
+      "mentor_id": 1,
+      "max_mentees": 15,
+      "current_mentees": 12,
+      "program_fee": 8000,
+      "success_rate": 78
+    }
+  ],
+  "success_stories": [
+    {
+      "mentee_name": "Rajesh Kumar",
+      "mentor_name": "Suresh Patel",
+      "program": "New Farmer Guidance",
+      "before_income": 150000,
+      "after_income": 280000,
+      "improvement_percentage": 87,
+      "testimonial": "Suresh sir's guidance helped me choose the right crops and techniques. My income almost doubled in the first year itself!",
+      "completion_date": "2023-12-15"
+    },
+    {
+      "mentee_name": "Priya Sharma",
+      "mentor_name": "Kavita Singh",
+      "program": "Organic Farming Transition",
+      "before_income": 200000,
+      "after_income": 320000,
+      "improvement_percentage": 60,
+      "testimonial": "The organic transition seemed difficult, but with proper mentorship, I successfully got certified and now sell at premium prices.",
+      "completion_date": "2023-11-20"
+    }
+  ]
+}

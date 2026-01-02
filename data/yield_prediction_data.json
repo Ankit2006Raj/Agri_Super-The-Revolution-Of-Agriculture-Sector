@@ -1,0 +1,54 @@
+{
+  "historical_yields": {
+    "wheat": {
+      "punjab": [
+        { "year": 2020, "yield_per_hectare": 4.2, "rainfall": 650, "temperature_avg": 22, "fertilizer_use": 180 },
+        { "year": 2021, "yield_per_hectare": 4.5, "rainfall": 720, "temperature_avg": 21, "fertilizer_use": 195 },
+        { "year": 2022, "yield_per_hectare": 4.1, "rainfall": 580, "temperature_avg": 24, "fertilizer_use": 175 },
+        { "year": 2023, "yield_per_hectare": 4.7, "rainfall": 780, "temperature_avg": 20, "fertilizer_use": 210 }
+      ],
+      "haryana": [
+        { "year": 2020, "yield_per_hectare": 3.8, "rainfall": 600, "temperature_avg": 23, "fertilizer_use": 165 },
+        { "year": 2021, "yield_per_hectare": 4.1, "rainfall": 680, "temperature_avg": 22, "fertilizer_use": 180 },
+        { "year": 2022, "yield_per_hectare": 3.7, "rainfall": 520, "temperature_avg": 25, "fertilizer_use": 160 },
+        { "year": 2023, "yield_per_hectare": 4.3, "rainfall": 740, "temperature_avg": 21, "fertilizer_use": 195 }
+      ]
+    },
+    "rice": {
+      "punjab": [
+        { "year": 2020, "yield_per_hectare": 6.2, "rainfall": 1200, "temperature_avg": 28, "fertilizer_use": 220 },
+        { "year": 2021, "yield_per_hectare": 6.5, "rainfall": 1350, "temperature_avg": 27, "fertilizer_use": 235 },
+        { "year": 2022, "yield_per_hectare": 5.9, "rainfall": 1100, "temperature_avg": 30, "fertilizer_use": 205 },
+        { "year": 2023, "yield_per_hectare": 6.8, "rainfall": 1450, "temperature_avg": 26, "fertilizer_use": 250 }
+      ]
+    }
+  },
+  "prediction_models": {
+    "linear_regression": {
+      "accuracy": 78.5,
+      "factors": ["rainfall", "temperature", "soil_ph", "fertilizer_use", "seed_quality"]
+    },
+    "random_forest": {
+      "accuracy": 85.2,
+      "factors": ["weather_pattern", "soil_nutrients", "irrigation_method", "pest_history", "variety"]
+    },
+    "neural_network": {
+      "accuracy": 91.7,
+      "factors": ["satellite_imagery", "weather_forecast", "soil_analysis", "historical_patterns", "market_trends"]
+    }
+  },
+  "environmental_factors": {
+    "soil_types": {
+      "alluvial": { "yield_multiplier": 1.2, "crops": ["wheat", "rice", "sugarcane"] },
+      "black_cotton": { "yield_multiplier": 1.1, "crops": ["cotton", "soybean", "jowar"] },
+      "red_laterite": { "yield_multiplier": 0.9, "crops": ["groundnut", "millets", "pulses"] },
+      "sandy_loam": { "yield_multiplier": 1.0, "crops": ["potato", "vegetables", "fruits"] }
+    },
+    "irrigation_methods": {
+      "drip": { "efficiency": 95, "yield_boost": 25, "water_saving": 40 },
+      "sprinkler": { "efficiency": 85, "yield_boost": 15, "water_saving": 25 },
+      "flood": { "efficiency": 60, "yield_boost": 0, "water_saving": 0 },
+      "micro_sprinkler": { "efficiency": 90, "yield_boost": 20, "water_saving": 35 }
+    }
+  }
+}

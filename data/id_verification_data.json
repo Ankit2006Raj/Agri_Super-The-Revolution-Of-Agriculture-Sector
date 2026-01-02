@@ -1,0 +1,81 @@
+{
+  "verification_types": [
+    {
+      "type": "Aadhaar Card",
+      "required_fields": ["aadhaar_number", "name", "address"],
+      "verification_time": "2-5 minutes",
+      "success_rate": 95,
+      "cost": 0
+    },
+    {
+      "type": "PAN Card",
+      "required_fields": ["pan_number", "name", "date_of_birth"],
+      "verification_time": "1-3 minutes",
+      "success_rate": 98,
+      "cost": 0
+    },
+    {
+      "type": "Land Records",
+      "required_fields": ["survey_number", "village", "district", "state"],
+      "verification_time": "5-10 minutes",
+      "success_rate": 85,
+      "cost": 50
+    },
+    {
+      "type": "Bank Account",
+      "required_fields": ["account_number", "ifsc_code", "account_holder_name"],
+      "verification_time": "3-7 minutes",
+      "success_rate": 92,
+      "cost": 25
+    }
+  ],
+  "verification_levels": [
+    {
+      "level": "Basic",
+      "requirements": ["Aadhaar Card"],
+      "features_unlocked": ["Basic Marketplace Access", "Forum Participation"],
+      "trust_score": 3
+    },
+    {
+      "level": "Standard",
+      "requirements": ["Aadhaar Card", "PAN Card"],
+      "features_unlocked": ["Equipment Rental", "Bulk Trading", "Loan Applications"],
+      "trust_score": 6
+    },
+    {
+      "level": "Premium",
+      "requirements": ["Aadhaar Card", "PAN Card", "Land Records", "Bank Account"],
+      "features_unlocked": ["All Features", "Priority Support", "Premium Buyer Access"],
+      "trust_score": 10
+    }
+  ],
+  "verified_users": [
+    {
+      "user_id": "U001",
+      "name": "Rajesh Kumar",
+      "verification_level": "Premium",
+      "verified_documents": ["Aadhaar", "PAN", "Land Records", "Bank Account"],
+      "trust_score": 10,
+      "verification_date": "2024-01-10",
+      "location": "Punjab, India"
+    },
+    {
+      "user_id": "U002",
+      "name": "Suresh Patel",
+      "verification_level": "Standard",
+      "verified_documents": ["Aadhaar", "PAN"],
+      "trust_score": 6,
+      "verification_date": "2024-01-08",
+      "location": "Gujarat, India"
+    }
+  ],
+  "verification_statistics": {
+    "total_verifications": 15420,
+    "success_rate": 94.2,
+    "avg_verification_time": "4.5 minutes",
+    "most_used_document": "Aadhaar Card",
+    "premium_users": 3240,
+    "standard_users": 8950,
+    "basic_users": 3230
+  }
+}

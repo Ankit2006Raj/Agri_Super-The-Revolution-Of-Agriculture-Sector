@@ -1,0 +1,55 @@
+{
+  "active_outbreaks": [
+    {
+      "pest_id": "PA001",
+      "pest_name": "Brown Plant Hopper",
+      "scientific_name": "Nilaparvata lugens",
+      "affected_crops": ["Rice"],
+      "severity": "High",
+      "affected_regions": ["West Bengal", "Odisha", "Andhra Pradesh"],
+      "symptoms": ["Yellowing and drying of leaves", "Stunted growth", "Hopperburn appearance"],
+      "control_measures": [
+        {
+          "method": "Chemical",
+          "pesticide": "Imidacloprid 17.8% SL",
+          "dosage": "100ml per acre",
+          "application_timing": "Early morning or evening"
+        },
+        {
+          "method": "Biological",
+          "agent": "Cyrtorhinus lividipennis",
+          "release_rate": "500 adults per acre"
+        }
+      ],
+      "economic_threshold": "2-5 hoppers per tiller"
+    }
+  ],
+  "disease_alerts": [
+    {
+      "disease_id": "DA001",
+      "disease_name": "Blast",
+      "pathogen": "Magnaporthe oryzae",
+      "affected_crops": ["Rice"],
+      "symptoms": ["Diamond-shaped lesions on leaves", "Neck rot in panicles", "Reduced grain filling"],
+      "favorable_conditions": {
+        "temperature": "25-28°C",
+        "humidity": ">90%",
+        "leaf_wetness": ">10 hours"
+      },
+      "management": ["Use resistant varieties", "Balanced fertilization", "Fungicide application: Tricyclazole 75% WP"]
+    }
+  ],
+  "ipm_strategies": [
+    {
+      "crop": "Cotton",
+      "integrated_approach": [
+        "Use of pheromone traps",
+        "Release of Trichogramma",
+        "Neem-based pesticides",
+        "Crop rotation with non-host crops"
+      ],
+      "cost_effectiveness": "40% reduction in pesticide cost",
+      "environmental_benefit": "Preserves beneficial insects"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "name": "AgriSuper - किसान ऐप",
+  "short_name": "AgriSuper",
+  "description": "Complete agricultural platform for Indian farmers - भारतीय किसानों के लिए संपूर्ण कृषि मंच",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#4CAF50",
+  "theme_color": "#2E7D32",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "hi",
+  "dir": "ltr",
+  
+  "icons": [
+    {
+      "src": "/static/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  
+  "screenshots": [
+    {
+      "src": "/static/screenshots/dashboard.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "label": "Main Dashboard"
+    },
+    {
+      "src": "/static/screenshots/market-prices.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "label": "Market Prices"
+    },
+    {
+      "src": "/static/screenshots/weather.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "label": "Weather Forecast"
+    }
+  ],
+  
+  "categories": [
+    "agriculture",
+    "business",
+    "finance",
+    "education",
+    "productivity"
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "Market Prices - मंडी भाव",
+      "short_name": "Prices",
+      "description": "Check live market prices",
+      "url": "/market-prices",
+      "icons": [
+        {
+          "src": "/static/icons/price-icon.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Weather - मौसम",
+      "short_name": "Weather",
+      "description": "View weather forecast",
+      "url": "/weather-alerts",
+      "icons": [
+        {
+          "src": "/static/icons/weather-icon.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Forum - फोरम",
+      "short_name": "Forum",
+      "description": "Ask farming questions",
+      "url": "/community-forum",
+      "icons": [
+        {
+          "src": "/static/icons/forum-icon.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Wallet - वॉलेट",
+      "short_name": "Wallet",
+      "description": "Digital wallet",
+      "url": "/digital-wallet",
+      "icons": [
+        {
+          "src": "/static/icons/wallet-icon.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "images",
+          "accept": ["image/*"]
+        }
+      ]
+    }
+  },
+  
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.agrisuper.app",
+      "id": "com.agrisuper.app"
+    }
+  ],
+  
+  "prefer_related_applications": false,
+  
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7"
+}

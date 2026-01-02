@@ -1,0 +1,69 @@
+{
+  "rotation_plans": [
+    {
+      "id": 1,
+      "plan_name": "Rice-Wheat-Legume Rotation",
+      "duration_months": 36,
+      "crops": [
+        {
+          "crop": "Rice",
+          "variety": "Basmati 1121",
+          "season": "Kharif",
+          "duration_days": 120,
+          "soil_nutrients_used": { "nitrogen": 80, "phosphorus": 40, "potassium": 60 },
+          "soil_nutrients_added": { "organic_matter": 15 },
+          "expected_yield_per_acre": 25,
+          "market_price_per_quintal": 3500
+        },
+        {
+          "crop": "Wheat",
+          "variety": "HD-2967",
+          "season": "Rabi",
+          "duration_days": 140,
+          "soil_nutrients_used": { "nitrogen": 120, "phosphorus": 60, "potassium": 40 },
+          "soil_nutrients_added": { "organic_matter": 10 },
+          "expected_yield_per_acre": 35,
+          "market_price_per_quintal": 2200
+        },
+        {
+          "crop": "Chickpea",
+          "variety": "Kabuli Chana",
+          "season": "Rabi",
+          "duration_days": 110,
+          "soil_nutrients_used": { "phosphorus": 30, "potassium": 25 },
+          "soil_nutrients_added": { "nitrogen": 45, "organic_matter": 20 },
+          "expected_yield_per_acre": 18,
+          "market_price_per_quintal": 5500
+        }
+      ],
+      "total_profit_per_cycle": 285000,
+      "soil_health_improvement": 25,
+      "water_efficiency": 30,
+      "pest_reduction": 40
+    }
+  ],
+  "soil_analysis": [
+    {
+      "soil_type": "Alluvial",
+      "ph_level": 6.8,
+      "organic_carbon": 0.65,
+      "nitrogen": 280,
+      "phosphorus": 18,
+      "potassium": 195,
+      "recommended_crops": ["Rice", "Wheat", "Sugarcane", "Cotton"],
+      "rotation_frequency": "Annual"
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_type": "Soil Fertility",
+      "description": "Legumes fix nitrogen, reducing fertilizer costs by 30-40%",
+      "economic_impact": 25000
+    },
+    {
+      "benefit_type": "Pest Control",
+      "description": "Crop rotation breaks pest cycles, reducing pesticide use by 50%",
+      "economic_impact": 15000
+    }
+  ]
+}

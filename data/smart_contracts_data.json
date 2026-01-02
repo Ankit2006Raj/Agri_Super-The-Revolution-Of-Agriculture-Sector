@@ -1,0 +1,72 @@
+{
+  "contract_templates": [
+    {
+      "id": 1,
+      "name": "Crop Purchase Agreement",
+      "category": "Purchase",
+      "description": "Standard contract for crop purchase with quality specifications",
+      "parameters": ["crop_type", "quantity", "quality_grade", "price_per_unit", "delivery_date", "payment_terms"],
+      "auto_execution_triggers": ["Quality inspection passed", "Delivery confirmed", "Payment due date reached"],
+      "usage_count": 1250
+    },
+    {
+      "id": 2,
+      "name": "Equipment Rental Contract",
+      "category": "Rental",
+      "description": "Smart contract for agricultural equipment rental",
+      "parameters": [
+        "equipment_type",
+        "rental_duration",
+        "hourly_rate",
+        "security_deposit",
+        "maintenance_responsibility"
+      ],
+      "auto_execution_triggers": ["Equipment delivered", "Rental period ended", "Damage assessment completed"],
+      "usage_count": 890
+    }
+  ],
+  "active_contracts": [
+    {
+      "contract_id": "SC001",
+      "template_id": 1,
+      "buyer": "Reliance Fresh",
+      "seller": "Rajesh Kumar",
+      "crop_type": "Tomatoes",
+      "quantity": 5000,
+      "quality_grade": "Grade A",
+      "price_per_unit": 25,
+      "total_value": 125000,
+      "delivery_date": "2024-02-15",
+      "payment_terms": "30 days after delivery",
+      "status": "Active",
+      "milestones": [
+        { "milestone": "Contract Signed", "status": "Completed", "date": "2024-01-15" },
+        { "milestone": "Quality Inspection", "status": "Pending", "date": null },
+        { "milestone": "Delivery", "status": "Pending", "date": null },
+        { "milestone": "Payment", "status": "Pending", "date": null }
+      ]
+    }
+  ],
+  "escrow_transactions": [
+    {
+      "transaction_id": "ESC001",
+      "contract_id": "SC001",
+      "amount": 125000,
+      "status": "Held",
+      "release_conditions": ["Quality inspection passed", "Delivery confirmed by buyer"],
+      "created_date": "2024-01-15",
+      "expected_release_date": "2024-02-20"
+    }
+  ],
+  "dispute_resolution": [
+    {
+      "dispute_id": "D001",
+      "contract_id": "SC002",
+      "raised_by": "Buyer",
+      "issue": "Quality not as per specifications",
+      "status": "Under Review",
+      "arbitrator": "Agricultural Expert Panel",
+      "resolution_timeline": "7 days"
+    }
+  ]
+}

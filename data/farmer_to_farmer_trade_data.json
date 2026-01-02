@@ -1,0 +1,81 @@
+{
+  "trade_listings": [
+    {
+      "id": 1,
+      "listing_type": "Sell",
+      "product": "Fresh Tomatoes",
+      "variety": "Hybrid Tomato",
+      "quantity": 2000,
+      "unit": "kg",
+      "price_per_unit": 25,
+      "farmer_name": "Suresh Kumar",
+      "location": "Nashik, Maharashtra",
+      "contact": "+91-9876543210",
+      "harvest_date": "2024-01-20",
+      "quality_grade": "Grade A",
+      "images": ["/images/tomatoes_fresh.jpg"],
+      "description": "Fresh, high-quality tomatoes directly from farm. Suitable for wholesale and retail.",
+      "transportation": "Farmer provides transport within 50km",
+      "payment_terms": "Cash on delivery",
+      "posted_date": "2024-01-18",
+      "expires_on": "2024-01-25",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "listing_type": "Buy",
+      "product": "Wheat Seeds",
+      "variety": "HD-2967",
+      "quantity": 500,
+      "unit": "kg",
+      "price_per_unit": 35,
+      "farmer_name": "Rajesh Patel",
+      "location": "Indore, Madhya Pradesh",
+      "contact": "+91-9876543211",
+      "required_by": "2024-02-15",
+      "quality_requirements": "Certified seeds with 85%+ germination rate",
+      "description": "Looking for high-quality wheat seeds for upcoming sowing season.",
+      "payment_terms": "Advance payment available",
+      "posted_date": "2024-01-15",
+      "expires_on": "2024-02-10",
+      "status": "Active"
+    }
+  ],
+  "successful_trades": [
+    {
+      "trade_id": "T001",
+      "seller": "Amit Singh",
+      "buyer": "Ravi Sharma",
+      "product": "Onions",
+      "quantity": 1500,
+      "unit": "kg",
+      "final_price": 18,
+      "trade_date": "2024-01-10",
+      "location": "Pune, Maharashtra",
+      "satisfaction_rating": {
+        "seller_rating": 4.8,
+        "buyer_rating": 4.9
+      }
+    }
+  ],
+  "popular_products": [
+    { "product": "Tomatoes", "avg_price": 22, "trade_volume": 15000, "trend": "increasing" },
+    { "product": "Onions", "avg_price": 20, "trade_volume": 12000, "trend": "stable" },
+    { "product": "Potatoes", "avg_price": 15, "trade_volume": 18000, "trend": "decreasing" },
+    { "product": "Wheat", "avg_price": 2100, "trade_volume": 8000, "trend": "increasing" }
+  ],
+  "regional_hubs": [
+    {
+      "region": "Western Maharashtra",
+      "major_products": ["Tomatoes", "Onions", "Grapes"],
+      "active_farmers": 1250,
+      "monthly_trade_volume": 50000
+    },
+    {
+      "region": "Punjab",
+      "major_products": ["Wheat", "Rice", "Cotton"],
+      "active_farmers": 980,
+      "monthly_trade_volume": 75000
+    }
+  ]
+}

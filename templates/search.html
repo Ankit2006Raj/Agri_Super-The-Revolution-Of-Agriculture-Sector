@@ -1,0 +1,415 @@
+{% extends "base.html" %}
+
+{% block title %}AgriSuper - Search Features{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <!-- Search Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <h1 class="mb-4"><i class="fas fa-search me-2"></i>Search Features</h1>
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <div class="input-group search-bar mb-4">
+                                <input type="text" class="form-control form-control-lg" id="featureSearchInput" placeholder="Search for features, tools, or keywords...">
+                                <button class="btn btn-success" type="button" id="searchButton"><i class="fas fa-search me-2"></i>Search</button>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="badge bg-light text-dark p-2 popular-search">Pricing</span>
+                                <span class="badge bg-light text-dark p-2 popular-search">Weather</span>
+                                <span class="badge bg-light text-dark p-2 popular-search">Crop Rotation</span>
+                                <span class="badge bg-light text-dark p-2 popular-search">Pest Control</span>
+                                <span class="badge bg-light text-dark p-2 popular-search">Market</span>
+                                <span class="badge bg-light text-dark p-2 popular-search">Irrigation</span>
+                                <span class="badge bg-light text-dark p-2 popular-search">Soil</span>
+                                <span class="badge bg-light text-dark p-2 popular-search">Finance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Search Results -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="mb-0">Search Results <span id="resultCount" class="badge bg-success ms-2">0</span></h2>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sort By
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                                <li><a class="dropdown-item sort-option" data-sort="relevance" href="#">Relevance</a></li>
+                                <li><a class="dropdown-item sort-option" data-sort="name-asc" href="#">Name (A-Z)</a></li>
+                                <li><a class="dropdown-item sort-option" data-sort="name-desc" href="#">Name (Z-A)</a></li>
+                                <li><a class="dropdown-item sort-option" data-sort="category" href="#">Category</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div id="searchResults" class="row">
+                        <!-- Results will be populated here via JavaScript -->
+                        <div class="col-12 text-center py-5" id="noResultsMessage">
+                            <div class="py-5">
+                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                <h3 class="text-muted">Enter a search term to find features</h3>
+                                <p class="text-muted">Try searching for feature names, categories, or keywords</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Feature Categories -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="mb-4">Browse by Category</h2>
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon bg-light-success rounded-circle mx-auto mb-3">
+                                        <i class="fas fa-store text-success"></i>
+                                    </div>
+                                    <h5 class="card-title">Market & Sales</h5>
+                                    <p class="card-text text-muted">6 features</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-center">
+                                    <a href="{{ url_for('categorized_dashboard') }}#market" class="stretched-link">View Features</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon bg-light-primary rounded-circle mx-auto mb-3">
+                                        <i class="fas fa-tractor text-primary"></i>
+                                    </div>
+                                    <h5 class="card-title">Farming</h5>
+                                    <p class="card-text text-muted">8 features</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-center">
+                                    <a href="{{ url_for('categorized_dashboard') }}#farming" class="stretched-link">View Features</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon bg-light-info rounded-circle mx-auto mb-3">
+                                        <i class="fas fa-shopping-cart text-info"></i>
+                                    </div>
+                                    <h5 class="card-title">Marketplaces</h5>
+                                    <p class="card-text text-muted">5 features</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-center">
+                                    <a href="{{ url_for('categorized_dashboard') }}#marketplace" class="stretched-link">View Features</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon bg-light-warning rounded-circle mx-auto mb-3">
+                                        <i class="fas fa-bell text-warning"></i>
+                                    </div>
+                                    <h5 class="card-title">Alerts & Safety</h5>
+                                    <p class="card-text text-muted">7 features</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-center">
+                                    <a href="{{ url_for('categorized_dashboard') }}#alerts" class="stretched-link">View Features</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon bg-light-danger rounded-circle mx-auto mb-3">
+                                        <i class="fas fa-users text-danger"></i>
+                                    </div>
+                                    <h5 class="card-title">Community</h5>
+                                    <p class="card-text text-muted">4 features</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-center">
+                                    <a href="{{ url_for('categorized_dashboard') }}#community" class="stretched-link">View Features</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon bg-light-success rounded-circle mx-auto mb-3">
+                                        <i class="fas fa-rupee-sign text-success"></i>
+                                    </div>
+                                    <h5 class="card-title">Financial</h5>
+                                    <p class="card-text text-muted">6 features</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-center">
+                                    <a href="{{ url_for('categorized_dashboard') }}#financial" class="stretched-link">View Features</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 border-0 shadow-sm category-card">
+                                <div class="card-body text-center">
+                                    <div class="feature-icon bg-light-primary rounded-circle mx-auto mb-3">
+                                        <i class="fas fa-tools text-primary"></i>
+                                    </div>
+                                    <h5 class="card-title">Tools</h5>
+                                    <p class="card-text text-muted">5 features</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-center">
+                                    <a href="{{ url_for('categorized_dashboard') }}#tools" class="stretched-link">View Features</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Feature data - this would typically come from a backend API
+    const featureData = [
+        {
+            id: 1,
+            name: "Dynamic Pricing Engine",
+            description: "Real-time price optimization based on market demand, supply, and quality factors.",
+            category: "Market & Sales",
+            icon: "fas fa-tags",
+            iconBg: "bg-light-success",
+            iconColor: "text-success",
+            url: "{{ url_for('pricing_engine_page') }}"
+        },
+        {
+            id: 2,
+            name: "Subscription Model",
+            description: "Recurring revenue streams through subscription-based produce delivery.",
+            category: "Market & Sales",
+            icon: "fas fa-sync-alt",
+            iconBg: "bg-light-success",
+            iconColor: "text-success",
+            url: "{{ url_for('subscription_model_page') }}"
+        },
+        {
+            id: 3,
+            name: "Contract Farming",
+            description: "Secure agreements with buyers before planting for guaranteed sales.",
+            category: "Market & Sales",
+            icon: "fas fa-handshake",
+            iconBg: "bg-light-success",
+            iconColor: "text-success",
+            url: "{{ url_for('contract_farming_page') }}"
+        },
+        {
+            id: 4,
+            name: "Bulk Deal Aggregation",
+            description: "Combine produce with other farmers to access larger buyers and better prices.",
+            category: "Market & Sales",
+            icon: "fas fa-boxes",
+            iconBg: "bg-light-success",
+            iconColor: "text-success",
+            url: "{{ url_for('bulk_deals_page') }}"
+        },
+        {
+            id: 5,
+            name: "Yield Prediction Tool",
+            description: "AI-powered forecasting of crop yields based on historical data and conditions.",
+            category: "Farming",
+            icon: "fas fa-chart-bar",
+            iconBg: "bg-light-primary",
+            iconColor: "text-primary",
+            url: "{{ url_for('yield_prediction_page') }}"
+        },
+        {
+            id: 6,
+            name: "Crop Rotation Planner",
+            description: "Optimize soil health and yields with intelligent crop rotation schedules.",
+            category: "Farming",
+            icon: "fas fa-sync",
+            iconBg: "bg-light-primary",
+            iconColor: "text-primary",
+            url: "{{ url_for('crop_rotation_page') }}"
+        }
+        // Additional features would be added here
+    ];
+    
+    $(document).ready(function() {
+        // Search functionality
+        function performSearch(query) {
+            query = query.toLowerCase().trim();
+            
+            if (!query) {
+                $('#noResultsMessage').show();
+                $('#searchResults').find('.result-card').remove();
+                $('#resultCount').text('0');
+                return;
+            }
+            
+            const results = featureData.filter(feature => {
+                return feature.name.toLowerCase().includes(query) || 
+                       feature.description.toLowerCase().includes(query) || 
+                       feature.category.toLowerCase().includes(query);
+            });
+            
+            displayResults(results, 'relevance');
+        }
+        
+        function displayResults(results, sortBy) {
+            $('#searchResults').find('.result-card').remove();
+            $('#resultCount').text(results.length);
+            
+            if (results.length === 0) {
+                $('#noResultsMessage').show();
+                return;
+            }
+            
+            $('#noResultsMessage').hide();
+            
+            // Sort results
+            let sortedResults = [...results];
+            switch (sortBy) {
+                case 'name-asc':
+                    sortedResults.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name-desc':
+                    sortedResults.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                case 'category':
+                    sortedResults.sort((a, b) => a.category.localeCompare(b.category));
+                    break;
+                // relevance is default (no sorting needed)
+            }
+            
+            // Display results
+            sortedResults.forEach(feature => {
+                const resultCard = `
+                    <div class="col-md-6 col-lg-4 mb-4 result-card">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="feature-icon ${feature.iconBg} rounded-circle me-3">
+                                        <i class="${feature.icon} ${feature.iconColor}"></i>
+                                    </div>
+                                    <h5 class="card-title mb-0">${feature.name}</h5>
+                                </div>
+                                <p class="card-text">${feature.description}</p>
+                                <span class="badge bg-light text-dark">${feature.category}</span>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="${feature.url}" class="btn btn-sm btn-outline-success">Open Feature</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                $('#searchResults').append(resultCard);
+            });
+        }
+        
+        // Search button click
+        $('#searchButton').on('click', function() {
+            performSearch($('#featureSearchInput').val());
+        });
+        
+        // Search on Enter key
+        $('#featureSearchInput').on('keypress', function(e) {
+            if (e.which === 13) {
+                performSearch($(this).val());
+            }
+        });
+        
+        // Popular search terms
+        $('.popular-search').on('click', function() {
+            const term = $(this).text();
+            $('#featureSearchInput').val(term);
+            performSearch(term);
+        });
+        
+        // Sort options
+        $('.sort-option').on('click', function(e) {
+            e.preventDefault();
+            const sortBy = $(this).data('sort');
+            const query = $('#featureSearchInput').val();
+            
+            if (query) {
+                const results = featureData.filter(feature => {
+                    return feature.name.toLowerCase().includes(query.toLowerCase()) || 
+                           feature.description.toLowerCase().includes(query.toLowerCase()) || 
+                           feature.category.toLowerCase().includes(query.toLowerCase());
+                });
+                
+                displayResults(results, sortBy);
+            }
+        });
+        
+        // Category card hover effect
+        $('.category-card').hover(
+            function() {
+                $(this).addClass('shadow');
+            },
+            function() {
+                $(this).removeClass('shadow');
+            }
+        );
+    });
+</script>
+
+<style>
+    .search-bar {
+        border-radius: 50px;
+        overflow: hidden;
+    }
+    
+    .search-bar .form-control {
+        border-right: none;
+        padding-left: 1.5rem;
+    }
+    
+    .search-bar .btn {
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+    }
+    
+    .popular-search {
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .popular-search:hover {
+        background-color: var(--bs-success) !important;
+        color: white !important;
+    }
+    
+    .category-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .category-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+</style>
+{% endblock %}

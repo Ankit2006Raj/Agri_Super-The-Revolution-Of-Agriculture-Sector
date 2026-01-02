@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section bg-gradient-success text-white p-5 rounded mb-5">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h1 class="display-4 fw-bold mb-3">Welcome to AgriSuper</h1>
+                        <p class="lead mb-4">Advanced Agriculture Platform with 41 Powerful Features</p>
+                        <p class="mb-0">Empowering farmers with AI-driven insights, market intelligence, and comprehensive agricultural solutions.</p>
+                        <div class="mt-4">
+                            <a href="{{ url_for('categorized_dashboard') }}" class="btn btn-light btn-lg">View Categorized Dashboard</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="fas fa-tractor fa-5x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Grid -->
+    <div class="row g-4">
+        <!-- Feature 1: Dynamic Pricing Engine -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Dynamic Pricing Engine</h5>
+                    <p class="card-text text-muted">AI-driven crop price recommendations with Fair Price Index, trend analysis, and volatility scoring.</p>
+                    <a href="{{ url_for('pricing_engine_page') }}" class="btn btn-primary">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 2: Subscription Model -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-sync-alt fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Subscription Model</h5>
+                    <p class="card-text text-muted">Recurring buyer subscriptions with custom crop baskets, loyalty programs, and demand analytics.</p>
+                    <a href="{{ url_for('subscription_model_page') }}" class="btn btn-success">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 3: Contract Farming -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-handshake fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Contract Farming</h5>
+                    <p class="card-text text-muted">Pre-booking orders with guaranteed buyers, escrow payments, and progress tracking.</p>
+                    <a href="{{ url_for('contract_farming_page') }}" class="btn btn-warning">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 4: Bulk Deals -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Bulk Deal Aggregation</h5>
+                    <p class="card-text text-muted">Collective selling for large orders with fair-split payments and shared logistics.</p>
+                    <a href="{{ url_for('bulk_deals_page') }}" class="btn btn-info">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 5: Yield Prediction -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-brain fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Yield Prediction Tool</h5>
+                    <p class="card-text text-muted">AI-powered yield forecasting with best/average/worst case scenarios and simulations.</p>
+                    <a href="{{ url_for('yield_prediction_page') }}" class="btn btn-secondary">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 6: Crop Rotation -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-recycle fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Crop Rotation Suggestions</h5>
+                    <p class="card-text text-muted">Improve soil fertility with 3-5 year crop cycles and profit projections.</p>
+                    <a href="{{ url_for('crop_rotation_page') }}" class="btn btn-dark">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 7: Market Comparison -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-balance-scale fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Market Comparison Tool</h5>
+                    <p class="card-text text-muted">Compare prices across mandis, private buyers, and online markets with transport cost analysis.</p>
+                    <a href="{{ url_for('market_comparison_page') }}" class="btn btn-danger">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 8: Profit Analyzer -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-calculator fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Profit Margin Analyzer</h5>
+                    <p class="card-text text-muted">Smart profitability calculator with break-even analysis and scenario simulation.</p>
+                    <a href="{{ url_for('profit_analyzer_page') }}" class="btn btn-primary">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 9: Disaster Alerts -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-exclamation-triangle fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Disaster Risk Alerts</h5>
+                    <p class="card-text text-muted">Real-time climate alerts with safety advice and insurance integration.</p>
+                    <a href="{{ url_for('disaster_alerts_page') }}" class="btn btn-warning">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 10: Sowing Calendar -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-calendar-alt fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Optimal Sowing Calendar</h5>
+                    <p class="card-text text-muted">Best sowing dates based on 10+ years of weather and crop cycle data.</p>
+                    <a href="{{ url_for('sowing_calendar_page') }}" class="btn btn-success">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 11: Pest Alerts -->
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="feature-icon bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-bug fa-2x"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Pest/Disease Alerts</h5>
+                    <p class="card-text text-muted">Prevent crop loss with outbreak alerts and mitigation recommendations.</p>
+                    <a href="{{ url_for('pest_alerts_page') }}" class="btn btn-danger">Explore Feature</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder for remaining 30 features -->
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <h5><i class="fas fa-info-circle me-2"></i>More Features Coming Soon</h5>
+                <p class="mb-0">30 additional advanced features will be added in the next development phases.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

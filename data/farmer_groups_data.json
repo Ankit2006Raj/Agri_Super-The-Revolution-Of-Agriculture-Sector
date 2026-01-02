@@ -1,0 +1,112 @@
+{
+  "groups": [
+    {
+      "id": "FG001",
+      "name": "Punjab Wheat Growers Cooperative",
+      "type": "Crop-specific",
+      "location": "Punjab",
+      "members": 245,
+      "established": "2018",
+      "leader": {
+        "name": "Rajesh Kumar",
+        "experience": "15 years",
+        "contact": "+91-9876543210"
+      },
+      "activities": [
+        "Bulk seed procurement",
+        "Collective bargaining for better prices",
+        "Knowledge sharing sessions",
+        "Equipment sharing"
+      ],
+      "achievements": [
+        "20% cost reduction in inputs",
+        "15% increase in average yield",
+        "Direct market access established"
+      ],
+      "meeting_schedule": "Every 2nd Saturday",
+      "membership_fee": 500,
+      "benefits": ["Discounted inputs", "Technical support", "Market linkage", "Insurance coverage"]
+    },
+    {
+      "id": "FG002",
+      "name": "Organic Farmers Alliance",
+      "type": "Practice-based",
+      "location": "Kerala",
+      "members": 180,
+      "established": "2020",
+      "leader": {
+        "name": "Priya Nair",
+        "experience": "12 years",
+        "contact": "+91-9876543211"
+      },
+      "activities": [
+        "Organic certification support",
+        "Composting workshops",
+        "Premium market access",
+        "Peer learning programs"
+      ],
+      "achievements": ["100% organic certification", "30% premium pricing achieved", "Export market access"],
+      "meeting_schedule": "Monthly",
+      "membership_fee": 750,
+      "benefits": ["Certification support", "Premium market access", "Technical training", "Organic input supply"]
+    }
+  ],
+  "group_types": [
+    {
+      "type": "Crop-specific",
+      "description": "Groups focused on specific crops",
+      "examples": ["Rice Growers", "Cotton Farmers", "Vegetable Producers"]
+    },
+    {
+      "type": "Practice-based",
+      "description": "Groups based on farming practices",
+      "examples": ["Organic Farmers", "Precision Agriculture", "Sustainable Farming"]
+    },
+    {
+      "type": "Location-based",
+      "description": "Groups based on geographical proximity",
+      "examples": ["Village Cooperatives", "District Associations", "Regional Unions"]
+    }
+  ],
+  "formation_guidelines": [
+    {
+      "step": 1,
+      "title": "Identify Common Interest",
+      "description": "Find farmers with similar crops, practices, or challenges"
+    },
+    {
+      "step": 2,
+      "title": "Initial Meeting",
+      "description": "Organize first meeting to discuss objectives and benefits"
+    },
+    {
+      "step": 3,
+      "title": "Registration",
+      "description": "Register the group with local agricultural department"
+    },
+    {
+      "step": 4,
+      "title": "Leadership Selection",
+      "description": "Elect group leader and committee members"
+    },
+    {
+      "step": 5,
+      "title": "Activity Planning",
+      "description": "Plan regular activities and meeting schedules"
+    }
+  ],
+  "success_stories": [
+    {
+      "group": "Maharashtra Sugarcane Cooperative",
+      "achievement": "Established own sugar mill",
+      "impact": "40% increase in farmer income",
+      "timeline": "5 years"
+    },
+    {
+      "group": "Tamil Nadu SHG Federation",
+      "achievement": "Direct export to international markets",
+      "impact": "50% increase in profit margins",
+      "timeline": "3 years"
+    }
+  ]
+}

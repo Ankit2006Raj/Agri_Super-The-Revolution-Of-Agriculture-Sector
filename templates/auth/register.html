@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+
+{% block title %}Register - AgriSuper{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/auth.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow border-0 rounded-lg">
+                <div class="card-header bg-gradient-success text-white text-center py-4">
+                    <h4 class="fw-bold mb-0"><i class="fas fa-seedling me-2"></i>AgriSuper</h4>
+                    <p class="mb-0">Create your account</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <!-- Registration Form -->
+                    <form id="registrationForm" action="{{ url_for('register') }}" method="post">
+                        <!-- Personal Information -->
+                        <h5 class="mb-3">Personal Information</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" name="first_name" placeholder="Enter your first name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" name="last_name" placeholder="Enter your last name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="form-label">Phone Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    <input type="tel" class="form-control" name="phone" placeholder="Enter your phone number" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email (Optional)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter your email">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Farm Information -->
+                        <h5 class="mb-3 mt-4">Farm Information</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="form-label">Farm Name (Optional)</label>
+                                <input type="text" class="form-control" name="farm_name" placeholder="Enter your farm name">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Farm Size (Acres)</label>
+                                <input type="number" class="form-control" name="farm_size" placeholder="Enter farm size" min="0" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="form-label">Primary Crop</label>
+                                <select class="form-select" name="primary_crop" aria-label="Select your primary crop" title="Primary crop">
+                                    <option value="" selected>Select primary crop</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="maize">Maize</option>
+                                    <option value="sugarcane">Sugarcane</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="pulses">Pulses</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="fruits">Fruits</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Farming Experience (Years)</label>
+                                <input type="number" class="form-control" name="experience" placeholder="Years of experience" min="0">
+                            </div>
+                        </div>
+                        
+                        <!-- Location Information -->
+                        <h5 class="mb-3 mt-4">Location</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="form-label">State</label>
+                                <select class="form-select" name="state" id="stateSelect" required aria-label="Select your state" title="State">
+                                    <option value="" selected>Select state</option>
+                                    <option value="andhra_pradesh">Andhra Pradesh</option>
+                                    <option value="assam">Assam</option>
+                                    <option value="bihar">Bihar</option>
+                                    <option value="chhattisgarh">Chhattisgarh</option>
+                                    <option value="gujarat">Gujarat</option>
+                                    <option value="haryana">Haryana</option>
+                                    <option value="himachal_pradesh">Himachal Pradesh</option>
+                                    <option value="jharkhand">Jharkhand</option>
+                                    <option value="karnataka">Karnataka</option>
+                                    <option value="kerala">Kerala</option>
+                                    <option value="madhya_pradesh">Madhya Pradesh</option>
+                                    <option value="maharashtra">Maharashtra</option>
+                                    <option value="odisha">Odisha</option>
+                                    <option value="punjab">Punjab</option>
+                                    <option value="rajasthan">Rajasthan</option>
+                                    <option value="tamil_nadu">Tamil Nadu</option>
+                                    <option value="telangana">Telangana</option>
+                                    <option value="uttar_pradesh">Uttar Pradesh</option>
+                                    <option value="uttarakhand">Uttarakhand</option>
+                                    <option value="west_bengal">West Bengal</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">District</label>
+                                <select class="form-select" name="district" id="districtSelect" required aria-label="Select your district" title="District">
+                                    <option value="" selected>Select state first</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Village/Town</label>
+                            <input type="text" class="form-control" name="village" placeholder="Enter your village or town" required>
+                        </div>
+                        
+                        <!-- Account Security -->
+                        <h5 class="mb-3 mt-4">Account Security</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Create a password" required>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword" title="Toggle password visibility" aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength mt-2" id="passwordStrength">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Password strength indicator" title="Password strength"></div>
+                                </div>
+                                <small class="text-muted">Password strength: <span id="strengthText">Very Weak</span></small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" name="confirm_password" id="confirmPassword" placeholder="Confirm your password" required>
+                            </div>
+                            <div id="passwordMatch" class="form-text"></div>
+                        </div>
+                        
+                        <!-- Terms and Conditions -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="termsCheck" name="terms" required>
+                                <label class="form-check-label" for="termsCheck">
+                                    I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Register Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg" id="registerBtn">Create Account</button>
+                        </div>
+                    </form>
+                    
+                    <!-- Login Link -->
+                    <div class="text-center mt-4">
+                        <p class="mb-0">Already have an account? <a href="{{ url_for('login') }}" class="text-decoration-none fw-bold">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms and Conditions Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Terms and Conditions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>1. Acceptance of Terms</h6>
+                <p>By accessing and using the AgriSuper platform, you agree to be bound by these Terms and Conditions.</p>
+                
+                <h6>2. User Registration</h6>
+                <p>To use certain features of the platform, you must register for an account. You agree to provide accurate information and keep your account credentials secure.</p>
+                
+                <h6>3. Platform Usage</h6>
+                <p>The AgriSuper platform provides agricultural services including market information, crop management tools, and connection to buyers. Users agree to use these services for legitimate agricultural purposes only.</p>
+                
+                <h6>4. Data Usage</h6>
+                <p>We collect and process data to provide and improve our services. This includes farm information, crop data, and usage patterns.</p>
+                
+                <h6>5. User Responsibilities</h6>
+                <p>Users are responsible for maintaining the accuracy of their information and for all activities conducted through their account.</p>
+                
+                <h6>6. Limitation of Liability</h6>
+                <p>AgriSuper is not liable for crop failures, market fluctuations, or other agricultural outcomes resulting from the use of our platform.</p>
+                
+                <h6>7. Termination</h6>
+                <p>We reserve the right to terminate or suspend accounts that violate these terms or engage in fraudulent activity.</p>
+                
+                <h6>8. Changes to Terms</h6>
+                <p>We may update these terms periodically. Continued use of the platform after changes constitutes acceptance of the new terms.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Privacy Policy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>1. Information We Collect</h6>
+                <p>We collect personal information (name, contact details), farm data (location, size, crops), and usage information (features used, time spent).</p>
+                
+                <h6>2. How We Use Your Information</h6>
+                <p>We use your information to provide personalized services, improve our platform, connect you with relevant agricultural opportunities, and send important notifications.</p>
+                
+                <h6>3. Data Sharing</h6>
+                <p>We may share anonymized data with agricultural research institutions. Your personal information is only shared with third parties with your explicit consent, except as required by law.</p>
+                
+                <h6>4. Data Security</h6>
+                <p>We implement appropriate security measures to protect your information from unauthorized access or disclosure.</p>
+                
+                <h6>5. Your Rights</h6>
+                <p>You have the right to access, correct, or delete your personal information. You may also opt out of certain data collection practices.</p>
+                
+                <h6>6. Data Retention</h6>
+                <p>We retain your information as long as your account is active or as needed to provide services. You may request deletion of your data at any time.</p>
+                
+                <h6>7. Changes to Privacy Policy</h6>
+                <p>We may update this policy periodically. We will notify you of significant changes via email or platform notification.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Toggle password visibility
+        $('#togglePassword').click(function() {
+            const passwordField = $('#password');
+            const fieldType = passwordField.attr('type');
+            
+            if (fieldType === 'password') {
+                passwordField.attr('type', 'text');
+                $(this).find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+        
+        // Password strength checker
+        $('#password').on('input', function() {
+            const password = $(this).val();
+            let strength = 0;
+            let progressColor = '';
+            
+            if (password.length >= 8) strength += 1;
+            if (password.match(/[a-z]+/)) strength += 1;
+            if (password.match(/[A-Z]+/)) strength += 1;
+            if (password.match(/[0-9]+/)) strength += 1;
+            if (password.match(/[^a-zA-Z0-9]+/)) strength += 1;
+            
+            switch (strength) {
+                case 0:
+                case 1:
+                    progressColor = 'bg-danger';
+                    $('#strengthText').text('Very Weak').addClass('text-danger').removeClass('text-warning text-info text-success');
+                    break;
+                case 2:
+                    progressColor = 'bg-warning';
+                    $('#strengthText').text('Weak').addClass('text-warning').removeClass('text-danger text-info text-success');
+                    break;
+                case 3:
+                    progressColor = 'bg-info';
+                    $('#strengthText').text('Medium').addClass('text-info').removeClass('text-danger text-warning text-success');
+                    break;
+                case 4:
+                    progressColor = 'bg-success';
+                    $('#strengthText').text('Strong').addClass('text-success').removeClass('text-danger text-warning text-info');
+                    break;
+                case 5:
+                    progressColor = 'bg-success';
+                    $('#strengthText').text('Very Strong').addClass('text-success').removeClass('text-danger text-warning text-info');
+                    break;
+            }
+            
+            const progressBar = $('#passwordStrength .progress-bar');
+            progressBar.removeClass('bg-danger bg-warning bg-info bg-success').addClass(progressColor);
+            progressBar.css('width', (strength * 20) + '%');
+            progressBar.attr('aria-valuenow', strength * 20);
+            
+            checkPasswordMatch();
+        });
+        
+        // Password match checker
+        $('#confirmPassword').on('input', function() {
+            checkPasswordMatch();
+        });
+        
+        function checkPasswordMatch() {
+            const password = $('#password').val();
+            const confirmPassword = $('#confirmPassword').val();
+            
+            if (confirmPassword === '') {
+                $('#passwordMatch').text('');
+                return;
+            }
+            
+            if (password === confirmPassword) {
+                $('#passwordMatch').text('Passwords match').addClass('text-success').removeClass('text-danger');
+            } else {
+                $('#passwordMatch').text('Passwords do not match').addClass('text-danger').removeClass('text-success');
+            }
+            
+            validateForm();
+        }
+        
+        // Terms checkbox
+        $('#termsCheck').change(function() {
+            validateForm();
+        });
+        
+        // Form validation
+        function validateForm() {
+            const password = $('#password').val();
+            const confirmPassword = $('#confirmPassword').val();
+            const termsChecked = $('#termsCheck').is(':checked');
+            
+            if (password && confirmPassword && password === confirmPassword && termsChecked) {
+                $('#registerBtn').prop('disabled', false);
+            } else {
+                $('#registerBtn').prop('disabled', true);
+            }
+        }
+        
+        // State and district selection
+        const districts = {
+            andhra_pradesh: ['Anantapur', 'Chittoor', 'East Godavari', 'Guntur', 'Krishna', 'Kurnool', 'Prakasam', 'Srikakulam', 'Visakhapatnam', 'Vizianagaram', 'West Godavari', 'YSR Kadapa'],
+            assam: ['Baksa', 'Barpeta', 'Biswanath', 'Bongaigaon', 'Cachar', 'Charaideo', 'Chirang', 'Darrang', 'Dhemaji', 'Dhubri', 'Dibrugarh', 'Goalpara', 'Golaghat', 'Hailakandi', 'Hojai', 'Jorhat', 'Kamrup', 'Kamrup Metropolitan', 'Karbi Anglong', 'Karimganj', 'Kokrajhar', 'Lakhimpur', 'Majuli', 'Morigaon', 'Nagaon', 'Nalbari', 'Sivasagar', 'Sonitpur', 'South Salmara-Mankachar', 'Tinsukia', 'Udalguri', 'West Karbi Anglong'],
+            bihar: ['Araria', 'Arwal', 'Aurangabad', 'Banka', 'Begusarai', 'Bhagalpur', 'Bhojpur', 'Buxar', 'Darbhanga', 'East Champaran', 'Gaya', 'Gopalganj', 'Jamui', 'Jehanabad', 'Kaimur', 'Katihar', 'Khagaria', 'Kishanganj', 'Lakhisarai', 'Madhepura', 'Madhubani', 'Munger', 'Muzaffarpur', 'Nalanda', 'Nawada', 'Patna', 'Purnia', 'Rohtas', 'Saharsa', 'Samastipur', 'Saran', 'Sheikhpura', 'Sheohar', 'Sitamarhi', 'Siwan', 'Supaul', 'Vaishali', 'West Champaran'],
+            // Add more states and their districts as needed
+            punjab: ['Amritsar', 'Barnala', 'Bathinda', 'Faridkot', 'Fatehgarh Sahib', 'Fazilka', 'Ferozepur', 'Gurdaspur', 'Hoshiarpur', 'Jalandhar', 'Kapurthala', 'Ludhiana', 'Mansa', 'Moga', 'Muktsar', 'Nawanshahr', 'Pathankot', 'Patiala', 'Rupnagar', 'Sangrur', 'SAS Nagar', 'Tarn Taran'],
+            uttar_pradesh: ['Agra', 'Aligarh', 'Allahabad', 'Ambedkar Nagar', 'Amethi', 'Amroha', 'Auraiya', 'Azamgarh', 'Baghpat', 'Bahraich', 'Ballia', 'Balrampur', 'Banda', 'Barabanki', 'Bareilly', 'Basti', 'Bhadohi', 'Bijnor', 'Budaun', 'Bulandshahr', 'Chandauli', 'Chitrakoot', 'Deoria', 'Etah', 'Etawah', 'Faizabad', 'Farrukhabad', 'Fatehpur', 'Firozabad', 'Gautam Buddha Nagar', 'Ghaziabad', 'Ghazipur', 'Gonda', 'Gorakhpur', 'Hamirpur', 'Hapur', 'Hardoi', 'Hathras', 'Jalaun', 'Jaunpur', 'Jhansi', 'Kannauj', 'Kanpur Dehat', 'Kanpur Nagar', 'Kasganj', 'Kaushambi', 'Kheri', 'Kushinagar', 'Lalitpur', 'Lucknow', 'Maharajganj', 'Mahoba', 'Mainpuri', 'Mathura', 'Mau', 'Meerut', 'Mirzapur', 'Moradabad', 'Muzaffarnagar', 'Pilibhit', 'Pratapgarh', 'Raebareli', 'Rampur', 'Saharanpur', 'Sambhal', 'Sant Kabir Nagar', 'Shahjahanpur', 'Shamli', 'Shravasti', 'Siddharthnagar', 'Sitapur', 'Sonbhadra', 'Sultanpur', 'Unnao', 'Varanasi']
+        };
+        
+        $('#stateSelect').change(function() {
+            const selectedState = $(this).val();
+            const districtSelect = $('#districtSelect');
+            
+            // Clear current options
+            districtSelect.empty();
+            districtSelect.append('<option value="" selected disabled>Select district</option>');
+            
+            // Add districts for selected state
+            if (districts[selectedState]) {
+                districts[selectedState].forEach(function(district) {
+                    districtSelect.append(`<option value="${district.toLowerCase().replace(/ /g, '_')}">${district}</option>`);
+                });
+            }
+        });
+        
+        // Form submission
+        $('#registrationForm').submit(function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            $('#registerBtn').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating Account...');
+            $('#registerBtn').prop('disabled', true);
+            
+            // Simulate form submission
+            setTimeout(function() {
+                // In a real app, this would be an AJAX call to the server
+                window.location.href = "{{ url_for('dashboard') }}";
+            }, 2000);
+        });
+    });
+</script>
+{% endblock %}

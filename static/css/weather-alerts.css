@@ -1,0 +1,59 @@
+/* Weather Alerts styles */
+
+/* Forecast Views */
+.weekly-forecast,
+.monthly-outlook {
+    display: none;
+}
+
+.weekly-forecast.active,
+.monthly-outlook.active {
+    display: block;
+}
+
+/* Weather Card */
+.weather-card {
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+/* Weather Icons */
+.weather-icon {
+    width: 50px;
+    height: 50px;
+}
+
+/* Forecast Tables */
+.table-forecast th,
+.table-forecast td {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+/* Alert Cards */
+.alert-card {
+    border-left: 4px solid;
+    margin-bottom: 1rem;
+}
+
+.alert-card.warning {
+    border-left-color: #ffc107;
+}
+
+.alert-card.danger {
+    border-left-color: #dc3545;
+}
+
+/* Temperature Display */
+.temperature-display {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Weather Stats */
+.weather-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}

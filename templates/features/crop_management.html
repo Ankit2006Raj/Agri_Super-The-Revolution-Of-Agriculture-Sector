@@ -1,0 +1,750 @@
+{% extends "base.html" %}
+
+{% block title %}Crop Management - AgriSuper{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/crop-management.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Crop Dashboard -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-seedling me-2"></i>Crop Dashboard</h5>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="cropSeasonSelector" data-bs-toggle="dropdown" aria-expanded="false">
+                            Current Season (Kharif 2023)
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cropSeasonSelector">
+                            <li><a class="dropdown-item active" href="#">Current Season (Kharif 2023)</a></li>
+                            <li><a class="dropdown-item" href="#">Previous Season (Rabi 2022-23)</a></li>
+                            <li><a class="dropdown-item" href="#">Kharif 2022</a></li>
+                            <li><a class="dropdown-item" href="#">Rabi 2021-22</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-plus-circle me-1"></i>Plan New Season</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Season Overview -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <div class="season-progress me-3">
+                                    <svg width="120" height="120" viewBox="0 0 120 120">
+                                        <circle cx="60" cy="60" r="54" fill="none" stroke="#e6e6e6" stroke-width="12"/>
+                                        <circle cx="60" cy="60" r="54" fill="none" stroke="#28a745" stroke-width="12" stroke-dasharray="339.3" stroke-dashoffset="169.6" transform="rotate(-90 60 60)"/>
+                                        <text x="60" y="55" font-size="24" text-anchor="middle" fill="#28a745">50%</text>
+                                        <text x="60" y="75" font-size="12" text-anchor="middle" fill="#28a745">Complete</text>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="mb-1">Kharif Season 2023</h4>
+                                    <p class="mb-0 text-muted">Started: June 15, 2023</p>
+                                    <p class="mb-0 text-muted">Expected Harvest: November 10, 2023</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">Season Summary</h6>
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <h3 class="text-success mb-0">4</h3>
+                                            <small class="text-muted">Crops</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <h3 class="text-success mb-0">14</h3>
+                                            <small class="text-muted">Acres</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <h3 class="text-success mb-0">₹8.2L</h3>
+                                            <small class="text-muted">Est. Value</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Crops -->
+                    <h5 class="mb-3">Active Crops</h5>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Crop</th>
+                                    <th>Variety</th>
+                                    <th>Field</th>
+                                    <th>Area</th>
+                                    <th>Stage</th>
+                                    <th>Health</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Rice" class="me-2 rounded">
+                                            <span>Rice</span>
+                                        </div>
+                                    </td>
+                                    <td>Basmati 1121</td>
+                                    <td>North Field</td>
+                                    <td>5 acres</td>
+                                    <td>
+                                        <div class="progress crop-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" aria-label="Rice crop growth progress" title="Rice growth progress: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small>Flowering (65%)</small>
+                                    </td>
+                                    <td><span class="badge bg-success">Good</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View Details</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Update Status</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-calendar me-2"></i>Schedule Activity</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-exclamation-triangle me-2"></i>Report Issue</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Cotton" class="me-2 rounded">
+                                            <span>Cotton</span>
+                                        </div>
+                                    </td>
+                                    <td>Bt Cotton</td>
+                                    <td>South Field</td>
+                                    <td>3 acres</td>
+                                    <td>
+                                        <div class="progress growth-stage-progress">
+                                            <div class="progress-bar bg-success" role="progressbar" aria-label="Cotton crop growth stage" title="Cotton growth progress: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small>Boll Development (70%)</small>
+                                    </td>
+                                    <td><span class="badge bg-warning text-dark">Fair</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View Details</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Update Status</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-calendar me-2"></i>Schedule Activity</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-exclamation-triangle me-2"></i>Report Issue</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Soybean" class="me-2 rounded">
+                                            <span>Soybean</span>
+                                        </div>
+                                    </td>
+                                    <td>JS-335</td>
+                                    <td>East Field</td>
+                                    <td>2 acres</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" aria-label="Soybean crop growth progress" title="Soybean growth progress: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small>Pod Formation (55%)</small>
+                                    </td>
+                                    <td><span class="badge bg-success">Good</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View Details</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Update Status</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-calendar me-2"></i>Schedule Activity</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-exclamation-triangle me-2"></i>Report Issue</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Maize" class="me-2 rounded">
+                                            <span>Maize</span>
+                                        </div>
+                                    </td>
+                                    <td>Pioneer 3377</td>
+                                    <td>West Field</td>
+                                    <td>4 acres</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" aria-label="Maize crop growth progress" title="Maize growth progress: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small>Vegetative (40%)</small>
+                                    </td>
+                                    <td><span class="badge bg-danger">At Risk</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye me-2"></i>View Details</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Update Status</a></li>
+                                                <li><a class="dropdown-item" href="#"><i class="fas fa-calendar me-2"></i>Schedule Activity</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-exclamation-triangle me-2"></i>Report Issue</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Upcoming Activities -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Upcoming Activities</h5>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#scheduleActivityModal">
+                            <i class="fas fa-plus-circle me-1"></i>Schedule Activity
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Activity</th>
+                                    <th>Crop</th>
+                                    <th>Field</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Aug 15, 2023</td>
+                                    <td>Fertilizer Application (Urea)</td>
+                                    <td>Rice</td>
+                                    <td>North Field</td>
+                                    <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success me-1"><i class="fas fa-check me-1"></i>Complete</button>
+                                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit me-1"></i>Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 18, 2023</td>
+                                    <td>Pest Control (Bollworm)</td>
+                                    <td>Cotton</td>
+                                    <td>South Field</td>
+                                    <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success me-1"><i class="fas fa-check me-1"></i>Complete</button>
+                                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit me-1"></i>Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 20, 2023</td>
+                                    <td>Irrigation</td>
+                                    <td>Maize</td>
+                                    <td>West Field</td>
+                                    <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success me-1"><i class="fas fa-check me-1"></i>Complete</button>
+                                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit me-1"></i>Edit</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 25, 2023</td>
+                                    <td>Weed Control</td>
+                                    <td>Soybean</td>
+                                    <td>East Field</td>
+                                    <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success me-1"><i class="fas fa-check me-1"></i>Complete</button>
+                                        <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit me-1"></i>Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crop Issues & Alerts -->
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Crop Issues & Alerts</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-bug fa-2x text-danger"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Pest Infestation Detected</h5>
+                                <p class="mb-0">Fall Armyworm detected in Maize crop (West Field). Immediate action recommended.</p>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-danger me-2">View Details</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Dismiss</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-tint fa-2x text-warning"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Irrigation Alert</h5>
+                                <p class="mb-0">Cotton crop (South Field) showing signs of water stress. Consider irrigation within 48 hours.</p>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-warning text-dark me-2">View Details</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Dismiss</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mb-0">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-cloud-rain fa-2x text-info"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Weather Advisory</h5>
+                                <p class="mb-0">Heavy rainfall predicted in your area in the next 72 hours. Consider postponing any scheduled fertilizer application.</p>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-info text-white me-2">View Details</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Dismiss</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Crop Calendar -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Crop Calendar</h5>
+                </div>
+                <div class="card-body p-0">
+                                        <div class="crop-calendar placeholder-container">
+                        <span class="text-muted"><i class="fas fa-calendar-alt me-2"></i>Calendar View Coming Soon</span>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Today</h6>
+                                <small>August 12, 2023</small>
+                            </div>
+                            <p class="mb-1">No scheduled activities</p>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Tomorrow</h6>
+                                <small>August 13, 2023</small>
+                            </div>
+                            <p class="mb-1">Soil moisture check (All fields)</p>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Upcoming</h6>
+                                <small>August 15, 2023</small>
+                            </div>
+                            <p class="mb-1">Fertilizer Application - Rice (North Field)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-sm btn-outline-success w-100">View Full Calendar</button>
+                </div>
+            </div>
+            
+            <!-- Crop Performance -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Crop Performance</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="cropPerformanceChart" height="200"></canvas>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h6 class="mb-0 text-success">+12%</h6>
+                            <small class="text-muted">vs. Last Season</small>
+                        </div>
+                        <div class="col-6">
+                            <h6 class="mb-0 text-success">+8%</h6>
+                            <small class="text-muted">vs. Regional Avg</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Input Inventory -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-box me-2"></i>Input Inventory</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Urea</h6>
+                                <small class="text-muted">Fertilizer</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-success rounded-pill">250 kg</span>
+                                <div><small class="text-muted">Sufficient</small></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Chlorpyrifos</h6>
+                                <small class="text-muted">Pesticide</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-warning text-dark rounded-pill">5 L</span>
+                                <div><small class="text-muted">Low Stock</small></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">DAP</h6>
+                                <small class="text-muted">Fertilizer</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-danger rounded-pill">0 kg</span>
+                                <div><small class="text-muted">Out of Stock</small></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Glyphosate</h6>
+                                <small class="text-muted">Herbicide</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-success rounded-pill">10 L</span>
+                                <div><small class="text-muted">Sufficient</small></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-light d-flex justify-content-between">
+                    <button class="btn btn-sm btn-outline-success">View All</button>
+                    <button class="btn btn-sm btn-success">Order Inputs</button>
+                </div>
+            </div>
+            
+            <!-- Weather Forecast -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-cloud-sun me-2"></i>Weather Forecast</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="current-weather p-3 text-center">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-cloud-sun fa-3x text-warning me-3"></i>
+                            <div class="text-start">
+                                <h3 class="mb-0">32°C</h3>
+                                <p class="mb-0">Partly Cloudy</p>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <small class="text-muted">Humidity: 65% | Wind: 12 km/h | Precipitation: 20%</small>
+                        </div>
+                    </div>
+                    <div class="weekly-forecast">
+                        <div class="row g-0 text-center">
+                            <div class="col border-top border-end p-2">
+                                <small>Mon</small>
+                                <div><i class="fas fa-cloud-sun text-warning"></i></div>
+                                <small>31°C</small>
+                            </div>
+                            <div class="col border-top border-end p-2">
+                                <small>Tue</small>
+                                <div><i class="fas fa-cloud-rain text-primary"></i></div>
+                                <small>29°C</small>
+                            </div>
+                            <div class="col border-top border-end p-2">
+                                <small>Wed</small>
+                                <div><i class="fas fa-cloud-showers-heavy text-primary"></i></div>
+                                <small>28°C</small>
+                            </div>
+                            <div class="col border-top border-end p-2">
+                                <small>Thu</small>
+                                <div><i class="fas fa-cloud-rain text-primary"></i></div>
+                                <small>30°C</small>
+                            </div>
+                            <div class="col border-top p-2">
+                                <small>Fri</small>
+                                <div><i class="fas fa-sun text-warning"></i></div>
+                                <small>33°C</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-sm btn-outline-success w-100">View Detailed Forecast</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schedule Activity Modal -->
+<div class="modal fade" id="scheduleActivityModal" tabindex="-1" aria-labelledby="scheduleActivityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="scheduleActivityModalLabel"><i class="fas fa-calendar-plus me-2"></i>Schedule Crop Activity</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="activityType" class="form-label">Activity Type</label>
+                            <select class="form-select" id="activityType">
+                                <option selected>Select Activity Type</option>
+                                <option>Fertilizer Application</option>
+                                <option>Irrigation</option>
+                                <option>Pest Control</option>
+                                <option>Weed Control</option>
+                                <option>Harvesting</option>
+                                <option>Soil Testing</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="activityDate" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="activityDate">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="activityCrop" class="form-label">Crop</label>
+                            <select class="form-select" id="activityCrop">
+                                <option selected>Select Crop</option>
+                                <option>Rice (Basmati 1121)</option>
+                                <option>Cotton (Bt Cotton)</option>
+                                <option>Soybean (JS-335)</option>
+                                <option>Maize (Pioneer 3377)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="activityField" class="form-label">Field</label>
+                            <select class="form-select" id="activityField">
+                                <option selected>Select Field</option>
+                                <option>North Field (5 acres)</option>
+                                <option>South Field (3 acres)</option>
+                                <option>East Field (2 acres)</option>
+                                <option>West Field (4 acres)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityDetails" class="form-label">Activity Details</label>
+                        <textarea class="form-control" id="activityDetails" rows="3" placeholder="Enter detailed description of the activity"></textarea>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="laborRequired" class="form-label">Labor Required</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="laborRequired" value="2">
+                                <span class="input-group-text">persons</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="estimatedDuration" class="form-label">Estimated Duration</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="estimatedDuration" value="4">
+                                <span class="input-group-text">hours</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputsRequired" class="form-label">Inputs Required</label>
+                        <div class="input-group mb-2">
+                            <select class="form-select" id="inputType">
+                                <option selected>Select Input</option>
+                                <option>Urea</option>
+                                <option>DAP</option>
+                                <option>Chlorpyrifos</option>
+                                <option>Glyphosate</option>
+                            </select>
+                            <input type="number" class="form-control" placeholder="Quantity" value="">
+                            <select class="form-select unit-select">
+                                <option selected>kg</option>
+                                <option>L</option>
+                                <option>g</option>
+                                <option>ml</option>
+                            </select>
+                            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="input-group mb-2">
+                            <select class="form-select">
+                                <option>Urea</option>
+                            </select>
+                            <input type="number" class="form-control" value="50">
+                            <select class="form-select unit-select">
+                                <option selected>kg</option>
+                            </select>
+                            <button class="btn btn-outline-danger" type="button"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="setReminder" checked>
+                            <label class="form-check-label" for="setReminder">
+                                Set reminder notification
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="repeatActivity">
+                            <label class="form-check-label" for="repeatActivity">
+                                Repeat this activity
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Schedule Activity</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Crop Performance Chart
+        var ctx = document.getElementById('cropPerformanceChart').getContext('2d');
+        var cropPerformanceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Rice', 'Cotton', 'Soybean', 'Maize'],
+                datasets: [
+                    {
+                        label: 'Current Yield Estimate (q/ha)',
+                        data: [42, 25, 18, 35],
+                        backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Regional Average (q/ha)',
+                        data: [38, 23, 17, 32],
+                        backgroundColor: 'rgba(108, 117, 125, 0.5)',
+                        borderColor: 'rgba(108, 117, 125, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Yield (q/ha)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Handle schedule activity modal submission
+        $('.modal .btn-success').click(function() {
+            // In a real app, this would submit the form data
+            $('#scheduleActivityModal').modal('hide');
+            
+            // Show confirmation toast
+            showToast('Activity scheduled successfully!');
+        });
+        
+        // Handle activity completion
+        $('.btn-outline-success').click(function() {
+            // In a real app, this would update the activity status
+            $(this).closest('tr').find('.badge').removeClass('bg-warning').addClass('bg-success').text('Completed');
+            
+            // Show confirmation toast
+            showToast('Activity marked as completed!');
+        });
+        
+        // Function to show toast notification
+        function showToast(message) {
+            // Create toast element
+            var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'+
+                          '<div class="toast-header bg-success text-white">'+
+                          '<strong class="me-auto">Crop Management</strong>'+
+                          '<small>Just now</small>'+
+                          '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>'+
+                          '</div>'+
+                          '<div class="toast-body">'+message+'</div>'+
+                          '</div>');
+            
+            // Add to container
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('.toast-container').append(toast);
+            
+            // Initialize and show toast
+            var toastEl = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 5000
+            });
+            toastEl.show();
+            
+            // Remove after hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
+{% endblock %}

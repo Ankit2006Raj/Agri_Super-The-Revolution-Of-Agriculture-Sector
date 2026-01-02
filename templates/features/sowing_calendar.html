@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Sowing Calendar - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Sowing Calendar</h1>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Plan Your Sowing Schedule</h5>
+                    <p class="card-text">Use our intelligent sowing calendar to optimize your planting schedule based on your location, climate, and crop selection.</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="location">Your Location</label>
+                                <select class="form-control" id="location">
+                                    <option value="">Select your region</option>
+                                    <option value="north">North India</option>
+                                    <option value="south">South India</option>
+                                    <option value="east">East India</option>
+                                    <option value="west">West India</option>
+                                    <option value="central">Central India</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="crop-type">Crop Type</label>
+                                <select class="form-control" id="crop-type">
+                                    <option value="">Select crop type</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="maize">Maize</option>
+                                    <option value="pulses">Pulses</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="fruits">Fruits</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="soil-type">Soil Type</label>
+                                <select class="form-control" id="soil-type">
+                                    <option value="">Select soil type</option>
+                                    <option value="alluvial">Alluvial</option>
+                                    <option value="black">Black</option>
+                                    <option value="red">Red</option>
+                                    <option value="laterite">Laterite</option>
+                                    <option value="sandy">Sandy</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="generate-calendar">Generate Calendar</button>
+                </div>
+            </div>
+            
+            <div class="card mt-4 shadow-sm d-none" id="calendar-results">
+                <div class="card-body">
+                    <h5 class="card-title">Your Personalized Sowing Calendar</h5>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Recommended Crops</th>
+                                    <th>Soil Preparation</th>
+                                    <th>Special Instructions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calendar-body">
+                                <!-- Calendar data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-info-circle"></i> This calendar is based on historical climate data and agricultural best practices. Always consider current weather conditions before making final decisions.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Crop Rotation Recommendations</h5>
+                    <p class="card-text">Proper crop rotation helps maintain soil health and reduces pest problems. Here are some recommended rotation patterns:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">Three-Year Rotation</h6>
+                                    <p>Year 1: Legumes (beans, peas) → Year 2: Leaf crops (cabbage, spinach) → Year 3: Root crops (carrots, potatoes)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">Four-Year Rotation</h6>
+                                    <p>Year 1: Legumes → Year 2: Brassicas → Year 3: Alliums → Year 4: Root vegetables</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('generate-calendar').addEventListener('click', function() {
+        const location = document.getElementById('location').value;
+        const cropType = document.getElementById('crop-type').value;
+        const soilType = document.getElementById('soil-type').value;
+        
+        if (!location || !cropType || !soilType) {
+            alert('Please select all fields to generate your calendar');
+            return;
+        }
+        
+        // In a real application, this would make an API call to get data
+        // For demo purposes, we'll just show some sample data
+        const calendarData = [
+            {
+                month: 'January',
+                crops: 'Wheat, Mustard, Peas',
+                soilPrep: 'Add organic matter, maintain moisture',
+                instructions: 'Protect from frost with mulch'
+            },
+            {
+                month: 'February',
+                crops: 'Onion, Garlic, Spinach',
+                soilPrep: 'Light tillage, add compost',
+                instructions: 'Regular watering in morning hours'
+            },
+            {
+                month: 'March',
+                crops: 'Okra, Cucumber, Pumpkin',
+                soilPrep: 'Deep plowing, add manure',
+                instructions: 'Prepare raised beds for better drainage'
+            },
+            {
+                month: 'April',
+                crops: 'Bitter gourd, Ridge gourd, Watermelon',
+                soilPrep: 'Add nitrogen-rich fertilizers',
+                instructions: 'Provide shade during peak afternoon'
+            },
+            {
+                month: 'May',
+                crops: 'Not recommended (summer)',
+                soilPrep: 'Mulching to retain moisture',
+                instructions: 'Consider drip irrigation systems'
+            },
+            {
+                month: 'June',
+                crops: 'Rice, Maize, Soybean',
+                soilPrep: 'Prepare for monsoon, drainage channels',
+                instructions: 'Wait for first monsoon showers'
+            }
+        ];
+        
+        const calendarBody = document.getElementById('calendar-body');
+        calendarBody.innerHTML = '';
+        
+        calendarData.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.month}</td>
+                <td>${item.crops}</td>
+                <td>${item.soilPrep}</td>
+                <td>${item.instructions}</td>
+            `;
+            calendarBody.appendChild(row);
+        });
+        
+        document.getElementById('calendar-results').classList.remove('d-none');
+    });
+</script>
+{% endblock %}

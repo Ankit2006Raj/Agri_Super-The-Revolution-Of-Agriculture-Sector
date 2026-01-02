@@ -1,0 +1,78 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "title": "Modern Rice Cultivation Techniques",
+      "category": "Crop Management",
+      "instructor": "Dr. Rajesh Kumar",
+      "duration": "6 hours",
+      "level": "Intermediate",
+      "rating": 4.8,
+      "enrolled": 2847,
+      "price": 299,
+      "description": "Comprehensive guide to modern rice cultivation including SRI method, water management, and pest control",
+      "modules": [
+        { "name": "Introduction to SRI Method", "duration": "45 min" },
+        { "name": "Seed Selection and Treatment", "duration": "60 min" },
+        { "name": "Water Management Techniques", "duration": "90 min" },
+        { "name": "Nutrient Management", "duration": "75 min" },
+        { "name": "Pest and Disease Control", "duration": "80 min" },
+        { "name": "Harvesting and Post-Harvest", "duration": "50 min" }
+      ],
+      "certificate": true,
+      "language": ["Hindi", "English", "Tamil"]
+    },
+    {
+      "id": 2,
+      "title": "Organic Farming Fundamentals",
+      "category": "Sustainable Agriculture",
+      "instructor": "Prof. Meera Sharma",
+      "duration": "8 hours",
+      "level": "Beginner",
+      "rating": 4.9,
+      "enrolled": 3521,
+      "price": 399,
+      "description": "Complete guide to organic farming practices, certification process, and market access",
+      "modules": [
+        { "name": "Principles of Organic Farming", "duration": "60 min" },
+        { "name": "Soil Health Management", "duration": "90 min" },
+        { "name": "Organic Pest Control", "duration": "75 min" },
+        { "name": "Composting Techniques", "duration": "80 min" },
+        { "name": "Certification Process", "duration": "45 min" },
+        { "name": "Marketing Organic Products", "duration": "70 min" }
+      ],
+      "certificate": true,
+      "language": ["Hindi", "English", "Gujarati"]
+    }
+  ],
+  "categories": [
+    { "name": "Crop Management", "courses": 45, "icon": "🌾" },
+    { "name": "Sustainable Agriculture", "courses": 32, "icon": "🌱" },
+    { "name": "Livestock Management", "courses": 28, "icon": "🐄" },
+    { "name": "Farm Technology", "courses": 38, "icon": "🚜" },
+    { "name": "Market Access", "courses": 25, "icon": "📈" },
+    { "name": "Financial Planning", "courses": 22, "icon": "💰" }
+  ],
+  "instructors": [
+    {
+      "name": "Dr. Rajesh Kumar",
+      "expertise": "Rice Cultivation",
+      "experience": "15 years",
+      "courses": 12,
+      "rating": 4.8
+    },
+    {
+      "name": "Prof. Meera Sharma",
+      "expertise": "Organic Farming",
+      "experience": "20 years",
+      "courses": 18,
+      "rating": 4.9
+    }
+  ],
+  "progress_tracking": {
+    "total_users": 15000,
+    "completed_courses": 8500,
+    "certificates_issued": 7200,
+    "average_completion_rate": 0.78
+  }
+}

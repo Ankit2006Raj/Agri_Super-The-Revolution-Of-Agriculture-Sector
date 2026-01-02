@@ -1,0 +1,2406 @@
+{% extends "base.html" %}
+
+{% block title %}AgriSuper - Feature Dashboard{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/dashboard-modern.css') }}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 bg-gradient-success text-white shadow-lg">
+                <div class="card-body p-5 text-center">
+                    <h1 class="display-4 fw-bold mb-3"><i class="fas fa-seedling me-2"></i>AgriSuper Platform</h1>
+                    <p class="lead mb-4">Access 41 powerful features designed to revolutionize your farming experience</p>
+                    <div class="d-flex justify-content-center">
+                        <div class="input-group search-bar mx-auto">
+                            <input type="text" class="form-control" id="featureSearch" placeholder="Search features...">
+                            <button class="btn btn-light" type="button" aria-label="Search features"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Stats Overview -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-4 mb-md-0">
+            <div class="card stats-card border-0 h-100 animate-fade-in-up">
+                <div class="card-body d-flex align-items-center">
+                    <div class="feature-icon bg-light-success rounded-circle me-3">
+                        <i class="fas fa-chart-line text-success"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-1 fw-semibold">Market Price</h6>
+                        <h3 class="mb-0 counter" data-target="1842">₹0</h3>
+                        <small class="text-success fw-medium"><i class="fas fa-arrow-up me-1"></i>3.2% from yesterday</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4 mb-md-0">
+            <div class="card stats-card border-0 h-100 animate-fade-in-up" style="animation-delay: 0.1s;">
+                <div class="card-body d-flex align-items-center">
+                    <div class="feature-icon bg-light-info rounded-circle me-3">
+                        <i class="fas fa-cloud-sun text-info"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-1 fw-semibold">Weather</h6>
+                        <h3 class="mb-0">28°C</h3>
+                        <small class="text-muted">Partly cloudy, 10% rain</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4 mb-md-0">
+            <div class="card stats-card border-0 h-100 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <div class="card-body d-flex align-items-center">
+                    <div class="feature-icon bg-light-warning rounded-circle me-3">
+                        <i class="fas fa-water text-warning"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-1 fw-semibold">Soil Moisture</h6>
+                        <h3 class="mb-0 counter" data-target="68">0%</h3>
+                        <small class="text-success fw-medium"><i class="fas fa-check-circle me-1"></i>Optimal level</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stats-card border-0 h-100 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <div class="card-body d-flex align-items-center">
+                    <div class="feature-icon bg-light-danger rounded-circle me-3">
+                        <i class="fas fa-calendar-alt text-danger"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-1 fw-semibold">Harvest Forecast</h6>
+                        <h3 class="mb-0 counter" data-target="18">0</h3>
+                        <small class="text-muted">Days until harvest</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Category Navigation -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                    <ul class="nav nav-pills nav-fill category-nav" id="featureCategories" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="all-tab" data-bs-toggle="pill" data-bs-target="#all" type="button" role="tab">
+                                <i class="fas fa-th-large me-2"></i>All Features
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="market-tab" data-bs-toggle="pill" data-bs-target="#market" type="button" role="tab">
+                                <i class="fas fa-store me-2"></i>Market & Sales
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="farming-tab" data-bs-toggle="pill" data-bs-target="#farming" type="button" role="tab">
+                                <i class="fas fa-tractor me-2"></i>Farming
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="marketplace-tab" data-bs-toggle="pill" data-bs-target="#marketplace" type="button" role="tab">
+                                <i class="fas fa-shopping-cart me-2"></i>Marketplaces
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="alerts-tab" data-bs-toggle="pill" data-bs-target="#alerts" type="button" role="tab">
+                                <i class="fas fa-bell me-2"></i>Alerts & Safety
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="community-tab" data-bs-toggle="pill" data-bs-target="#community" type="button" role="tab">
+                                <i class="fas fa-users me-2"></i>Community
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="financial-tab" data-bs-toggle="pill" data-bs-target="#financial" type="button" role="tab">
+                                <i class="fas fa-rupee-sign me-2"></i>Financial
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tools-tab" data-bs-toggle="pill" data-bs-target="#tools" type="button" role="tab">
+                                <i class="fas fa-tools me-2"></i>Tools
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Features Grid -->
+    <div class="tab-content" id="featureCategoriesContent">
+        <!-- All Features Tab -->
+        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div class="row">
+                <!-- Market & Sales Features -->
+                <div class="col-12 mb-4">
+                    <h4 class="category-title market-title"><i class="fas fa-store me-2"></i>Market & Sales</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-emerald rounded-circle mb-3">
+                                        <i class="fas fa-tags text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Dynamic Pricing Engine</h5>
+                                    <p class="card-text">Real-time price optimization based on market demand, supply, and quality factors.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('pricing_engine_page') }}" class="btn btn-sm btn-outline-emerald">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-sync-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Subscription Model</h5>
+                                    <p class="card-text">Recurring revenue streams through subscription-based produce delivery.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('subscription_model_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-lime rounded-circle mb-3">
+                                        <i class="fas fa-handshake text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Contract Farming</h5>
+                                    <p class="card-text">Secure agreements with buyers before planting for guaranteed sales.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('contract_farming_page') }}" class="btn btn-sm btn-outline-lime">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-boxes text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Bulk Deal Aggregation</h5>
+                                    <p class="card-text">Combine produce with other farmers to access larger buyers and better prices.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('bulk_deals_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-chart-line text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Demand Forecasting</h5>
+                                    <p class="card-text">Predict future market demand to optimize planting decisions.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('get_forum_questions') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-emerald rounded-circle mb-3">
+                                        <i class="fas fa-certificate text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Quality Certification</h5>
+                                    <p class="card-text">Get your produce certified for quality to command premium prices.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('quality_certification') }}" class="btn btn-sm btn-outline-emerald">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Farming Features -->
+                <div class="col-12 mb-4">
+                    <h4 class="category-title farming-title"><i class="fas fa-tractor me-2"></i>Farming</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-amber rounded-circle mb-3">
+                                        <i class="fas fa-chart-bar text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Yield Prediction Tool</h5>
+                                    <p class="card-text">AI-powered forecasting of crop yields based on historical data and conditions.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('yield_prediction_page') }}" class="btn btn-sm btn-outline-amber">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-orange rounded-circle mb-3">
+                                        <i class="fas fa-sync text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Crop Rotation Planner</h5>
+                                    <p class="card-text">Optimize soil health and yields with intelligent crop rotation schedules.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('crop_rotation_page') }}" class="btn btn-sm btn-outline-orange">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-brown rounded-circle mb-3">
+                                        <i class="fas fa-bug text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Pest Detection</h5>
+                                    <p class="card-text">Early identification of pests and diseases using image recognition.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('pest_alerts_page') }}" class="btn btn-sm btn-outline-brown">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-tint text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Irrigation Optimizer</h5>
+                                    <p class="card-text">Smart water management based on soil moisture, weather, and crop needs.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('sowing_calendar_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-brown rounded-circle mb-3">
+                                        <i class="fas fa-flask text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Soil Health Analysis</h5>
+                                    <p class="card-text">Comprehensive soil testing and nutrient management recommendations.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('community_forum') }}" class="btn btn-sm btn-outline-brown">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-seedling text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Seed Selection Advisor</h5>
+                                    <p class="card-text">Personalized seed recommendations based on your soil and climate.</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('market_comparison_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More categories would follow with similar structure -->
+                <!-- For brevity, only showing two categories in detail -->
+                
+                <!-- Marketplace Features -->
+                <div class="col-12 mb-4">
+                    <h4 class="category-title marketplace-title"><i class="fas fa-shopping-cart me-2"></i>Marketplaces</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-leaf text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Organic Marketplace</h5>
+                                    <p class="card-text">Buy and sell certified organic produce</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('organic_marketplace_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-violet rounded-circle mb-3">
+                                        <i class="fas fa-recycle text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Secondhand Marketplace</h5>
+                                    <p class="card-text">Trade used farming equipment and supplies</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('secondhand_marketplace_page') }}" class="btn btn-sm btn-outline-violet">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-handshake text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Farmer-to-Farmer Trade</h5>
+                                    <p class="card-text">Direct trading between farmers without middlemen</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('farmer_to_farmer_trade_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-flask text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Fertilizer Price Comparison</h5>
+                                    <p class="card-text">Compare fertilizer prices across suppliers</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('fertilizer_price_comparison_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-globe text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Export Gateway</h5>
+                                    <p class="card-text">Access international markets for your produce</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('export_gateway_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alerts & Safety Features -->
+                <div class="col-12 mb-4">
+                    <h4 class="category-title alert-title"><i class="fas fa-bell me-2"></i>Alerts & Safety</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-red rounded-circle mb-3">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Disaster Alerts</h5>
+                                    <p class="card-text">Get early warnings for weather and natural disasters</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('disaster_alerts_page') }}" class="btn btn-sm btn-outline-red">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-orange rounded-circle mb-3">
+                                        <i class="fas fa-bug text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Pest Alerts</h5>
+                                    <p class="card-text">Early detection and prevention of pest infestations</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('pest_alerts_page') }}" class="btn btn-sm btn-outline-orange">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-yellow rounded-circle mb-3">
+                                        <i class="fas fa-shield-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Crop Insurance</h5>
+                                    <p class="card-text">Protect your crops with comprehensive insurance</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('crop_insurance_page') }}" class="btn btn-sm btn-outline-yellow">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-id-card text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">ID Verification</h5>
+                                    <p class="card-text">Secure KYC and identity verification</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('id_verification_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-violet rounded-circle mb-3">
+                                        <i class="fas fa-shield-virus text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Fraud Detection</h5>
+                                    <p class="card-text">AI-powered fraud detection and prevention</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('fraud_detection_page') }}" class="btn btn-sm btn-outline-violet">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-cloud-sun text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Weather Alerts</h5>
+                                    <p class="card-text">Real-time weather updates and forecasts</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('weather_alerts') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-amber rounded-circle mb-3">
+                                        <i class="fas fa-certificate text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Quality Certification</h5>
+                                    <p class="card-text">Get quality certification for your produce</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('quality_certification') }}" class="btn btn-sm btn-outline-amber">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Features -->
+                <div class="col-12 mb-4">
+                    <h4 class="category-title community-title"><i class="fas fa-users me-2"></i>Community</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-users-cog text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Farmer Groups</h5>
+                                    <p class="card-text">Join and create farmer collectives for better bargaining</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('farmer_groups_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-purple rounded-circle mb-3">
+                                        <i class="fas fa-comments text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Q&A Forum</h5>
+                                    <p class="card-text">Ask questions and share knowledge with experts</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('qa_forum_page') }}" class="btn btn-sm btn-outline-purple">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-pink rounded-circle mb-3">
+                                        <i class="fas fa-chalkboard-teacher text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Mentorship Program</h5>
+                                    <p class="card-text">Connect with experienced farmers for guidance</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('mentorship_page') }}" class="btn btn-sm btn-outline-pink">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-microphone text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Voice Assistant</h5>
+                                    <p class="card-text">Hands-free access to platform features via voice</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('voice_assistant_page') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Financial Features -->
+                <div class="col-12 mb-4">
+                    <h4 class="category-title financial-title"><i class="fas fa-rupee-sign me-2"></i>Financial</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-wallet text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Digital Wallet</h5>
+                                    <p class="card-text">Secure digital payments and transaction tracking</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('digital_wallet_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-emerald rounded-circle mb-3">
+                                        <i class="fas fa-hand-holding-usd text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Micro Loans</h5>
+                                    <p class="card-text">Quick access to small loans with flexible terms</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('micro_loans_page') }}" class="btn btn-sm btn-outline-emerald">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-shield-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Crop Insurance</h5>
+                                    <p class="card-text">Protect your crops with comprehensive insurance</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('crop_insurance_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-credit-card text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">EMI Purchase</h5>
+                                    <p class="card-text">Buy equipment and inputs with easy installment plans</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('emi_purchase_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-tree text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Carbon Credits</h5>
+                                    <p class="card-text">Earn credits for sustainable farming practices</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('carbon_credits_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tools Features -->
+                <div class="col-12">
+                    <h4 class="category-title tools-title"><i class="fas fa-tools me-2"></i>Tools & Utilities</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-purple rounded-circle mb-3">
+                                        <i class="fas fa-truck text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Shared Logistics</h5>
+                                    <p class="card-text">Reduce transportation costs through shared delivery</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('shared_logistics_page') }}" class="btn btn-sm btn-outline-purple">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-warehouse text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Storage Booking</h5>
+                                    <p class="card-text">Book warehouse space and cold storage facilities</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('storage_booking_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-route text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Route Optimization</h5>
+                                    <p class="card-text">Find the most efficient delivery routes</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('route_optimization_page') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-tractor text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Equipment Rental</h5>
+                                    <p class="card-text">Rent farming equipment on-demand</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('equipment_rental_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-id-card text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">ID Verification</h5>
+                                    <p class="card-text">Secure KYC and identity verification</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('id_verification_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-violet rounded-circle mb-3">
+                                        <i class="fas fa-file-contract text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Smart Contracts</h5>
+                                    <p class="card-text">Blockchain-based automated agreements</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('smart_contracts_page') }}" class="btn btn-sm btn-outline-violet">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-pink rounded-circle mb-3">
+                                        <i class="fas fa-shield-virus text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Fraud Detection</h5>
+                                    <p class="card-text">AI-powered fraud detection and prevention</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('fraud_detection_page') }}" class="btn btn-sm btn-outline-pink">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-orange rounded-circle mb-3">
+                                        <i class="fas fa-language text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Multi-Language Support</h5>
+                                    <p class="card-text">Access platform in multiple regional languages</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('multilanguage_page') }}" class="btn btn-sm btn-outline-orange">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-lime rounded-circle mb-3">
+                                        <i class="fas fa-sms text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Offline SMS</h5>
+                                    <p class="card-text">Access features via SMS without internet</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('offline_sms_page') }}" class="btn btn-sm btn-outline-lime">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-rose rounded-circle mb-3">
+                                        <i class="fas fa-chart-line text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Admin Dashboard</h5>
+                                    <p class="card-text">Comprehensive analytics and management tools</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('admin_dashboard_page') }}" class="btn btn-sm btn-outline-rose">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Market & Sales Tab -->
+        <div class="tab-pane fade" id="market" role="tabpanel" aria-labelledby="market-tab">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="category-title market-title"><i class="fas fa-store me-2"></i>Market & Sales Features</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-emerald rounded-circle mb-3">
+                                        <i class="fas fa-tags text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Dynamic Pricing Engine</h5>
+                                    <p class="card-text">Real-time price optimization based on market demand</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('pricing_engine_page') }}" class="btn btn-sm btn-outline-emerald">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-sync-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Subscription Model</h5>
+                                    <p class="card-text">Recurring revenue through subscription delivery</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('subscription_model_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-lime rounded-circle mb-3">
+                                        <i class="fas fa-handshake text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Contract Farming</h5>
+                                    <p class="card-text">Secure agreements with buyers before planting</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('contract_farming_page') }}" class="btn btn-sm btn-outline-lime">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-boxes text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Bulk Deal Aggregation</h5>
+                                    <p class="card-text">Combine produce for better bulk pricing</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('bulk_deals_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-balance-scale text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Market Comparison</h5>
+                                    <p class="card-text">Compare prices across multiple markets</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('market_comparison_page') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-chart-pie text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Profit Analyzer</h5>
+                                    <p class="card-text">Calculate and optimize profit margins</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('profit_analyzer_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card market-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-star text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Buyer Ratings</h5>
+                                    <p class="card-text">Rate and review buyers for transparency</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('buyer_ratings_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Farming Tab -->
+        <div class="tab-pane fade" id="farming" role="tabpanel" aria-labelledby="farming-tab">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="category-title farming-title"><i class="fas fa-tractor me-2"></i>Farming Features</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-amber rounded-circle mb-3">
+                                        <i class="fas fa-chart-bar text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Yield Prediction Tool</h5>
+                                    <p class="card-text">AI-powered forecasting of crop yields</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('yield_prediction_page') }}" class="btn btn-sm btn-outline-amber">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-orange rounded-circle mb-3">
+                                        <i class="fas fa-sync text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Crop Rotation Planner</h5>
+                                    <p class="card-text">Optimize soil health with rotation schedules</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('crop_rotation_page') }}" class="btn btn-sm btn-outline-orange">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-calendar-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Sowing Calendar</h5>
+                                    <p class="card-text">Optimal planting dates for your crops</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('sowing_calendar_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-brown rounded-circle mb-3">
+                                        <i class="fas fa-flask text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Soil Knowledge</h5>
+                                    <p class="card-text">Soil testing and nutrient management</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('soil_knowledge_page') }}" class="btn btn-sm btn-outline-brown">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-leaf text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Organic Farming</h5>
+                                    <p class="card-text">Organic farming guidance and certification</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('organic_farming_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-tint text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Water Conservation</h5>
+                                    <p class="card-text">Smart water management strategies</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('water_conservation_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card farming-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-violet rounded-circle mb-3">
+                                        <i class="fas fa-graduation-cap text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">E-Learning Courses</h5>
+                                    <p class="card-text">Agricultural training and education</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('elearning_courses_page') }}" class="btn btn-sm btn-outline-violet">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-light-primary rounded-circle mb-3">
+                                        <i class="fas fa-trophy text-primary"></i>
+                                    </div>
+                                    <h5 class="card-title">Success Stories</h5>
+                                    <p class="card-text">Learn from successful farmers</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('success_stories_page') }}" class="btn btn-sm btn-outline-primary">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Marketplace Tab -->
+        <div class="tab-pane fade" id="marketplace" role="tabpanel" aria-labelledby="marketplace-tab">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="category-title marketplace-title"><i class="fas fa-shopping-cart me-2"></i>Marketplace Features</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-leaf text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Organic Marketplace</h5>
+                                    <p class="card-text">Buy and sell certified organic produce</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('organic_marketplace_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-violet rounded-circle mb-3">
+                                        <i class="fas fa-recycle text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Secondhand Marketplace</h5>
+                                    <p class="card-text">Buy/sell used farming equipment</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('secondhand_marketplace_page') }}" class="btn btn-sm btn-outline-violet">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-exchange-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Farmer-to-Farmer Trade</h5>
+                                    <p class="card-text">Direct peer-to-peer trading platform</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('farmer_to_farmer_trade_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-spray-can text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Fertilizer Price Comparison</h5>
+                                    <p class="card-text">Compare fertilizer prices and quality</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('fertilizer_price_comparison_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card marketplace-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-globe text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Export Gateway</h5>
+                                    <p class="card-text">Connect with international buyers</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('export_gateway_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Alerts & Safety Tab -->
+        <div class="tab-pane fade" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="category-title alert-title"><i class="fas fa-bell me-2"></i>Alerts & Safety Features</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-red rounded-circle mb-3">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Disaster Alerts</h5>
+                                    <p class="card-text">Get early warnings for weather and natural disasters</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('disaster_alerts_page') }}" class="btn btn-sm btn-outline-red">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-orange rounded-circle mb-3">
+                                        <i class="fas fa-bug text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Pest Alerts</h5>
+                                    <p class="card-text">Early detection and prevention of pest infestations</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('pest_alerts_page') }}" class="btn btn-sm btn-outline-orange">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-yellow rounded-circle mb-3">
+                                        <i class="fas fa-shield-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Crop Insurance</h5>
+                                    <p class="card-text">Protect your crops with comprehensive insurance coverage</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('crop_insurance_page') }}" class="btn btn-sm btn-outline-yellow">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-id-card text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">ID Verification</h5>
+                                    <p class="card-text">Secure KYC and identity verification for safe transactions</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('id_verification_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-violet rounded-circle mb-3">
+                                        <i class="fas fa-shield-virus text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Fraud Detection</h5>
+                                    <p class="card-text">AI-powered fraud detection and prevention system</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('fraud_detection_page') }}" class="btn btn-sm btn-outline-violet">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-cloud-sun text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Weather Alerts</h5>
+                                    <p class="card-text">Real-time weather updates and forecasts for your farm</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('weather_alerts') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card alert-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-amber rounded-circle mb-3">
+                                        <i class="fas fa-certificate text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Quality Certification</h5>
+                                    <p class="card-text">Get quality certification for your produce to ensure safety</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('quality_certification') }}" class="btn btn-sm btn-outline-amber">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Community Tab -->
+        <div class="tab-pane fade" id="community" role="tabpanel" aria-labelledby="community-tab">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="category-title community-title"><i class="fas fa-users me-2"></i>Community Features</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-users-cog text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Farmer Groups</h5>
+                                    <p class="card-text">Join or create farmer cooperatives</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('farmer_groups_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-purple rounded-circle mb-3">
+                                        <i class="fas fa-comments text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Q&A Forum</h5>
+                                    <p class="card-text">Ask questions and get expert answers</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('qa_forum_page') }}" class="btn btn-sm btn-outline-purple">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-pink rounded-circle mb-3">
+                                        <i class="fas fa-chalkboard-teacher text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Mentorship</h5>
+                                    <p class="card-text">Connect with experienced farmers</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('mentorship_page') }}" class="btn btn-sm btn-outline-pink">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card community-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-microphone text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Voice Assistant</h5>
+                                    <p class="card-text">Voice-based assistance in local language</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('voice_assistant_page') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Financial Tab -->
+        <div class="tab-pane fade" id="financial" role="tabpanel" aria-labelledby="financial-tab">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="category-title financial-title"><i class="fas fa-rupee-sign me-2"></i>Financial Features</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-wallet text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Digital Wallet</h5>
+                                    <p class="card-text">Secure digital payment and wallet</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('digital_wallet_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-emerald rounded-circle mb-3">
+                                        <i class="fas fa-hand-holding-usd text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Micro Loans</h5>
+                                    <p class="card-text">Quick agricultural micro-financing</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('micro_loans_page') }}" class="btn btn-sm btn-outline-emerald">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-shield-alt text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Crop Insurance</h5>
+                                    <p class="card-text">Protect your crops with insurance</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('crop_insurance_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-credit-card text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">EMI Purchase</h5>
+                                    <p class="card-text">Buy equipment on easy installments</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('emi_purchase_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card financial-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-green rounded-circle mb-3">
+                                        <i class="fas fa-tree text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Carbon Credits</h5>
+                                    <p class="card-text">Earn from sustainable practices</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('carbon_credits_page') }}" class="btn btn-sm btn-outline-green">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tools Tab -->
+        <div class="tab-pane fade" id="tools" role="tabpanel" aria-labelledby="tools-tab">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="category-title tools-title"><i class="fas fa-tools me-2"></i>Tools & Utilities</h4>
+                    <div class="row feature-row">
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-purple rounded-circle mb-3">
+                                        <i class="fas fa-truck text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Shared Logistics</h5>
+                                    <p class="card-text">Share transportation costs with others</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('shared_logistics_page') }}" class="btn btn-sm btn-outline-purple">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-indigo rounded-circle mb-3">
+                                        <i class="fas fa-warehouse text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Storage Booking</h5>
+                                    <p class="card-text">Book warehouse space for crops</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('storage_booking_page') }}" class="btn btn-sm btn-outline-indigo">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-cyan rounded-circle mb-3">
+                                        <i class="fas fa-route text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Route Optimization</h5>
+                                    <p class="card-text">Optimize delivery routes and costs</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('route_optimization_page') }}" class="btn btn-sm btn-outline-cyan">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-teal rounded-circle mb-3">
+                                        <i class="fas fa-tractor text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Equipment Rental</h5>
+                                    <p class="card-text">Rent farming equipment affordably</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('equipment_rental_page') }}" class="btn btn-sm btn-outline-teal">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-blue rounded-circle mb-3">
+                                        <i class="fas fa-id-card text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">ID Verification</h5>
+                                    <p class="card-text">Secure KYC and identity verification</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('id_verification_page') }}" class="btn btn-sm btn-outline-blue">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-violet rounded-circle mb-3">
+                                        <i class="fas fa-file-contract text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Smart Contracts</h5>
+                                    <p class="card-text">Blockchain-based agreements</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('smart_contracts_page') }}" class="btn btn-sm btn-outline-violet">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-pink rounded-circle mb-3">
+                                        <i class="fas fa-shield-virus text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Fraud Detection</h5>
+                                    <p class="card-text">Protect against fraudulent activities</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('fraud_detection_page') }}" class="btn btn-sm btn-outline-pink">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-orange rounded-circle mb-3">
+                                        <i class="fas fa-language text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Multi-Language</h5>
+                                    <p class="card-text">Access in 15+ Indian languages</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('multilanguage_page') }}" class="btn btn-sm btn-outline-orange">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-lime rounded-circle mb-3">
+                                        <i class="fas fa-sms text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Offline SMS</h5>
+                                    <p class="card-text">Access features via SMS offline</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('offline_sms_page') }}" class="btn btn-sm btn-outline-lime">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 mb-4">
+                            <div class="card feature-card tools-card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="feature-icon bg-gradient-rose rounded-circle mb-3">
+                                        <i class="fas fa-chart-area text-white"></i>
+                                    </div>
+                                    <h5 class="card-title">Admin Dashboard</h5>
+                                    <p class="card-text">Platform analytics and management</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{{ url_for('admin_dashboard_page') }}" class="btn btn-sm btn-outline-rose">Open Feature</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // ========================================
+        // MODERN COUNTER ANIMATION
+        // ========================================
+        function animateCounter(element) {
+            const $element = $(element);
+            const target = parseInt($element.attr('data-target'));
+            const prefix = $element.text().includes('₹') ? '₹' : '';
+            const suffix = $element.text().includes('%') ? '%' : '';
+            
+            let current = 0;
+            const increment = target / 60; // 60 frames
+            const duration = 1500;
+            const stepTime = duration / 60;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                if (prefix === '₹') {
+                    $element.text(prefix + Math.floor(current).toLocaleString('en-IN'));
+                } else {
+                    $element.text(Math.floor(current) + suffix);
+                }
+            }, stepTime);
+        }
+        
+        // Initialize counters with Intersection Observer
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    animateCounter(entry.target);
+                    entry.target.classList.add('counted');
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        $('.counter').each(function() {
+            counterObserver.observe(this);
+        });
+        
+        // ========================================
+        // ENHANCED SEARCH WITH DEBOUNCE
+        // ========================================
+        let searchTimeout;
+        $('#featureSearch').on('input', function() {
+            clearTimeout(searchTimeout);
+            const searchTerm = $(this).val().toLowerCase().trim();
+            
+            searchTimeout = setTimeout(() => {
+                if (searchTerm === '') {
+                    // Show all cards with animation
+                    $('.feature-card').closest('.col-md-4, .col-lg-3').fadeIn(200);
+                    $('.category-title').closest('.col-12').fadeIn(200);
+                } else {
+                    // Filter cards
+                    let visibleCount = 0;
+                    
+                    $('.feature-card').each(function() {
+                        const $card = $(this);
+                        const $col = $card.closest('.col-md-4, .col-lg-3');
+                        const cardTitle = $card.find('.card-title').text().toLowerCase();
+                        const cardText = $card.find('.card-text').text().toLowerCase();
+                        
+                        if (cardTitle.includes(searchTerm) || cardText.includes(searchTerm)) {
+                            $col.fadeIn(200);
+                            visibleCount++;
+                        } else {
+                            $col.fadeOut(200);
+                        }
+                    });
+                    
+                    // Show/hide category sections
+                    $('.category-title').each(function() {
+                        const $categorySection = $(this).closest('.col-12');
+                        const visibleCards = $categorySection.find('.feature-card').filter(function() {
+                            return $(this).closest('.col-md-4, .col-lg-3').is(':visible');
+                        });
+                        
+                        if (visibleCards.length === 0) {
+                            $categorySection.fadeOut(200);
+                        } else {
+                            $categorySection.fadeIn(200);
+                        }
+                    });
+                    
+                    // Show no results message
+                    if (visibleCount === 0 && $('#noResults').length === 0) {
+                        $('.tab-pane.active .row').append(`
+                            <div id="noResults" class="col-12 text-center py-5">
+                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                <h4 class="text-muted">No features found</h4>
+                                <p class="text-muted">Try searching with different keywords</p>
+                            </div>
+                        `);
+                    } else if (visibleCount > 0) {
+                        $('#noResults').remove();
+                    }
+                }
+            }, 300); // Debounce delay
+        });
+        
+        // ========================================
+        // TAB SWITCHING ENHANCEMENTS
+        // ========================================
+        $('#featureCategories .nav-link').on('click', function() {
+            // Clear search
+            $('#featureSearch').val('');
+            $('#noResults').remove();
+            
+            // Show all cards
+            $('.feature-card').closest('.col-md-4, .col-lg-3').fadeIn(200);
+            $('.category-title').closest('.col-12').fadeIn(200);
+            
+            // Add ripple effect
+            const $btn = $(this);
+            const ripple = $('<span class="ripple"></span>');
+            $btn.append(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+        
+        // ========================================
+        // FEATURE CARD INTERACTIONS
+        // ========================================
+        $('.feature-card').each(function(index) {
+            const $card = $(this);
+            
+            // Add entrance animation delay
+            $card.css('animation-delay', (index * 0.05) + 's');
+            
+            // Enhanced hover effects
+            $card.hover(
+                function() {
+                    $(this).find('.feature-icon').addClass('pulse');
+                },
+                function() {
+                    $(this).find('.feature-icon').removeClass('pulse');
+                }
+            );
+            
+            // Click ripple effect
+            $card.find('.btn').on('click', function(e) {
+                const $btn = $(this);
+                const ripple = $('<span class="btn-ripple"></span>');
+                const x = e.pageX - $btn.offset().left;
+                const y = e.pageY - $btn.offset().top;
+                
+                ripple.css({ left: x, top: y });
+                $btn.append(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+        
+        // ========================================
+        // STATS CARD LIVE UPDATES (SIMULATED)
+        // ========================================
+        setInterval(() => {
+            // Simulate market price fluctuation
+            const priceCard = $('.stats-card').first();
+            const currentPrice = parseInt(priceCard.find('.counter').text().replace(/[^0-9]/g, ''));
+            const change = Math.random() > 0.5 ? 1 : -1;
+            const newPrice = currentPrice + (Math.floor(Math.random() * 10) * change);
+            
+            // Update with smooth animation
+            priceCard.find('.counter').text('₹' + newPrice.toLocaleString('en-IN'));
+        }, 30000); // Update every 30 seconds
+        
+        // ========================================
+        // LAZY LOADING FOR FEATURE CARDS
+        // ========================================
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-scale');
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        $('.feature-card').each(function() {
+            cardObserver.observe(this);
+        });
+        
+        // ========================================
+        // KEYBOARD SHORTCUTS
+        // ========================================
+        $(document).on('keydown', function(e) {
+            // Ctrl/Cmd + K to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                $('#featureSearch').focus();
+            }
+            
+            // Escape to clear search
+            if (e.key === 'Escape' && $('#featureSearch').is(':focus')) {
+                $('#featureSearch').val('').trigger('input');
+            }
+        });
+        
+        // ========================================
+        // SCROLL TO TOP BUTTON
+        // ========================================
+        const scrollBtn = $('<button>', {
+            class: 'btn btn-success position-fixed bottom-0 end-0 m-4 rounded-circle shadow-lg',
+            style: 'width: 50px; height: 50px; display: none; z-index: 1000; transition: all 0.3s ease;',
+            html: '<i class="fas fa-arrow-up"></i>',
+            title: 'Scroll to top'
+        });
+        
+        $('body').append(scrollBtn);
+        
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 300) {
+                scrollBtn.fadeIn();
+            } else {
+                scrollBtn.fadeOut();
+            }
+        });
+        
+        scrollBtn.on('click', function() {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+        });
+        
+        // ========================================
+        // TOOLTIP INITIALIZATION
+        // ========================================
+        $('[data-bs-toggle="tooltip"]').tooltip();
+        
+        // ========================================
+        // CATEGORY BADGE COUNT
+        // ========================================
+        $('#featureCategories .nav-link').each(function() {
+            const tabId = $(this).data('bs-target');
+            if (tabId && tabId !== '#all') {
+                const count = $(tabId).find('.feature-card').length;
+                if (count > 0) {
+                    $(this).append(` <span class="badge bg-light text-dark ms-1">${count}</span>`);
+                }
+            }
+        });
+        
+        // ========================================
+        // PERFORMANCE: DISABLE HOVER ON SCROLL
+        // ========================================
+        let scrollTimer;
+        $(window).on('scroll', function() {
+            clearTimeout(scrollTimer);
+            $('body').addClass('disable-hover');
+            
+            scrollTimer = setTimeout(() => {
+                $('body').removeClass('disable-hover');
+            }, 100);
+        });
+        
+        // Add CSS for disable-hover
+        $('<style>').text('.disable-hover .feature-card:hover { transform: none !important; }').appendTo('head');
+    });
+</script>
+
+<style>
+    /* Additional inline styles for animations */
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        width: 50px;
+        height: 50px;
+        animation: ripple-animation 0.6s ease-out;
+        pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+        from {
+            transform: scale(0);
+            opacity: 1;
+        }
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    .btn-ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        width: 20px;
+        height: 20px;
+        animation: btn-ripple-animation 0.6s ease-out;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+    }
+    
+    @keyframes btn-ripple-animation {
+        from {
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+        }
+        to {
+            transform: translate(-50%, -50%) scale(3);
+            opacity: 0;
+        }
+    }
+    
+    /* Search input focus glow */
+    #featureSearch:focus {
+        animation: search-glow 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes search-glow {
+        0%, 100% {
+            box-shadow: 0 0 5px rgba(16, 185, 129, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+    }
+    
+    /* Feature Icons */
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+    
+    .bg-light-success {
+        background-color: rgba(40, 167, 69, 0.1);
+    }
+    
+    .bg-light-primary {
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+    
+    .bg-light-info {
+        background-color: rgba(23, 162, 184, 0.1);
+    }
+    
+    .bg-light-warning {
+        background-color: rgba(255, 193, 7, 0.1);
+    }
+    
+    .bg-light-danger {
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+    
+    /* Category Navigation */
+    .category-nav {
+        padding: 0.5rem;
+    }
+    
+    .category-nav .nav-link {
+        color: #495057;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .category-nav .nav-link:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    .category-nav .nav-link.active {
+        background-color: #28a745;
+        color: white;
+    }
+    
+    /* Feature Cards */
+    .feature-card {
+        transition: all 0.3s ease;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-card .card-footer {
+        padding-top: 0;
+    }
+    
+    /* Category Titles */
+    .category-title {
+        position: relative;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+    
+    .category-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 50px;
+        background-color: #28a745;
+    }
+    
+    /* Search Bar */
+    .search-bar {
+        border-radius: 50px;
+        overflow: hidden;
+    }
+    
+    .search-bar .form-control {
+        border-right: none;
+        padding-left: 1.5rem;
+    }
+    
+    .search-bar .btn {
+        border-left: none;
+        padding-right: 1.5rem;
+    }
+    
+    /* ============================================
+       TOOLS SECTION - VIBRANT COLOR ENHANCEMENTS
+       ============================================ */
+    
+    /* Tools Title Gradient */
+    .tools-title {
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+    }
+    
+    /* Tools Cards Enhanced */
+    .tools-card {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .tools-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    
+    .tools-card:hover::before {
+        opacity: 1;
+        animation: rotate 3s linear infinite;
+    }
+    
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Gradient Backgrounds for Icons */
+    .bg-gradient-purple {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    }
+    
+    .bg-gradient-indigo {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    }
+    
+    .bg-gradient-cyan {
+        background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    }
+    
+    .bg-gradient-teal {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        box-shadow: 0 4px 15px rgba(20, 184, 166, 0.4);
+    }
+    
+    .bg-gradient-blue {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    }
+    
+    .bg-gradient-violet {
+        background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+        box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    }
+    
+    .bg-gradient-pink {
+        background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+    }
+    
+    .bg-gradient-orange {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+    }
+    
+    .bg-gradient-lime {
+        background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+        box-shadow: 0 4px 15px rgba(132, 204, 22, 0.4);
+    }
+    
+    .bg-gradient-rose {
+        background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+        box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+    }
+    
+    .bg-gradient-emerald {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    
+    .bg-gradient-green {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+    }
+    
+    .bg-gradient-amber {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+    }
+    
+    .bg-gradient-brown {
+        background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
+        box-shadow: 0 4px 15px rgba(146, 64, 14, 0.4);
+    }
+    
+    .bg-gradient-yellow {
+        background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+        box-shadow: 0 4px 15px rgba(250, 204, 21, 0.4);
+    }
+    
+    .bg-gradient-red {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    }
+    
+    /* Outline Button Variants */
+    .btn-outline-purple {
+        color: #8b5cf6;
+        border-color: #8b5cf6;
+        border-width: 2px;
+    }
+    
+    .btn-outline-purple:hover {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        border-color: #8b5cf6;
+        color: white;
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    .btn-outline-indigo {
+        color: #6366f1;
+        border-color: #6366f1;
+        border-width: 2px;
+    }
+    
+    .btn-outline-indigo:hover {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        border-color: #6366f1;
+        color: white;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    
+    .btn-outline-cyan {
+        color: #06b6d4;
+        border-color: #06b6d4;
+        border-width: 2px;
+    }
+    
+    .btn-outline-cyan:hover {
+        background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        border-color: #06b6d4;
+        color: white;
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    }
+    
+    .btn-outline-teal {
+        color: #14b8a6;
+        border-color: #14b8a6;
+        border-width: 2px;
+    }
+    
+    .btn-outline-teal:hover {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        border-color: #14b8a6;
+        color: white;
+        box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+    }
+    
+    .btn-outline-blue {
+        color: #3b82f6;
+        border-color: #3b82f6;
+        border-width: 2px;
+    }
+    
+    .btn-outline-blue:hover {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-color: #3b82f6;
+        color: white;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    
+    .btn-outline-violet {
+        color: #a855f7;
+        border-color: #a855f7;
+        border-width: 2px;
+    }
+    
+    .btn-outline-violet:hover {
+        background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+        border-color: #a855f7;
+        color: white;
+        box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+    }
+    
+    .btn-outline-pink {
+        color: #ec4899;
+        border-color: #ec4899;
+        border-width: 2px;
+    }
+    
+    .btn-outline-pink:hover {
+        background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        border-color: #ec4899;
+        color: white;
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    }
+    
+    .btn-outline-orange {
+        color: #f97316;
+        border-color: #f97316;
+        border-width: 2px;
+    }
+    
+    .btn-outline-orange:hover {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+        border-color: #f97316;
+        color: white;
+        box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+    }
+    
+    .btn-outline-lime {
+        color: #84cc16;
+        border-color: #84cc16;
+        border-width: 2px;
+    }
+    
+    .btn-outline-lime:hover {
+        background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+        border-color: #84cc16;
+        color: white;
+        box-shadow: 0 4px 15px rgba(132, 204, 22, 0.3);
+    }
+    
+    .btn-outline-rose {
+        color: #f43f5e;
+        border-color: #f43f5e;
+        border-width: 2px;
+    }
+    
+    .btn-outline-rose:hover {
+        background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+        border-color: #f43f5e;
+        color: white;
+        box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+    }
+    
+    .btn-outline-emerald {
+        color: #10b981;
+        border-color: #10b981;
+        border-width: 2px;
+    }
+    
+    .btn-outline-emerald:hover {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-color: #10b981;
+        color: white;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-outline-green {
+        color: #22c55e;
+        border-color: #22c55e;
+        border-width: 2px;
+    }
+    
+    .btn-outline-green:hover {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        border-color: #22c55e;
+        color: white;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
+    
+    .btn-outline-amber {
+        color: #f59e0b;
+        border-color: #f59e0b;
+        border-width: 2px;
+    }
+    
+    .btn-outline-amber:hover {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-color: #f59e0b;
+        color: white;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+    
+    .btn-outline-brown {
+        color: #92400e;
+        border-color: #92400e;
+        border-width: 2px;
+    }
+    
+    .btn-outline-brown:hover {
+        background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
+        border-color: #92400e;
+        color: white;
+        box-shadow: 0 4px 15px rgba(146, 64, 14, 0.3);
+    }
+    
+    .btn-outline-yellow {
+        color: #ca8a04;
+        border-color: #ca8a04;
+        border-width: 2px;
+    }
+    
+    .btn-outline-yellow:hover {
+        background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+        border-color: #ca8a04;
+        color: white;
+        box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+    }
+    
+    .btn-outline-red {
+        color: #ef4444;
+        border-color: #ef4444;
+        border-width: 2px;
+    }
+    
+    .btn-outline-red:hover {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        border-color: #ef4444;
+        color: white;
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+    
+    /* Enhanced Hover Effects for All Section Cards */
+    .tools-card:hover .feature-icon,
+    .market-card:hover .feature-icon,
+    .farming-card:hover .feature-icon,
+    .marketplace-card:hover .feature-icon,
+    .alert-card:hover .feature-icon,
+    .community-card:hover .feature-icon,
+    .financial-card:hover .feature-icon {
+        transform: scale(1.15) rotate(-10deg);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Section Title Gradients */
+    .market-title {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+    }
+    
+    .farming-title {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+    }
+    
+    .marketplace-title {
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+    }
+    
+    .alert-title {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+    }
+    
+    .community-title {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+    }
+    
+    .financial-title {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 800;
+    }
+    
+    /* Enhanced Card Animation for All Sections */
+    .market-card,
+    .farming-card,
+    .marketplace-card,
+    .alert-card,
+    .community-card,
+    .financial-card {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .market-card::before,
+    .farming-card::before,
+    .marketplace-card::before,
+    .alert-card::before,
+    .community-card::before,
+    .financial-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    
+    .market-card:hover::before,
+    .farming-card:hover::before,
+    .marketplace-card:hover::before,
+    .alert-card:hover::before,
+    .community-card:hover::before,
+    .financial-card:hover::before {
+        opacity: 1;
+        animation: rotate 3s linear infinite;
+    }
+    
+    /* Enhanced Hover Effects for Tools Icons */
+    .tools-card:hover .feature-icon {
+        transform: scale(1.15) rotate(-10deg);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Animated Border Glow */
+    .tools-card:hover {
+        box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+    }
+    
+    /* Icon Animation */
+    @keyframes iconPulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+    
+    .tools-card:hover .feature-icon i {
+        animation: iconPulse 1s ease-in-out infinite;
+    }
+</style>
+{% endblock %}

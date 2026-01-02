@@ -1,0 +1,84 @@
+{
+  "routes": [
+    {
+      "id": "RT001",
+      "origin": "Farm Location A",
+      "destination": "Market Hub Delhi",
+      "distance_km": 245,
+      "estimated_time": "4h 30m",
+      "fuel_cost": 2450,
+      "toll_charges": 180,
+      "stops": [
+        { "location": "Checkpoint 1", "time": "30min", "purpose": "Rest" },
+        { "location": "Fuel Station", "time": "15min", "purpose": "Refuel" }
+      ],
+      "traffic_conditions": "moderate",
+      "weather_impact": "clear",
+      "optimal_departure": "05:00 AM"
+    },
+    {
+      "id": "RT002",
+      "origin": "Warehouse Punjab",
+      "destination": "Export Terminal Mumbai",
+      "distance_km": 1420,
+      "estimated_time": "18h 45m",
+      "fuel_cost": 14200,
+      "toll_charges": 850,
+      "stops": [
+        { "location": "Rest Area Rajasthan", "time": "8h", "purpose": "Mandatory Rest" },
+        { "location": "Inspection Point", "time": "2h", "purpose": "Quality Check" }
+      ],
+      "traffic_conditions": "heavy",
+      "weather_impact": "monsoon_risk",
+      "optimal_departure": "02:00 AM"
+    }
+  ],
+  "optimization_algorithms": [
+    {
+      "name": "Shortest Path",
+      "description": "Minimizes total distance",
+      "efficiency": 85,
+      "fuel_savings": "15-20%"
+    },
+    {
+      "name": "Time Optimal",
+      "description": "Minimizes travel time",
+      "efficiency": 90,
+      "fuel_savings": "10-15%"
+    },
+    {
+      "name": "Cost Optimal",
+      "description": "Minimizes total cost including fuel and tolls",
+      "efficiency": 95,
+      "fuel_savings": "20-25%"
+    }
+  ],
+  "traffic_data": {
+    "peak_hours": ["07:00-10:00", "17:00-20:00"],
+    "low_traffic": ["22:00-05:00"],
+    "congestion_points": [
+      { "location": "Delhi Border", "delay_minutes": 45 },
+      { "location": "Mumbai Entry", "delay_minutes": 60 }
+    ]
+  },
+  "vehicle_types": [
+    {
+      "type": "Small Truck",
+      "capacity": "3 tons",
+      "fuel_efficiency": "12 km/l",
+      "hourly_rate": 800
+    },
+    {
+      "type": "Medium Truck",
+      "capacity": "7 tons",
+      "fuel_efficiency": "8 km/l",
+      "hourly_rate": 1200
+    },
+    {
+      "type": "Large Truck",
+      "capacity": "15 tons",
+      "fuel_efficiency": "6 km/l",
+      "hourly_rate": 1800
+    }
+  ]
+}

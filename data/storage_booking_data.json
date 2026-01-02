@@ -1,0 +1,82 @@
+{
+  "storage_facilities": [
+    {
+      "facility_id": "SF001",
+      "facility_name": "Modern Agro Warehouse",
+      "location": "Karnal, Haryana",
+      "total_capacity_mt": 5000,
+      "available_capacity_mt": 1200,
+      "storage_types": [
+        {
+          "type": "Cold Storage",
+          "capacity_mt": 1000,
+          "temperature_range": "2-8°C",
+          "suitable_crops": ["Potato", "Onion", "Apple"],
+          "rate_per_mt_per_month": 800
+        },
+        {
+          "type": "Dry Storage",
+          "capacity_mt": 4000,
+          "humidity_control": true,
+          "suitable_crops": ["Wheat", "Rice", "Pulses"],
+          "rate_per_mt_per_month": 300
+        }
+      ],
+      "facilities": [
+        "Fumigation",
+        "Quality testing lab",
+        "Loading/unloading equipment",
+        "24x7 security",
+        "Insurance coverage"
+      ],
+      "certifications": ["WDRA", "ISO 9001", "HACCP"]
+    }
+  ],
+  "bookings": [
+    {
+      "booking_id": "SB001",
+      "farmer_id": "F12345",
+      "facility_id": "SF001",
+      "crop": "Wheat",
+      "quantity_mt": 50,
+      "storage_type": "Dry Storage",
+      "booking_date": "2024-01-15",
+      "storage_start_date": "2024-01-20",
+      "storage_duration_months": 6,
+      "monthly_rate": 300,
+      "total_cost": 90000,
+      "advance_paid": 18000,
+      "status": "Confirmed"
+    }
+  ],
+  "inventory_tracking": [
+    {
+      "inventory_id": "INV001",
+      "booking_id": "SB001",
+      "crop": "Wheat",
+      "initial_quantity": 50,
+      "current_quantity": 49.2,
+      "quality_parameters": {
+        "moisture_content": 12.5,
+        "foreign_matter": 1.2,
+        "damaged_grains": 2.1,
+        "test_weight": 78.5
+      },
+      "last_inspection": "2024-01-25",
+      "quality_grade": "FAQ"
+    }
+  ],
+  "pricing_models": [
+    {
+      "model": "Fixed Rate",
+      "description": "Fixed monthly rate regardless of market fluctuations",
+      "suitable_for": "Short-term storage (1-3 months)"
+    },
+    {
+      "model": "Dynamic Pricing",
+      "description": "Rate varies based on demand and market conditions",
+      "discount_long_term": 15,
+      "suitable_for": "Long-term storage (6+ months)"
+    }
+  ]
+}

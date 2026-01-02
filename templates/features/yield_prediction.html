@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}Yield Prediction Tool - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-chart-line me-2"></i>AI-Powered Yield Prediction</h4>
+                    <p class="mb-0 opacity-75">Predict your crop yield using advanced machine learning algorithms</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="text-primary">Input Parameters</h5>
+                            <form id="yieldPredictionForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Crop Type</label>
+                                    <select class="form-select" id="cropType" required>
+                                        <option value="">Select Crop</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                        <option value="maize">Maize</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Farm Area (acres)</label>
+                                    <input type="number" class="form-control" id="farmArea" step="0.1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Soil Type</label>
+                                    <select class="form-select" id="soilType" required>
+                                        <option value="">Select Soil Type</option>
+                                        <option value="clay">Clay</option>
+                                        <option value="loam">Loam</option>
+                                        <option value="sandy">Sandy</option>
+                                        <option value="silt">Silt</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Irrigation Type</label>
+                                    <select class="form-select" id="irrigationType" required>
+                                        <option value="">Select Irrigation</option>
+                                        <option value="drip">Drip Irrigation</option>
+                                        <option value="sprinkler">Sprinkler</option>
+                                        <option value="flood">Flood Irrigation</option>
+                                        <option value="rainfed">Rainfed</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Fertilizer Usage (kg/acre)</label>
+                                    <input type="number" class="form-control" id="fertilizerUsage" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Predict Yield</button>
+                            </form>
+                        </div>
+                        <div class="col-md-8">
+                            <h5 class="text-success">Prediction Results</h5>
+                            <div id="predictionResults" class="d-none">
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <div class="card bg-success text-white">
+                                            <div class="card-body text-center">
+                                                <h3 id="predictedYield">0</h3>
+                                                <p class="mb-0">Predicted Yield (tons)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card bg-info text-white">
+                                            <div class="card-body text-center">
+                                                <h3 id="confidenceScore">0%</h3>
+                                                <p class="mb-0">Confidence Score</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Yield Analysis & Recommendations</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="yieldAnalysis"></div>
+                                        <div id="recommendations" class="mt-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="historicalData" class="mt-4">
+                                <h6>Historical Yield Trends</h6>
+                                <canvas id="yieldChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+$(document).ready(function() {
+    loadHistoricalData();
+
+    $('#yieldPredictionForm').on('submit', function(e) {
+        e.preventDefault();
+        predictYield();
+    });
+});
+
+function predictYield() {
+    const formData = {
+        crop_type: $('#cropType').val(),
+        farm_area: $('#farmArea').val(),
+        soil_type: $('#soilType').val(),
+        irrigation_type: $('#irrigationType').val(),
+        fertilizer_usage: $('#fertilizerUsage').val()
+    };
+
+    $.post('/api/yield_prediction/predict', formData, function(response) {
+        if (response.success) {
+            displayPredictionResults(response.data);
+        }
+    });
+}
+
+function displayPredictionResults(data) {
+    $('#predictedYield').text(data.predicted_yield.toFixed(2));
+    $('#confidenceScore').text(data.confidence_score + '%');
+    
+    const analysisHtml = `
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Yield Factors</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Weather Impact:</strong> ${data.factors.weather_impact}</li>
+                    <li><strong>Soil Quality:</strong> ${data.factors.soil_quality}</li>
+                    <li><strong>Irrigation Efficiency:</strong> ${data.factors.irrigation_efficiency}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>Risk Assessment</h6>
+                <div class="progress mb-2">
+                    <div class="progress-bar bg-${data.risk_level === 'Low' ? 'success' : data.risk_level === 'Medium' ? 'warning' : 'danger'}" 
+                         style="width: ${data.risk_percentage}%">${data.risk_level} Risk</div>
+                </div>
+            </div>
+        </div>
+    `;
+    $('#yieldAnalysis').html(analysisHtml);
+    
+    const recommendationsHtml = `
+        <h6>Recommendations</h6>
+        <ul class="list-group list-group-flush">
+            ${data.recommendations.map(rec => `<li class="list-group-item">${rec}</li>`).join('')}
+        </ul>
+    `;
+    $('#recommendations').html(recommendationsHtml);
+    
+    $('#predictionResults').removeClass('d-none');
+}
+
+function loadHistoricalData() {
+    $.get('/api/yield_prediction/historical', function(data) {
+        const ctx = document.getElementById('yieldChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.years,
+                datasets: [{
+                    label: 'Average Yield (tons/acre)',
+                    data: data.yields,
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,710 @@
+{% extends "base.html" %}
+
+{% block title %}Market Prices - AgriSuper{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/market-prices.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+                                          <input class="form-check-input" type="checkbox" id="alertSwitch2" title="Toggle Wheat price alert" aria-label="Enable or disable Wheat price alert">
+                                        <label class="form-check-label" for="alertSwitch2">Toggle alert</label>    <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Market Price Dashboard -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Market Price Dashboard</h5>
+                    <div class="d-flex">
+                        <div class="input-group input-group-sm me-2 market-selector-group">
+                            <span class="input-group-text">Market</span>
+                            <select class="form-select form-select-sm" id="marketSelector" title="Select market" aria-label="Select market to view prices">
+                                <option selected>All Markets</option>
+                                <option>Local Mandi</option>
+                                <option>State APMC</option>
+                                <option>National Exchange</option>
+                            </select>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="timeframeSelector" data-bs-toggle="dropdown" aria-expanded="false">
+                                Last 7 Days
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="timeframeSelector">
+                                <li><a class="dropdown-item active" href="#">Last 7 Days</a></li>
+                                <li><a class="dropdown-item" href="#">Last 30 Days</a></li>
+                                <li><a class="dropdown-item" href="#">Last 3 Months</a></li>
+                                <li><a class="dropdown-item" href="#">Last 6 Months</a></li>
+                                <li><a class="dropdown-item" href="#">Last Year</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Custom Range</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Search and Filter -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for crops..." aria-label="Search for crops">
+                                <button class="btn btn-success" type="button" title="Search crops" aria-label="Search for crops"><i class="fas fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="categoryFilter" title="Filter by category" aria-label="Filter prices by crop category">
+                                <option selected>All Categories</option>
+                                <option>Cereals</option>
+                                <option>Pulses</option>
+                                <option>Oilseeds</option>
+                                <option>Vegetables</option>
+                                <option>Fruits</option>
+                                <option>Spices</option>
+                                <option>Cash Crops</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Trends Chart -->
+                    <h5 class="mb-3">Price Trends</h5>
+                    <div class="price-trends-chart mb-4">
+                        <canvas id="priceTrendsChart" height="250"></canvas>
+                    </div>
+                    
+                    <!-- Current Market Prices -->
+                    <h5 class="mb-3">Current Market Prices</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Crop</th>
+                                    <th>Variety</th>
+                                    <th>Market</th>
+                                    <th>Price (₹/q)</th>
+                                    <th>Change</th>
+                                    <th>Updated</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Rice" class="me-2 rounded">
+                                            <span>Rice</span>
+                                        </div>
+                                    </td>
+                                    <td>Basmati 1121</td>
+                                    <td>Local Mandi</td>
+                                    <td>3,850</td>
+                                    <td class="text-success">+2.5% <i class="fas fa-arrow-up"></i></td>
+                                    <td>Today, 10:30 AM</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Set Price Alert"><i class="fas fa-bell"></i></button>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-chart-bar"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Wheat" class="me-2 rounded">
+                                            <span>Wheat</span>
+                                        </div>
+                                    </td>
+                                    <td>Sharbati</td>
+                                    <td>State APMC</td>
+                                    <td>2,240</td>
+                                    <td class="text-danger">-1.2% <i class="fas fa-arrow-down"></i></td>
+                                    <td>Today, 11:45 AM</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Set Price Alert"><i class="fas fa-bell"></i></button>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-chart-bar"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Soybean" class="me-2 rounded">
+                                            <span>Soybean</span>
+                                        </div>
+                                    </td>
+                                    <td>Yellow</td>
+                                    <td>National Exchange</td>
+                                    <td>4,120</td>
+                                    <td class="text-success">+3.8% <i class="fas fa-arrow-up"></i></td>
+                                    <td>Today, 09:15 AM</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Set Price Alert"><i class="fas fa-bell"></i></button>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-chart-bar"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Cotton" class="me-2 rounded">
+                                            <span>Cotton</span>
+                                        </div>
+                                    </td>
+                                    <td>Long Staple</td>
+                                    <td>State APMC</td>
+                                    <td>6,780</td>
+                                    <td class="text-success">+0.5% <i class="fas fa-arrow-up"></i></td>
+                                    <td>Yesterday, 04:30 PM</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Set Price Alert"><i class="fas fa-bell"></i></button>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-chart-bar"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Tomato" class="me-2 rounded">
+                                            <span>Tomato</span>
+                                        </div>
+                                    </td>
+                                    <td>Hybrid</td>
+                                    <td>Local Mandi</td>
+                                    <td>1,850</td>
+                                    <td class="text-danger">-5.2% <i class="fas fa-arrow-down"></i></td>
+                                    <td>Today, 08:00 AM</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Set Price Alert"><i class="fas fa-bell"></i></button>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-chart-bar"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/32" alt="Potato" class="me-2 rounded">
+                                            <span>Potato</span>
+                                        </div>
+                                    </td>
+                                    <td>Kufri Jyoti</td>
+                                    <td>Local Mandi</td>
+                                    <td>1,240</td>
+                                    <td class="text-success">+8.7% <i class="fas fa-arrow-up"></i></td>
+                                    <td>Today, 09:30 AM</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Set Price Alert"><i class="fas fa-bell"></i></button>
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-chart-bar"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <button class="btn btn-outline-secondary">Previous</button>
+                        <span>Page 1 of 5</span>
+                        <button class="btn btn-outline-secondary">Next</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Market Insights -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Market Insights</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-arrow-trend-up fa-2x text-success"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Price Opportunity: Soybean</h5>
+                                <p class="mb-0">Soybean prices have increased by 3.8% today and are expected to remain strong for the next 2 weeks due to export demand. Consider selling if you have stock.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-arrow-trend-down fa-2x text-warning"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Price Alert: Tomato</h5>
+                                <p class="mb-0">Tomato prices have fallen by 5.2% due to increased supply. If possible, consider holding your produce for 1-2 weeks when prices are expected to stabilize.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mb-0">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fa-2x text-info"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Market News: MSP Announcement</h5>
+                                <p class="mb-0">The government has announced new Minimum Support Prices (MSP) for Kharif crops. Paddy MSP increased by 5.1% to ₹2,040 per quintal. Check the full list for other crops.</p>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-info text-white">View Full MSP List</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Price Alerts -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-bell me-2"></i>My Price Alerts</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Rice (Basmati 1121)</h6>
+                                    <small class="text-muted">Alert when price exceeds ₹4,000/q</small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-secondary">Current: ₹3,850</span>
+                                    <div class="form-check form-switch mt-1">
+                                        <input class="form-check-input" type="checkbox" id="alertSwitch1" checked title="Toggle Rice price alert" aria-label="Enable or disable Rice price alert">
+                                        <label class="form-check-label" for="alertSwitch1">Toggle alert</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Soybean (Yellow)</h6>
+                                    <small class="text-muted">Alert when price exceeds ₹4,200/q</small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-warning text-dark">Current: ₹4,120</span>
+                                    <div class="form-check form-switch mt-1">
+                                        <input class="form-check-input" type="checkbox" id="alertSwitch2" checked>
+                                        <label class="form-check-label" for="alertSwitch2"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Wheat (Sharbati)</h6>
+                                    <small class="text-muted">Alert when price falls below ₹2,200/q</small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-danger">Current: ₹2,240</span>
+                                    <div class="form-check form-switch mt-1">
+                                        <input class="form-check-input" type="checkbox" id="alertSwitch3" checked title="Toggle Corn price alert" aria-label="Enable or disable Corn price alert">
+                                        <label class="form-check-label" for="alertSwitch3">Toggle alert</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createAlertModal">
+                        <i class="fas fa-plus-circle me-1"></i>Create New Alert
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Market Comparison -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-balance-scale me-2"></i>Market Comparison</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="compareProduct" class="form-label">Select Crop</label>
+                        <select class="form-select" id="compareProduct">
+                            <option selected>Rice (Basmati 1121)</option>
+                            <option>Wheat (Sharbati)</option>
+                            <option>Soybean (Yellow)</option>
+                            <option>Cotton (Long Staple)</option>
+                            <option>Tomato (Hybrid)</option>
+                            <option>Potato (Kufri Jyoti)</option>
+                        </select>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Market</th>
+                                    <th>Price (₹/q)</th>
+                                    <th>Difference</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Local Mandi</td>
+                                    <td>3,850</td>
+                                    <td class="text-success">Base</td>
+                                </tr>
+                                <tr>
+                                    <td>State APMC</td>
+                                    <td>3,920</td>
+                                    <td class="text-success">+70 (+1.8%)</td>
+                                </tr>
+                                <tr>
+                                    <td>National Exchange</td>
+                                    <td>4,050</td>
+                                    <td class="text-success">+200 (+5.2%)</td>
+                                </tr>
+                                <tr>
+                                    <td>Neighboring District</td>
+                                    <td>3,780</td>
+                                    <td class="text-danger">-70 (-1.8%)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="alert alert-success mt-3 mb-0 py-2">
+                        <small><i class="fas fa-info-circle me-1"></i>Best selling price available at National Exchange (₹4,050/q)</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Price Forecast -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Price Forecast</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="forecastProduct" class="form-label">Select Crop</label>
+                        <select class="form-select" id="forecastProduct">
+                            <option selected>Rice (Basmati 1121)</option>
+                            <option>Wheat (Sharbati)</option>
+                            <option>Soybean (Yellow)</option>
+                            <option>Cotton (Long Staple)</option>
+                            <option>Tomato (Hybrid)</option>
+                            <option>Potato (Kufri Jyoti)</option>
+                        </select>
+                    </div>
+                    <div class="forecast-chart mb-3">
+                        <canvas id="forecastChart" height="200"></canvas>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="text-center">
+                            <h6 class="mb-0 text-success">₹3,950</h6>
+                            <small class="text-muted">1 Week</small>
+                        </div>
+                        <div class="text-center">
+                            <h6 class="mb-0 text-success">₹4,100</h6>
+                            <small class="text-muted">1 Month</small>
+                        </div>
+                        <div class="text-center">
+                            <h6 class="mb-0 text-success">₹4,250</h6>
+                            <small class="text-muted">3 Months</small>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3 mb-0 py-2">
+                        <small><i class="fas fa-info-circle me-1"></i>Forecast based on historical data, seasonal trends, and market conditions</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Market News -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-newspaper me-2"></i>Market News</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Government Announces Export Policy for Wheat</h6>
+                                <small>Today</small>
+                            </div>
+                            <p class="mb-1 small">The government has announced a new export policy for wheat, allowing exports up to 2 million tonnes...</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Vegetable Prices Expected to Stabilize Next Month</h6>
+                                <small>Yesterday</small>
+                            </div>
+                            <p class="mb-1 small">After recent fluctuations, vegetable prices are expected to stabilize by next month as new harvest...</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">New Trading Platform Launched for Farmers</h6>
+                                <small>2 days ago</small>
+                            </div>
+                            <p class="mb-1 small">A new digital trading platform has been launched to connect farmers directly with buyers, eliminating...</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">International Demand for Indian Spices Rises</h6>
+                                <small>3 days ago</small>
+                            </div>
+                            <p class="mb-1 small">Export demand for Indian spices has seen a significant increase, with prices of cardamom and black pepper...</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-sm btn-outline-success w-100">View All News</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Alert Modal -->
+<div class="modal fade" id="createAlertModal" tabindex="-1" aria-labelledby="createAlertModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="createAlertModalLabel"><i class="fas fa-bell me-2"></i>Create Price Alert</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="alertCrop" class="form-label">Select Crop</label>
+                        <select class="form-select" id="alertCrop">
+                            <option selected>Select Crop</option>
+                            <option>Rice (Basmati 1121)</option>
+                            <option>Wheat (Sharbati)</option>
+                            <option>Soybean (Yellow)</option>
+                            <option>Cotton (Long Staple)</option>
+                            <option>Tomato (Hybrid)</option>
+                            <option>Potato (Kufri Jyoti)</option>
+                            <option>Maize (Pioneer 3377)</option>
+                            <option>Chickpea (Desi)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="alertMarket" class="form-label">Select Market</label>
+                        <select class="form-select" id="alertMarket">
+                            <option selected>All Markets</option>
+                            <option>Local Mandi</option>
+                            <option>State APMC</option>
+                            <option>National Exchange</option>
+                            <option>Neighboring District</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Alert Type</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="alertType" id="alertTypeAbove" checked>
+                            <label class="form-check-label" for="alertTypeAbove">
+                                Alert when price goes above
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="alertType" id="alertTypeBelow">
+                            <label class="form-check-label" for="alertTypeBelow">
+                                Alert when price goes below
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="alertPrice" class="form-label">Price Threshold (₹/quintal)</label>
+                        <input type="number" class="form-control" id="alertPrice" placeholder="Enter price">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Notification Method</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notifyApp" checked>
+                            <label class="form-check-label" for="notifyApp">
+                                App Notification
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notifySMS" checked>
+                            <label class="form-check-label" for="notifySMS">
+                                SMS
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notifyEmail">
+                            <label class="form-check-label" for="notifyEmail">
+                                Email
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Create Alert</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Price Trends Chart
+        var trendCtx = document.getElementById('priceTrendsChart').getContext('2d');
+        var priceTrendsChart = new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Aug 5', 'Aug 6', 'Aug 7', 'Aug 8', 'Aug 9', 'Aug 10', 'Aug 11', 'Aug 12'],
+                datasets: [
+                    {
+                        label: 'Rice (Basmati 1121)',
+                        data: [3750, 3780, 3800, 3820, 3790, 3810, 3830, 3850],
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Wheat (Sharbati)',
+                        data: [2280, 2270, 2260, 2250, 2240, 2230, 2250, 2240],
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                        borderColor: 'rgba(255, 193, 7, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Soybean (Yellow)',
+                        data: [3950, 3980, 4000, 4050, 4080, 4100, 4090, 4120],
+                        backgroundColor: 'rgba(23, 162, 184, 0.2)',
+                        borderColor: 'rgba(23, 162, 184, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ": ₹" + context.raw;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Price (₹/quintal)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Price Forecast Chart
+        var forecastCtx = document.getElementById('forecastChart').getContext('2d');
+        var forecastChart = new Chart(forecastCtx, {
+            type: 'line',
+            data: {
+                labels: ['Current', '1 Week', '2 Weeks', '1 Month', '2 Months', '3 Months'],
+                datasets: [
+                    {
+                        label: 'Forecast Price',
+                        data: [3850, 3950, 4000, 4100, 4180, 4250],
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 2,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Historical Trend',
+                        data: [3750, 3850, 3900, 4000, 4050, 4100],
+                        backgroundColor: 'rgba(108, 117, 125, 0.2)',
+                        borderColor: 'rgba(108, 117, 125, 1)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ": ₹" + context.raw;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price (₹/quintal)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Handle create alert modal submission
+        $('#createAlertModal .btn-success').click(function() {
+            // In a real app, this would submit the form data
+            $('#createAlertModal').modal('hide');
+            
+            // Show confirmation toast
+            showToast('Price alert created successfully!');
+        });
+        
+        // Handle alert button clicks
+        $('.btn-outline-success').click(function() {
+            if ($(this).find('i').hasClass('fa-bell')) {
+                $('#createAlertModal').modal('show');
+            }
+        });
+        
+        // Function to show toast notification
+        function showToast(message) {
+            // Create toast element
+            var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'+
+                          '<div class="toast-header bg-success text-white">'+
+                          '<strong class="me-auto">Market Prices</strong>'+
+                          '<small>Just now</small>'+
+                          '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>'+
+                          '</div>'+
+                          '<div class="toast-body">'+message+'</div>'+
+                          '</div>');
+            
+            // Add to container
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('.toast-container').append(toast);
+            
+            // Initialize and show toast
+            var toastEl = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 5000
+            });
+            toastEl.show();
+            
+            // Remove after hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
+{% endblock %}

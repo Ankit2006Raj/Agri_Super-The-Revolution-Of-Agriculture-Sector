@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block title %}Fertilizer Price Comparison - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="fas fa-seedling me-2"></i>Fertilizer Price Comparison</h4>
+                    <p class="mb-0">Compare fertilizer prices across multiple vendors and get the best deals</p>
+                </div>
+                <div class="card-body">
+                    <!-- Search Form -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <label class="form-label">Fertilizer Type</label>
+                            <select class="form-select" id="fertilizerType" title="Select type of fertilizer" aria-label="Type of fertilizer to compare">
+                                <option value="">Select Fertilizer</option>
+                                <option value="urea">Urea</option>
+                                <option value="dap">DAP</option>
+                                <option value="mop">MOP</option>
+                                <option value="ssp">SSP</option>
+                                <option value="npk">NPK</option>
+                                <option value="organic">Organic Fertilizer</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Quantity (kg)</label>
+                            <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" min="1">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" placeholder="Enter your location">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-warning d-block w-100" onclick="comparePrices()">
+                                <i class="fas fa-search me-2"></i>Compare Prices
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Price Comparison Results -->
+                    <div id="priceResults" class="row">
+                        <!-- Results will be loaded here -->
+                    </div>
+
+                    <!-- Price Alert Setup -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-bell me-2"></i>Price Alerts</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">Fertilizer</label>
+                                    <select class="form-select" id="alertFertilizer" title="Select fertilizer for price alerts" aria-label="Fertilizer to set price alert for">
+                                        <option value="urea">Urea</option>
+                                        <option value="dap">DAP</option>
+                                        <option value="mop">MOP</option>
+                                        <option value="ssp">SSP</option>
+                                        <option value="npk">NPK</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Target Price (₹/kg)</label>
+                                    <input type="number" class="form-control" id="targetPrice" placeholder="Enter target price" step="0.01">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">&nbsp;</label>
+                                    <button class="btn btn-info d-block w-100" onclick="setPriceAlert()">
+                                        <i class="fas fa-bell-plus me-2"></i>Set Alert
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Trends Chart -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Price Trends</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="priceChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let priceChart = null;
+
+function comparePrices() {
+    const fertilizerType = document.getElementById('fertilizerType').value;
+    const quantity = document.getElementById('quantity').value;
+    const location = document.getElementById('location').value;
+
+    if (!fertilizerType || !quantity) {
+        showAlert('Please select fertilizer type and enter quantity', 'warning');
+        return;
+    }
+
+    const data = {
+        fertilizer_type: fertilizerType,
+        quantity: parseInt(quantity),
+        location: location
+    };
+
+    fetch('/api/fertilizer/compare', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayPriceComparison(data.comparison || []);
+        updatePriceChart(data.trends || []);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('Error comparing prices', 'danger');
+    });
+}
+
+function displayPriceComparison(comparison) {
+    const container = document.getElementById('priceResults');
+    container.innerHTML = '';
+
+    if (comparison.length === 0) {
+        container.innerHTML = '<div class="col-12"><div class="alert alert-info">No price data available for the selected criteria.</div></div>';
+        return;
+    }
+
+    // Sort by price (lowest first)
+    comparison.sort((a, b) => a.price_per_kg - b.price_per_kg);
+
+    comparison.forEach((vendor, index) => {
+        const isLowest = index === 0;
+        const card = `
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card h-100 ${isLowest ? 'border-success' : ''}">
+                    ${isLowest ? '<div class="card-header bg-success text-white text-center"><small><i class="fas fa-trophy me-1"></i>Best Price</small></div>' : ''}
+                    <div class="card-body">
+                        <h5 class="card-title">${vendor.vendor_name}</h5>
+                        <div class="mb-2">
+                            <span class="badge bg-primary">${vendor.brand}</span>
+                            <span class="badge bg-secondary ms-1">${vendor.grade}</span>
+                        </div>
+                        <div class="price-info mb-3">
+                            <div class="h4 text-success">₹${vendor.price_per_kg}/kg</div>
+                            <div class="text-muted">Total: ₹${vendor.total_price.toLocaleString()}</div>
+                        </div>
+                        <div class="vendor-details">
+                            <small class="text-muted d-block">
+                                <i class="fas fa-map-marker-alt me-1"></i>${vendor.location}
+                            </small>
+                            <small class="text-muted d-block">
+                                <i class="fas fa-truck me-1"></i>Delivery: ${vendor.delivery_days} days
+                            </small>
+                            <small class="text-muted d-block">
+                                Rating: ${'★'.repeat(Math.floor(vendor.rating))} (${vendor.rating}/5)
+                            </small>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn btn-outline-success btn-sm w-100" onclick="contactVendor('${vendor.vendor_id}')">
+                                <i class="fas fa-phone me-1"></i>Contact Vendor
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+function updatePriceChart(trends) {
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    
+    if (priceChart) {
+        priceChart.destroy();
+    }
+
+    const labels = trends.map(t => t.date);
+    const prices = trends.map(t => t.average_price);
+
+    priceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Average Price (₹/kg)',
+                data: prices,
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    title: {
+                        display: true,
+                        text: 'Price (₹/kg)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function setPriceAlert() {
+    const fertilizer = document.getElementById('alertFertilizer').value;
+    const targetPrice = document.getElementById('targetPrice').value;
+
+    if (!targetPrice) {
+        showAlert('Please enter target price', 'warning');
+        return;
+    }
+
+    const data = {
+        fertilizer_type: fertilizer,
+        target_price: parseFloat(targetPrice),
+        user_id: 'user123' // This would come from authentication
+    };
+
+    fetch('/api/fertilizer/alerts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            showAlert('Price alert set successfully!', 'success');
+            document.getElementById('targetPrice').value = '';
+        } else {
+            showAlert(data.message || 'Error setting price alert', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('Error setting price alert', 'danger');
+    });
+}
+
+function contactVendor(vendorId) {
+    showAlert('Vendor contact details sent to your registered mobile number', 'info');
+}
+
+// Load default comparison on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Set default values
+    document.getElementById('fertilizerType').value = 'urea';
+    document.getElementById('quantity').value = '50';
+    // Auto-load comparison for urea
+    setTimeout(comparePrices, 500);
+});
+</script>
+{% endblock %}

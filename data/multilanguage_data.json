@@ -1,0 +1,124 @@
+{
+  "supported_languages": [
+    {
+      "language": "Hindi",
+      "code": "hi",
+      "native_name": "हिंदी",
+      "user_percentage": 45.2,
+      "translation_completeness": 100,
+      "voice_support": true,
+      "regional_variants": ["Devanagari Script"]
+    },
+    {
+      "language": "English",
+      "code": "en",
+      "native_name": "English",
+      "user_percentage": 35.8,
+      "translation_completeness": 100,
+      "voice_support": true,
+      "regional_variants": ["Indian English"]
+    },
+    {
+      "language": "Punjabi",
+      "code": "pa",
+      "native_name": "ਪੰਜਾਬੀ",
+      "user_percentage": 8.5,
+      "translation_completeness": 95,
+      "voice_support": true,
+      "regional_variants": ["Gurmukhi Script"]
+    },
+    {
+      "language": "Gujarati",
+      "code": "gu",
+      "native_name": "ગુજરાતી",
+      "user_percentage": 6.3,
+      "translation_completeness": 90,
+      "voice_support": false,
+      "regional_variants": ["Standard Gujarati"]
+    },
+    {
+      "language": "Marathi",
+      "code": "mr",
+      "native_name": "मराठी",
+      "user_percentage": 4.2,
+      "translation_completeness": 85,
+      "voice_support": false,
+      "regional_variants": ["Devanagari Script"]
+    }
+  ],
+  "translation_keys": {
+    "common": {
+      "welcome": {
+        "en": "Welcome to AgriSuper",
+        "hi": "एग्रीसुपर में आपका स्वागत है",
+        "pa": "ਐਗਰੀਸੁਪਰ ਵਿੱਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ",
+        "gu": "એગ્રીસુપરમાં આપનું સ્વાગત છે",
+        "mr": "एग्रीसुपरमध्ये आपले स्वागत आहे"
+      },
+      "login": {
+        "en": "Login",
+        "hi": "लॉगिन",
+        "pa": "ਲਾਗਇਨ",
+        "gu": "લોગિન",
+        "mr": "लॉगिन"
+      },
+      "price": {
+        "en": "Price",
+        "hi": "मूल्य",
+        "pa": "ਕੀਮਤ",
+        "gu": "કિંમત",
+        "mr": "किंमत"
+      }
+    },
+    "agriculture": {
+      "crop": {
+        "en": "Crop",
+        "hi": "फसल",
+        "pa": "ਫਸਲ",
+        "gu": "પાક",
+        "mr": "पीक"
+      },
+      "farmer": {
+        "en": "Farmer",
+        "hi": "किसान",
+        "pa": "ਕਿਸਾਨ",
+        "gu": "ખેડૂત",
+        "mr": "शेतकરी"
+      },
+      "harvest": {
+        "en": "Harvest",
+        "hi": "फसल कटाई",
+        "pa": "ਵਾਢੀ",
+        "gu": "લણણી",
+        "mr": "कापणी"
+      }
+    }
+  },
+  "regional_preferences": [
+    {
+      "region": "North India",
+      "primary_languages": ["Hindi", "Punjabi"],
+      "currency_format": "₹ ##,##,###",
+      "date_format": "DD/MM/YYYY",
+      "measurement_units": "Metric"
+    },
+    {
+      "region": "West India",
+      "primary_languages": ["Gujarati", "Marathi", "Hindi"],
+      "currency_format": "₹ ##,##,###",
+      "date_format": "DD/MM/YYYY",
+      "measurement_units": "Metric"
+    }
+  ],
+  "voice_commands": {
+    "hindi": [
+      { "command": "मौसम दिखाओ", "action": "show_weather", "confidence": 95 },
+      { "command": "कीमत बताओ", "action": "show_prices", "confidence": 92 },
+      { "command": "फसल की जानकारी", "action": "crop_info", "confidence": 88 }
+    ],
+    "punjabi": [
+      { "command": "ਮੌਸਮ ਦਿਖਾਓ", "action": "show_weather", "confidence": 90 },
+      { "command": "ਕੀਮਤ ਦੱਸੋ", "action": "show_prices", "confidence": 87 }
+    ]
+  }
+}

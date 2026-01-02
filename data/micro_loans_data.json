@@ -1,0 +1,62 @@
+{
+  "loan_products": [
+    {
+      "product_id": "ML001",
+      "product_name": "Kisan Credit Card",
+      "lender": "State Bank of India",
+      "loan_amount_range": {
+        "minimum": 50000,
+        "maximum": 300000
+      },
+      "interest_rate": 7.5,
+      "tenure_months": 12,
+      "processing_fee": 0.5,
+      "eligibility": ["Land ownership documents", "Aadhaar card", "Bank account", "Crop insurance"],
+      "approval_time_days": 7,
+      "collateral_required": false
+    }
+  ],
+  "loan_applications": [
+    {
+      "application_id": "LA2024001",
+      "farmer_id": "F12345",
+      "farmer_name": "Ramesh Kumar",
+      "loan_amount": 150000,
+      "purpose": "Seed and fertilizer purchase",
+      "crop_season": "Rabi 2024",
+      "land_area": 5,
+      "status": "Approved",
+      "disbursement_date": "2024-01-15",
+      "repayment_schedule": [
+        {
+          "installment_no": 1,
+          "due_date": "2024-04-15",
+          "amount": 52500,
+          "status": "Pending"
+        }
+      ]
+    }
+  ],
+  "credit_scores": [
+    {
+      "farmer_id": "F12345",
+      "credit_score": 750,
+      "factors": {
+        "repayment_history": 85,
+        "land_ownership": 90,
+        "crop_yield_history": 75,
+        "market_linkages": 80
+      },
+      "eligible_amount": 250000,
+      "recommended_products": ["KCC", "Equipment Loan"]
+    }
+  ],
+  "repayment_assistance": [
+    {
+      "assistance_type": "Crop Insurance Claim",
+      "description": "Loan waiver in case of natural calamity",
+      "coverage_percentage": 100,
+      "conditions": ["Enrolled in PMFBY", "Loss > 50%"]
+    }
+  ]
+}

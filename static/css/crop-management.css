@@ -1,0 +1,48 @@
+/* Progress bars */
+.progress {
+    height: 6px;
+    margin-bottom: 0.5rem;
+    border-radius: 3px;
+}
+
+.crop-progress,
+.growth-stage-progress,
+.health-progress,
+.yield-progress {
+    height: 6px;
+}
+
+/* Task buttons */
+.task-button {
+    width: 32px;
+}
+
+/* Form controls */
+.unit-select {
+    max-width: 100px;
+}
+
+/* Placeholder containers */
+.placeholder-container {
+    height: 300px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Charts */
+.chart-container {
+    height: 300px;
+}
+
+/* Field Map */
+.field-map {
+    height: 400px;
+    background-color: #eaf5ea;
+}
+
+/* Small text */
+.temperature-text {
+    font-size: 0.75rem;
+}

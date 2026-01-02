@@ -1,0 +1,92 @@
+{
+  "sms_services": [
+    {
+      "service_name": "Price Alerts",
+      "short_code": "AGRIPRICE",
+      "description": "Get daily crop prices via SMS",
+      "usage_format": "SMS AGRIPRICE <CROP> <MARKET> to 567890",
+      "example": "SMS AGRIPRICE WHEAT DELHI to 567890",
+      "cost_per_sms": 2,
+      "subscribers": 15420
+    },
+    {
+      "service_name": "Weather Updates",
+      "short_code": "AGRIWEATHER",
+      "description": "Receive weather forecasts and alerts",
+      "usage_format": "SMS AGRIWEATHER <LOCATION> to 567890",
+      "example": "SMS AGRIWEATHER PUNJAB to 567890",
+      "cost_per_sms": 1,
+      "subscribers": 23150
+    },
+    {
+      "service_name": "Expert Advice",
+      "short_code": "AGRIHELP",
+      "description": "Get farming advice via SMS",
+      "usage_format": "SMS AGRIHELP <QUESTION> to 567890",
+      "example": "SMS AGRIHELP WHEAT DISEASE to 567890",
+      "cost_per_sms": 5,
+      "subscribers": 8900
+    }
+  ],
+  "sms_templates": [
+    {
+      "template_id": "PRICE_ALERT",
+      "template": "AGRI: {crop} price in {market}: Rs.{price}/{unit}. Trend: {trend}. Date: {date}",
+      "variables": ["crop", "market", "price", "unit", "trend", "date"],
+      "character_limit": 160
+    },
+    {
+      "template_id": "WEATHER_ALERT",
+      "template": "AGRI: {location} Weather: {condition}, Temp: {temp}°C, Rain: {rainfall}mm. {alert_message}",
+      "variables": ["location", "condition", "temp", "rainfall", "alert_message"],
+      "character_limit": 160
+    },
+    {
+      "template_id": "EXPERT_ADVICE",
+      "template": "AGRI Expert: {question} - {advice}. For more help call {phone}",
+      "variables": ["question", "advice", "phone"],
+      "character_limit": 160
+    }
+  ],
+  "subscriber_data": [
+    {
+      "phone_number": "+919876543210",
+      "farmer_name": "Rajesh Kumar",
+      "location": "Punjab",
+      "subscribed_services": ["AGRIPRICE", "AGRIWEATHER"],
+      "subscription_date": "2023-12-15",
+      "total_sms_sent": 145,
+      "preferred_language": "Punjabi"
+    },
+    {
+      "phone_number": "+919876543211",
+      "farmer_name": "Suresh Patel",
+      "location": "Gujarat",
+      "subscribed_services": ["AGRIWEATHER", "AGRIHELP"],
+      "subscription_date": "2024-01-05",
+      "total_sms_sent": 67,
+      "preferred_language": "Gujarati"
+    }
+  ],
+  "usage_statistics": {
+    "total_sms_sent_monthly": 125000,
+    "most_popular_service": "Weather Updates",
+    "peak_usage_hours": ["6-8 AM", "6-8 PM"],
+    "average_response_time": "30 seconds",
+    "delivery_success_rate": 98.5
+  },
+  "offline_features": [
+    {
+      "feature": "Voice Calls",
+      "description": "Automated voice messages for important alerts",
+      "supported_languages": ["Hindi", "Punjabi", "Gujarati"],
+      "usage": "Disaster alerts, urgent market updates"
+    },
+    {
+      "feature": "USSD Codes",
+      "description": "Interactive menu system via USSD",
+      "access_code": "*567*890#",
+      "menu_options": ["Prices", "Weather", "Advice", "Account"]
+    }
+  ]
+}

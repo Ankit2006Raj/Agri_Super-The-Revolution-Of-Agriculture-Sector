@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Assistant - AgriSuper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .voice-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .voice-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .voice-button:hover {
+            transform: scale(1.1);
+        }
+        .voice-button.listening {
+            animation: pulse 1.5s infinite;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+        }
+        .message {
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            max-width: 80%;
+        }
+        .message.user {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+        .message.assistant {
+            background: white;
+            color: #333;
+            border: 1px solid #eee;
+        }
+        .language-btn {
+            margin: 5px;
+            border-radius: 20px;
+        }
+        .quick-command {
+            background: #f8f9fa;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        .quick-command:hover {
+            border-color: #667eea;
+            background: #e7f0ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <button onclick="window.history.back()" class="btn btn-light mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <h1 class="text-white text-center mb-4">
+                    <i class="fas fa-microphone-alt"></i> AI Voice Assistant
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Voice Interface -->
+                <div class="voice-card">
+                    <div class="text-center mb-4">
+                        <h4>Ask me anything about farming!</h4>
+                        <p class="text-muted">Click the microphone to start speaking</p>
+                    </div>
+                    
+                    <div class="text-center mb-4">
+                        <button class="voice-button" id="voiceButton" onclick="toggleVoiceRecording()">
+                            <i class="fas fa-microphone fa-4x text-white"></i>
+                        </button>
+                    </div>
+
+                    <div class="text-center mb-3">
+                        <span id="listeningStatus" class="badge bg-secondary">Ready to listen</span>
+                    </div>
+
+                    <div id="transcriptDisplay" class="alert alert-info d-none">
+                        <strong>You said:</strong> <span id="transcriptText"></span>
+                    </div>
+                </div>
+
+                <!-- Chat History -->
+                <div class="voice-card">
+                    <h5 class="mb-3"><i class="fas fa-comments"></i> Conversation History</h5>
+                    <div class="chat-container" id="chatContainer">
+                        <div class="text-center text-muted">
+                            <i class="fas fa-robot fa-3x mb-3"></i>
+                            <p>Start a conversation by speaking or typing</p>
+                        </div>
+                    </div>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" id="textInput" placeholder="Or type your question here...">
+                        <button class="btn btn-primary" onclick="sendTextMessage()">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Commands -->
+                <div class="voice-card">
+                    <h5 class="mb-3"><i class="fas fa-bolt"></i> Quick Commands</h5>
+                    <div>
+                        <div class="quick-command" onclick="executeQuickCommand('weather')">
+                            <i class="fas fa-cloud-sun"></i> Today's Weather
+                        </div>
+                        <div class="quick-command" onclick="executeQuickCommand('prices')">
+                            <i class="fas fa-chart-line"></i> Crop Prices
+                        </div>
+                        <div class="quick-command" onclick="executeQuickCommand('tips')">
+                            <i class="fas fa-lightbulb"></i> Farming Tips
+                        </div>
+                        <div class="quick-command" onclick="executeQuickCommand('diseases')">
+                            <i class="fas fa-bug"></i> Crop Diseases
+                        </div>
+                        <div class="quick-command" onclick="executeQuickCommand('calendar')">
+                            <i class="fas fa-calendar"></i> Sowing Calendar
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Language Selection -->
+                <div class="voice-card">
+                    <h5><i class="fas fa-language"></i> Select Language</h5>
+                    <div id="languageSelector">
+                        <button class="btn btn-sm btn-outline-primary language-btn active" data-lang="en">English</button>
+                        <button class="btn btn-sm btn-outline-primary language-btn" data-lang="hi">हिंदी</button>
+                        <button class="btn btn-sm btn-outline-primary language-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
+                        <button class="btn btn-sm btn-outline-primary language-btn" data-lang="ta">தமிழ்</button>
+                        <button class="btn btn-sm btn-outline-primary language-btn" data-lang="te">తెలుగు</button>
+                        <button class="btn btn-sm btn-outline-primary language-btn" data-lang="mr">मराठी</button>
+                    </div>
+                </div>
+
+                <!-- Voice Features -->
+                <div class="voice-card">
+                    <h5><i class="fas fa-star"></i> Features</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Multi-language support</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Voice-to-text</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Text-to-speech</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> 24/7 availability</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Offline mode</li>
+                    </ul>
+                </div>
+
+                <!-- What Can I Ask? -->
+                <div class="voice-card">
+                    <h5><i class="fas fa-question-circle"></i> What Can I Ask?</h5>
+                    <div class="small">
+                        <p class="mb-2"><strong>Market Information:</strong></p>
+                        <p class="text-muted">"What is the price of wheat today?"</p>
+                        
+                        <p class="mb-2 mt-3"><strong>Weather Updates:</strong></p>
+                        <p class="text-muted">"Will it rain tomorrow?"</p>
+                        
+                        <p class="mb-2 mt-3"><strong>Farming Tips:</strong></p>
+                        <p class="text-muted">"How to control pests in rice?"</p>
+                        
+                        <p class="mb-2 mt-3"><strong>Crop Advice:</strong></p>
+                        <p class="text-muted">"Best time to sow cotton?"</p>
+                    </div>
+                </div>
+
+                <!-- Privacy Notice -->
+                <div class="voice-card bg-light">
+                    <p class="small text-muted mb-0">
+                        <i class="fas fa-lock"></i> Your conversations are encrypted and private
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let isListening = false;
+        let currentLanguage = 'en';
+        let recognition;
+        let synthesis = window.speechSynthesis;
+
+        // Check if browser supports speech recognition
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('transcriptText').textContent = transcript;
+                document.getElementById('transcriptDisplay').classList.remove('d-none');
+                
+                // Send to backend for processing
+                processVoiceQuery(transcript);
+            };
+            
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                updateListeningStatus('Error occurred', 'danger');
+                stopListening();
+            };
+            
+            recognition.onend = function() {
+                stopListening();
+            };
+        }
+
+        function toggleVoiceRecording() {
+            if (isListening) {
+                stopListening();
+            } else {
+                startListening();
+            }
+        }
+
+        function startListening() {
+            if (!recognition) {
+                alert('Voice recognition is not supported in your browser');
+                return;
+            }
+            
+            isListening = true;
+            recognition.lang = currentLanguage;
+            recognition.start();
+            
+            document.getElementById('voiceButton').classList.add('listening');
+            updateListeningStatus('Listening...', 'success');
+        }
+
+        function stopListening() {
+            isListening = false;
+            if (recognition) {
+                recognition.stop();
+            }
+            document.getElementById('voiceButton').classList.remove('listening');
+            updateListeningStatus('Ready to listen', 'secondary');
+        }
+
+        function updateListeningStatus(text, status) {
+            const statusEl = document.getElementById('listeningStatus');
+            statusEl.textContent = text;
+            statusEl.className = `badge bg-${status}`;
+        }
+
+        async function processVoiceQuery(query) {
+            // Add user message to chat
+            addMessageToChat(query, 'user');
+            
+            try {
+                const response = await fetch('/api/voice/query', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        query: query,
+                        language: currentLanguage
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addMessageToChat(data.response, 'assistant');
+                    
+                    // Speak the response
+                    if (data.audio_response) {
+                        speakText(data.response);
+                    }
+                } else {
+                    addMessageToChat('Sorry, I could not process your request.', 'assistant');
+                }
+            } catch (error) {
+                console.error('Error processing query:', error);
+                addMessageToChat('Error processing your request. Please try again.', 'assistant');
+            }
+        }
+
+        function addMessageToChat(text, sender) {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            // Clear initial message if present
+            if (chatContainer.querySelector('.text-center')) {
+                chatContainer.innerHTML = '';
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = text;
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function speakText(text) {
+            if (synthesis) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = currentLanguage;
+                synthesis.speak(utterance);
+            }
+        }
+
+        function sendTextMessage() {
+            const input = document.getElementById('textInput');
+            const text = input.value.trim();
+            
+            if (text) {
+                processVoiceQuery(text);
+                input.value = '';
+            }
+        }
+
+        function executeQuickCommand(command) {
+            const commands = {
+                'weather': 'What is the weather forecast for today?',
+                'prices': 'Show me current crop prices',
+                'tips': 'Give me some farming tips',
+                'diseases': 'Tell me about common crop diseases',
+                'calendar': 'Show me the sowing calendar'
+            };
+            
+            if (commands[command]) {
+                processVoiceQuery(commands[command]);
+            }
+        }
+
+        // Language selector
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentLanguage = this.dataset.lang;
+            });
+        });
+
+        // Enter key to send message
+        document.getElementById('textInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendTextMessage();
+            }
+        });
+    </script>
+</body>
+</html>

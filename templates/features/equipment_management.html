@@ -1,0 +1,915 @@
+{% extends "base.html" %}
+
+{% block title %}Equipment Management - AgriSuper{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/equipment-management.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Equipment Dashboard -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-tractor me-2"></i>Equipment Dashboard</h5>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="equipmentActions" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="equipmentActions">
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addEquipmentModal"><i class="fas fa-plus-circle me-2"></i>Add Equipment</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#scheduleMaintenanceModal"><i class="fas fa-tools me-2"></i>Schedule Maintenance</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-file-export me-2"></i>Export Inventory</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Search and Filter -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search equipment..." aria-label="Search equipment">
+                                <button class="btn btn-success" type="button" title="Search equipment" aria-label="Search equipment"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" id="equipmentFilter" title="Equipment category filter" aria-label="Filter equipment by category">
+                                <option selected>All Categories</option>
+                                <option>Tractors</option>
+                                <option>Harvesters</option>
+                                <option>Seeders</option>
+                                <option>Irrigation</option>
+                                <option>Tools</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Equipment List -->
+                    <h5 class="mb-3">My Equipment</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Equipment</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Last Used</th>
+                                    <th>Next Maintenance</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/40" alt="Tractor" class="me-2 rounded">
+                                            <div>
+                                                <h6 class="mb-0">John Deere 5310</h6>
+                                                <small class="text-muted">Tractor - 55 HP</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Tractors</td>
+                                    <td><span class="badge bg-success">Operational</span></td>
+                                    <td>Yesterday</td>
+                                    <td>In 15 days</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Log Usage"><i class="fas fa-clipboard-list"></i></button>
+                                            <button class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" title="Schedule Maintenance"><i class="fas fa-tools"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/40" alt="Harvester" class="me-2 rounded">
+                                            <div>
+                                                <h6 class="mb-0">New Holland TC5.30</h6>
+                                                <small class="text-muted">Harvester - Combine</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Harvesters</td>
+                                    <td><span class="badge bg-warning text-dark">Maintenance Due</span></td>
+                                    <td>3 days ago</td>
+                                    <td>Overdue by 2 days</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Log Usage"><i class="fas fa-clipboard-list"></i></button>
+                                            <button class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" title="Schedule Maintenance"><i class="fas fa-tools"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/40" alt="Seeder" class="me-2 rounded">
+                                            <div>
+                                                <h6 class="mb-0">Mahindra Seed Drill</h6>
+                                                <small class="text-muted">Seeder - 9 Row</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Seeders</td>
+                                    <td><span class="badge bg-success">Operational</span></td>
+                                    <td>Last week</td>
+                                    <td>In 45 days</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Log Usage"><i class="fas fa-clipboard-list"></i></button>
+                                            <button class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" title="Schedule Maintenance"><i class="fas fa-tools"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/40" alt="Sprayer" class="me-2 rounded">
+                                            <div>
+                                                <h6 class="mb-0">Aspee Tractor Sprayer</h6>
+                                                <small class="text-muted">Sprayer - 600L</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Tools</td>
+                                    <td><span class="badge bg-danger">Needs Repair</span></td>
+                                    <td>2 weeks ago</td>
+                                    <td>After repair</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Log Usage"><i class="fas fa-clipboard-list"></i></button>
+                                            <button class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" title="Schedule Maintenance"><i class="fas fa-tools"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://via.placeholder.com/40" alt="Irrigation" class="me-2 rounded">
+                                            <div>
+                                                <h6 class="mb-0">Drip Irrigation System</h6>
+                                                <small class="text-muted">Irrigation - 5 Acre</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Irrigation</td>
+                                    <td><span class="badge bg-success">Operational</span></td>
+                                    <td>Today</td>
+                                    <td>In 30 days</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-sm btn-outline-success" data-bs-toggle="tooltip" title="Log Usage"><i class="fas fa-clipboard-list"></i></button>
+                                            <button class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" title="Schedule Maintenance"><i class="fas fa-tools"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <button class="btn btn-outline-secondary">Previous</button>
+                        <span>Page 1 of 2</span>
+                        <button class="btn btn-outline-secondary">Next</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Maintenance Schedule -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-tools me-2"></i>Maintenance Schedule</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-exclamation-triangle fa-2x text-warning"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Maintenance Due</h5>
+                                <p class="mb-0">New Holland TC5.30 Harvester is overdue for maintenance by 2 days. Schedule service to avoid potential breakdowns during harvest season.</p>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-warning text-dark">Schedule Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h6 class="mb-3">Upcoming Maintenance</h6>
+                    <div class="list-group mb-3">
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">John Deere 5310 Tractor</h6>
+                                <small class="text-muted">In 15 days</small>
+                            </div>
+                            <p class="mb-1 small">Regular service - Oil change, filter replacement, and general inspection</p>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button class="btn btn-sm btn-outline-success me-2">Reschedule</button>
+                                <button class="btn btn-sm btn-outline-primary">View Details</button>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Drip Irrigation System</h6>
+                                <small class="text-muted">In 30 days</small>
+                            </div>
+                            <p class="mb-1 small">Filter cleaning, pressure check, and leak inspection</p>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button class="btn btn-sm btn-outline-success me-2">Reschedule</button>
+                                <button class="btn btn-sm btn-outline-primary">View Details</button>
+                            </div>
+                        </div>
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Mahindra Seed Drill</h6>
+                                <small class="text-muted">In 45 days</small>
+                            </div>
+                            <p class="mb-1 small">Lubrication, calibration, and parts inspection</p>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button class="btn btn-sm btn-outline-success me-2">Reschedule</button>
+                                <button class="btn btn-sm btn-outline-primary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#scheduleMaintenanceModal">
+                            <i class="fas fa-plus-circle me-1"></i>Schedule New Maintenance
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Equipment Usage Log -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Recent Usage Log</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">John Deere 5310 Tractor</h6>
+                                <small class="text-muted">Yesterday, 4:30 PM</small>
+                            </div>
+                            <p class="mb-1 small">Used for plowing in North Field - 4.5 hours, 12 liters fuel</p>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span class="badge bg-secondary">Operator: Rajesh</span>
+                                <button class="btn btn-sm btn-outline-primary">View Details</button>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Drip Irrigation System</h6>
+                                <small class="text-muted">Today, 6:00 AM</small>
+                            </div>
+                            <p class="mb-1 small">Irrigation cycle in Vegetable Field - 2 hours, normal pressure</p>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span class="badge bg-secondary">Automatic Schedule</span>
+                                <button class="btn btn-sm btn-outline-primary">View Details</button>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">New Holland TC5.30 Harvester</h6>
+                                <small class="text-muted">3 days ago, 2:15 PM</small>
+                            </div>
+                            <p class="mb-1 small">Wheat harvesting in East Field - 6 hours, 35 liters fuel</p>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span class="badge bg-secondary">Operator: Sunil</span>
+                                <button class="btn btn-sm btn-outline-primary">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#logUsageModal">
+                        <i class="fas fa-plus-circle me-1"></i>Log New Usage
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary float-end">View All Logs</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Equipment Stats -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Equipment Stats</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center mb-3">
+                        <div class="col-4">
+                            <div class="p-3 border rounded">
+                                <h3 class="mb-0">12</h3>
+                                <small class="text-muted">Total Equipment</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-3 border rounded">
+                                <h3 class="mb-0">9</h3>
+                                <small class="text-muted">Operational</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-3 border rounded">
+                                <h3 class="mb-0">3</h3>
+                                <small class="text-muted">Needs Attention</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h6 class="mb-3">Equipment Status</h6>
+                    <div class="equipment-status-chart mb-3">
+                        <canvas id="equipmentStatusChart" height="180"></canvas>
+                    </div>
+                    
+                    <h6 class="mb-3">Equipment Categories</h6>
+                    <div class="equipment-category-chart">
+                        <canvas id="equipmentCategoryChart" height="180"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Equipment Efficiency -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-tachometer-alt me-2"></i>Equipment Efficiency</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>John Deere 5310 Tractor</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" aria-label="John Deere 5310 Tractor efficiency" title="John Deere 5310 Tractor efficiency: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>New Holland TC5.30 Harvester</span>
+                            <span>68%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" aria-label="New Holland TC5.30 Harvester efficiency" title="New Holland TC5.30 Harvester efficiency: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Mahindra Seed Drill</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" aria-label="Mahindra Seed Drill efficiency" title="Mahindra Seed Drill efficiency: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Aspee Tractor Sprayer</span>
+                            <span>45%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" aria-label="Aspee Tractor Sprayer efficiency" title="Aspee Tractor Sprayer efficiency: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="mb-0">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Drip Irrigation System</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" aria-label="Drip Irrigation System efficiency" title="Drip Irrigation System efficiency: 88%" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted"><i class="fas fa-info-circle me-1"></i>Efficiency based on operational hours, fuel consumption, and maintenance history</small>
+                </div>
+            </div>
+            
+            <!-- Fuel Consumption -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-gas-pump me-2"></i>Fuel Consumption</h5>
+                </div>
+                <div class="card-body">
+                    <div class="fuel-consumption-chart mb-3">
+                        <canvas id="fuelConsumptionChart" height="200"></canvas>
+                    </div>
+                    <div class="alert alert-info mb-0 py-2">
+                        <small><i class="fas fa-info-circle me-1"></i>Total fuel consumption this month: 245 liters (15% less than last month)</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Providers -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-cog me-2"></i>Service Providers</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Tractor Service Center</h6>
+                                    <small class="text-muted">Authorized John Deere Service</small>
+                                </div>
+                                <button class="btn btn-sm btn-outline-success"><i class="fas fa-phone-alt me-1"></i>Call</button>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Harvester Repairs</h6>
+                                    <small class="text-muted">New Holland Specialist</small>
+                                </div>
+                                <button class="btn btn-sm btn-outline-success"><i class="fas fa-phone-alt me-1"></i>Call</button>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Irrigation Systems Ltd.</h6>
+                                    <small class="text-muted">Drip & Sprinkler Systems</small>
+                                </div>
+                                <button class="btn btn-sm btn-outline-success"><i class="fas fa-phone-alt me-1"></i>Call</button>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-0">Mobile Mechanic Service</h6>
+                                    <small class="text-muted">24/7 Emergency Repairs</small>
+                                </div>
+                                <button class="btn btn-sm btn-outline-success"><i class="fas fa-phone-alt me-1"></i>Call</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-sm btn-outline-success w-100">
+                        <i class="fas fa-plus-circle me-1"></i>Add Service Provider
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Equipment Modal -->
+<div class="modal fade" id="addEquipmentModal" tabindex="-1" aria-labelledby="addEquipmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addEquipmentModalLabel"><i class="fas fa-plus-circle me-2"></i>Add New Equipment</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="equipmentName" class="form-label">Equipment Name</label>
+                            <input type="text" class="form-control" id="equipmentName" placeholder="Enter equipment name">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="equipmentCategory" class="form-label">Category</label>
+                            <select class="form-select" id="equipmentCategory">
+                                <option selected>Select Category</option>
+                                <option>Tractors</option>
+                                <option>Harvesters</option>
+                                <option>Seeders</option>
+                                <option>Irrigation</option>
+                                <option>Tools</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="equipmentMake" class="form-label">Make/Brand</label>
+                            <input type="text" class="form-control" id="equipmentMake" placeholder="Enter make/brand">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="equipmentModel" class="form-label">Model</label>
+                            <input type="text" class="form-control" id="equipmentModel" placeholder="Enter model">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="purchaseDate" class="form-label">Purchase Date</label>
+                            <input type="date" class="form-control" id="purchaseDate">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="purchasePrice" class="form-label">Purchase Price (₹)</label>
+                            <input type="number" class="form-control" id="purchasePrice" placeholder="Enter price">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="currentValue" class="form-label">Current Value (₹)</label>
+                            <input type="number" class="form-control" id="currentValue" placeholder="Enter value">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="serialNumber" class="form-label">Serial Number</label>
+                            <input type="text" class="form-control" id="serialNumber" placeholder="Enter serial number">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="warrantyExpiry" class="form-label">Warranty Expiry</label>
+                            <input type="date" class="form-control" id="warrantyExpiry">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="equipmentSpecs" class="form-label">Specifications</label>
+                        <textarea class="form-control" id="equipmentSpecs" rows="3" placeholder="Enter specifications"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="equipmentImage" class="form-label">Equipment Image</label>
+                        <input class="form-control" type="file" id="equipmentImage">
+                    </div>
+                    <div class="mb-3">
+                        <label for="maintenanceSchedule" class="form-label">Maintenance Schedule</label>
+                        <select class="form-select" id="maintenanceSchedule">
+                            <option selected>Select Schedule</option>
+                            <option>Every 30 days</option>
+                            <option>Every 3 months</option>
+                            <option>Every 6 months</option>
+                            <option>Yearly</option>
+                            <option>Based on hours used</option>
+                            <option>Custom</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Add Equipment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Schedule Maintenance Modal -->
+<div class="modal fade" id="scheduleMaintenanceModal" tabindex="-1" aria-labelledby="scheduleMaintenanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="scheduleMaintenanceModalLabel"><i class="fas fa-tools me-2"></i>Schedule Maintenance</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="maintenanceEquipment" class="form-label">Select Equipment</label>
+                        <select class="form-select" id="maintenanceEquipment">
+                            <option selected>Select Equipment</option>
+                            <option>John Deere 5310 Tractor</option>
+                            <option>New Holland TC5.30 Harvester</option>
+                            <option>Mahindra Seed Drill</option>
+                            <option>Aspee Tractor Sprayer</option>
+                            <option>Drip Irrigation System</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="maintenanceType" class="form-label">Maintenance Type</label>
+                        <select class="form-select" id="maintenanceType">
+                            <option selected>Select Type</option>
+                            <option>Regular Service</option>
+                            <option>Oil Change</option>
+                            <option>Filter Replacement</option>
+                            <option>Repair</option>
+                            <option>Inspection</option>
+                            <option>Calibration</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="maintenanceDate" class="form-label">Scheduled Date</label>
+                        <input type="date" class="form-control" id="maintenanceDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="serviceProvider" class="form-label">Service Provider</label>
+                        <select class="form-select" id="serviceProvider">
+                            <option selected>Select Provider</option>
+                            <option>Tractor Service Center</option>
+                            <option>Harvester Repairs</option>
+                            <option>Irrigation Systems Ltd.</option>
+                            <option>Mobile Mechanic Service</option>
+                            <option>Self-service</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="estimatedCost" class="form-label">Estimated Cost (₹)</label>
+                        <input type="number" class="form-control" id="estimatedCost" placeholder="Enter estimated cost">
+                    </div>
+                    <div class="mb-3">
+                        <label for="maintenanceNotes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="maintenanceNotes" rows="3" placeholder="Enter notes"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Reminder</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="reminderApp" checked>
+                            <label class="form-check-label" for="reminderApp">
+                                App Notification (1 day before)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="reminderSMS" checked>
+                            <label class="form-check-label" for="reminderSMS">
+                                SMS (1 day before)
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Schedule</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Log Usage Modal -->
+<div class="modal fade" id="logUsageModal" tabindex="-1" aria-labelledby="logUsageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="logUsageModalLabel"><i class="fas fa-clipboard-list me-2"></i>Log Equipment Usage</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="usageEquipment" class="form-label">Select Equipment</label>
+                        <select class="form-select" id="usageEquipment">
+                            <option selected>Select Equipment</option>
+                            <option>John Deere 5310 Tractor</option>
+                            <option>New Holland TC5.30 Harvester</option>
+                            <option>Mahindra Seed Drill</option>
+                            <option>Aspee Tractor Sprayer</option>
+                            <option>Drip Irrigation System</option>
+                        </select>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="usageDate" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="usageDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="usageDuration" class="form-label">Duration (hours)</label>
+                            <input type="number" class="form-control" id="usageDuration" placeholder="Enter hours">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usageActivity" class="form-label">Activity</label>
+                        <select class="form-select" id="usageActivity">
+                            <option selected>Select Activity</option>
+                            <option>Plowing</option>
+                            <option>Seeding</option>
+                            <option>Harvesting</option>
+                            <option>Spraying</option>
+                            <option>Irrigation</option>
+                            <option>Transportation</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usageField" class="form-label">Field/Location</label>
+                        <select class="form-select" id="usageField">
+                            <option selected>Select Field</option>
+                            <option>North Field</option>
+                            <option>South Field</option>
+                            <option>East Field</option>
+                            <option>West Field</option>
+                            <option>Vegetable Field</option>
+                            <option>Orchard</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="fuelUsed" class="form-label">Fuel Used (liters)</label>
+                            <input type="number" class="form-control" id="fuelUsed" placeholder="Enter fuel amount">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="operator" class="form-label">Operator</label>
+                            <input type="text" class="form-control" id="operator" placeholder="Enter operator name">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usageNotes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="usageNotes" rows="3" placeholder="Enter notes"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="issuesCheck">
+                            <label class="form-check-label" for="issuesCheck">
+                                Report issues with equipment
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-none" id="issuesSection">
+                        <label for="issuesDescription" class="form-label">Issue Description</label>
+                        <textarea class="form-control" id="issuesDescription" rows="3" placeholder="Describe the issue"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Save Log</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Equipment Status Chart
+        var statusCtx = document.getElementById('equipmentStatusChart').getContext('2d');
+        var equipmentStatusChart = new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Operational', 'Maintenance Due', 'Needs Repair', 'Inactive'],
+                datasets: [{
+                    data: [9, 1, 1, 1],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.8)',
+                        'rgba(255, 193, 7, 0.8)',
+                        'rgba(220, 53, 69, 0.8)',
+                        'rgba(108, 117, 125, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+        
+        // Equipment Category Chart
+        var categoryCtx = document.getElementById('equipmentCategoryChart').getContext('2d');
+        var equipmentCategoryChart = new Chart(categoryCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Tractors', 'Harvesters', 'Seeders', 'Irrigation', 'Tools', 'Other'],
+                datasets: [{
+                    data: [2, 1, 2, 3, 3, 1],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.8)',
+                        'rgba(23, 162, 184, 0.8)',
+                        'rgba(255, 193, 7, 0.8)',
+                        'rgba(13, 110, 253, 0.8)',
+                        'rgba(108, 117, 125, 0.8)',
+                        'rgba(111, 66, 193, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+        
+        // Fuel Consumption Chart
+        var fuelCtx = document.getElementById('fuelConsumptionChart').getContext('2d');
+        var fuelConsumptionChart = new Chart(fuelCtx, {
+            type: 'bar',
+            data: {
+                labels: ['John Deere 5310', 'New Holland TC5.30', 'Other Equipment'],
+                datasets: [
+                    {
+                        label: 'This Month',
+                        data: [120, 95, 30],
+                        backgroundColor: 'rgba(40, 167, 69, 0.8)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Last Month',
+                        data: [140, 110, 40],
+                        backgroundColor: 'rgba(108, 117, 125, 0.5)',
+                        borderColor: 'rgba(108, 117, 125, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Fuel (liters)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Toggle issues section in log usage modal
+        $('#issuesCheck').change(function() {
+            if(this.checked) {
+                $('#issuesSection').removeClass('d-none');
+            } else {
+                $('#issuesSection').addClass('d-none');
+            }
+        });
+        
+        // Handle modal form submissions
+        $('.modal .btn-success').click(function() {
+            var modalId = $(this).closest('.modal').attr('id');
+            var message = '';
+            
+            if (modalId === 'addEquipmentModal') {
+                message = 'Equipment added successfully!';
+            } else if (modalId === 'scheduleMaintenanceModal') {
+                message = 'Maintenance scheduled successfully!';
+            } else if (modalId === 'logUsageModal') {
+                message = 'Usage log saved successfully!';
+            }
+            
+            // Close the modal
+            $(this).closest('.modal').modal('hide');
+            
+            // Show confirmation toast
+            if (message) {
+                showToast(message);
+            }
+        });
+        
+        // Function to show toast notification
+        function showToast(message) {
+            // Create toast element
+            var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'+
+                          '<div class="toast-header bg-success text-white">'+
+                          '<strong class="me-auto">Equipment Management</strong>'+
+                          '<small>Just now</small>'+
+                          '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>'+
+                          '</div>'+
+                          '<div class="toast-body">'+message+'</div>'+
+                          '</div>');
+            
+            // Add to container
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('.toast-container').append(toast);
+            
+            // Initialize and show toast
+            var toastEl = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 5000
+            });
+            toastEl.show();
+            
+            // Remove after hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+/* Soil Health styles */
+
+/* Map container */
+.soil-map {
+    height: 300px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Map legend badges */
+.soil-health-indicator {
+    width: 15px;
+    height: 15px;
+}
+
+/* Health indicators */
+.soil-health-legend {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.soil-health-legend-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Soil health charts */
+.soil-chart {
+    height: 250px;
+    margin-bottom: 1rem;
+}
+
+/* Analysis cards */
+.soil-analysis-card {
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+/* Recommendations section */
+.recommendations-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.recommendation-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.recommendation-item:last-child {
+    border-bottom: none;
+}

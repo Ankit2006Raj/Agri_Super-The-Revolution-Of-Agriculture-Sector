@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline SMS Support - AgriSuper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .sms-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .command-card {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+        }
+        .sms-preview {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <button onclick="window.history.back()" class="btn btn-light mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <h1 class="text-white text-center mb-4">
+                    <i class="fas fa-sms"></i> Offline SMS Support
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- SMS Subscription -->
+                <div class="sms-card">
+                    <h4 class="mb-3"><i class="fas fa-bell"></i> Subscribe to SMS Alerts</h4>
+                    <form id="smsSubscription">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Mobile Number</label>
+                                <input type="tel" class="form-control" id="mobileNumber" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Language Preference</label>
+                                <select class="form-select" id="smsLanguage" required>
+                                    <option value="en">English</option>
+                                    <option value="hi">Hindi</option>
+                                    <option value="pa">Punjabi</option>
+                                    <option value="ta">Tamil</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Alert Types</label>
+                            <div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="price" id="alertPrice" checked>
+                                    <label class="form-check-label" for="alertPrice">Price Alerts</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="weather" id="alertWeather" checked>
+                                    <label class="form-check-label" for="alertWeather">Weather Updates</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="pest" id="alertPest">
+                                    <label class="form-check-label" for="alertPest">Pest Alerts</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="tips" id="alertTips">
+                                    <label class="form-check-label" for="alertTips">Farming Tips</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i> Subscribe
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SMS Commands -->
+                <div class="sms-card">
+                    <h4 class="mb-3"><i class="fas fa-terminal"></i> SMS Commands</h4>
+                    <p class="text-muted">Send these commands to <strong>+91-9876543210</strong> to get information</p>
+                    
+                    <div class="command-card">
+                        <h6><code>PRICE [CROP]</code></h6>
+                        <p class="mb-2 small">Get current market price of a crop</p>
+                        <div class="sms-preview">
+                            <strong>Example:</strong> PRICE WHEAT<br>
+                            <strong>Response:</strong> Wheat price: ₹2,450/quintal in Delhi mandi
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <h6><code>WEATHER [LOCATION]</code></h6>
+                        <p class="mb-2 small">Get weather forecast</p>
+                        <div class="sms-preview">
+                            <strong>Example:</strong> WEATHER LUDHIANA<br>
+                            <strong>Response:</strong> Ludhiana: Sunny, 28°C. No rain expected.
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <h6><code>TIPS [CROP]</code></h6>
+                        <p class="mb-2 small">Get farming tips for specific crop</p>
+                        <div class="sms-preview">
+                            <strong>Example:</strong> TIPS RICE<br>
+                            <strong>Response:</strong> Rice: Apply nitrogen fertilizer 30 days after transplanting
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <h6><code>BALANCE</code></h6>
+                        <p class="mb-2 small">Check your wallet balance</p>
+                        <div class="sms-preview">
+                            <strong>Example:</strong> BALANCE<br>
+                            <strong>Response:</strong> Your wallet balance: ₹25,430.50
+                        </div>
+                    </div>
+
+                    <div class="command-card">
+                        <h6><code>HELP</code></h6>
+                        <p class="mb-2 small">Get list of all commands</p>
+                        <div class="sms-preview">
+                            <strong>Example:</strong> HELP<br>
+                            <strong>Response:</strong> Available commands: PRICE, WEATHER, TIPS, BALANCE, HELP
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Why SMS? -->
+                <div class="sms-card">
+                    <h5><i class="fas fa-question-circle"></i> Why SMS?</h5>
+                    <ul class="small">
+                        <li class="mb-2">Works without internet</li>
+                        <li class="mb-2">Available on basic phones</li>
+                        <li class="mb-2">Instant notifications</li>
+                        <li class="mb-2">Low data usage</li>
+                        <li class="mb-2">Works in remote areas</li>
+                    </ul>
+                </div>
+
+                <!-- Subscription Plans -->
+                <div class="sms-card">
+                    <h5><i class="fas fa-tag"></i> Plans</h5>
+                    <div class="border-bottom pb-2 mb-2">
+                        <strong>Free Plan</strong>
+                        <p class="small mb-0">10 SMS per month</p>
+                    </div>
+                    <div class="border-bottom pb-2 mb-2">
+                        <strong>Basic (₹29/month)</strong>
+                        <p class="small mb-0">100 SMS per month</p>
+                    </div>
+                    <div>
+                        <strong>Premium (₹99/month)</strong>
+                        <p class="small mb-0">Unlimited SMS</p>
+                    </div>
+                </div>
+
+                <!-- Support -->
+                <div class="sms-card bg-light">
+                    <p class="small mb-2"><strong>Need Help?</strong></p>
+                    <p class="small text-muted">Call our toll-free number</p>
+                    <h4 class="text-primary">1800-XXX-XXXX</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('smsSubscription').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const alertTypes = [];
+            document.querySelectorAll('.form-check-input:checked').forEach(checkbox => {
+                alertTypes.push(checkbox.value);
+            });
+            
+            const subscriptionData = {
+                mobile_number: document.getElementById('mobileNumber').value,
+                language: document.getElementById('smsLanguage').value,
+                alert_types: alertTypes
+            };
+            
+            try {
+                const response = await fetch('/api/sms/subscribe', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(subscriptionData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('SMS subscription activated successfully!');
+                    this.reset();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error subscribing. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{
+  "historical_prices": {
+    "wheat": {
+      "2024": [
+        { "date": "2024-01-01", "price": 2150, "market": "Delhi", "grade": "A", "moisture": 12.5 },
+        { "date": "2024-01-02", "price": 2180, "market": "Delhi", "grade": "A", "moisture": 12.3 },
+        { "date": "2024-01-03", "price": 2200, "market": "Delhi", "grade": "A", "moisture": 12.1 },
+        { "date": "2024-01-04", "price": 2175, "market": "Mumbai", "grade": "A", "moisture": 12.4 },
+        { "date": "2024-01-05", "price": 2190, "market": "Mumbai", "grade": "A", "moisture": 12.2 }
+      ],
+      "rice": {
+        "2024": [
+          { "date": "2024-01-01", "price": 3250, "market": "Punjab", "grade": "Basmati", "moisture": 14.0 },
+          { "date": "2024-01-02", "price": 3280, "market": "Punjab", "grade": "Basmati", "moisture": 13.8 },
+          { "date": "2024-01-03", "price": 3300, "market": "Punjab", "grade": "Basmati", "moisture": 13.5 },
+          { "date": "2024-01-04", "price": 3275, "market": "Haryana", "grade": "Basmati", "moisture": 13.9 },
+          { "date": "2024-01-05", "price": 3290, "market": "Haryana", "grade": "Basmati", "moisture": 13.7 }
+        ]
+      }
+    }
+  },
+  "market_factors": {
+    "weather_impact": {
+      "drought": { "price_multiplier": 1.25, "volatility": 0.15 },
+      "flood": { "price_multiplier": 1.35, "volatility": 0.2 },
+      "normal": { "price_multiplier": 1.0, "volatility": 0.05 },
+      "excessive_rain": { "price_multiplier": 1.15, "volatility": 0.1 }
+    },
+    "demand_supply": {
+      "high_demand_low_supply": { "price_multiplier": 1.4, "volatility": 0.18 },
+      "balanced": { "price_multiplier": 1.0, "volatility": 0.05 },
+      "low_demand_high_supply": { "price_multiplier": 0.85, "volatility": 0.08 }
+    },
+    "government_policies": {
+      "msp_increase": { "price_multiplier": 1.1, "volatility": 0.03 },
+      "export_ban": { "price_multiplier": 0.9, "volatility": 0.12 },
+      "import_duty_reduction": { "price_multiplier": 0.95, "volatility": 0.08 }
+    }
+  },
+  "crop_varieties": {
+    "wheat": {
+      "varieties": ["HD-2967", "PBW-725", "DBW-187", "HD-3086", "WH-1105"],
+      "grades": ["A", "B", "C", "FAQ"],
+      "quality_parameters": {
+        "moisture": { "min": 10, "max": 14, "optimal": 12 },
+        "protein": { "min": 10, "max": 14, "optimal": 12 },
+        "gluten": { "min": 25, "max": 35, "optimal": 30 }
+      }
+    },
+    "rice": {
+      "varieties": ["Basmati-370", "Pusa-1121", "CSR-30", "Sharbati", "PR-126"],
+      "grades": ["Super", "Grade-A", "Grade-B", "Common"],
+      "quality_parameters": {
+        "moisture": { "min": 12, "max": 16, "optimal": 14 },
+        "length": { "min": 6.0, "max": 8.5, "optimal": 7.5 },
+        "aroma": { "scale": 1, "max": 10, "optimal": 8 }
+      }
+    }
+  }
+}

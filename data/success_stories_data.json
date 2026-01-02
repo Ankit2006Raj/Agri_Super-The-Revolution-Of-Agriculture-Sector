@@ -1,0 +1,79 @@
+{
+  "stories": [
+    {
+      "id": 1,
+      "farmer_name": "Ramesh Patel",
+      "location": "Gujarat, India",
+      "crop": "Cotton",
+      "story_title": "From Traditional to Precision Farming",
+      "story": "Using AgriSuper's yield prediction and market comparison tools, I increased my cotton yield by 40% and profits by 60% in just two seasons. The precision farming techniques recommended helped me optimize water usage and reduce input costs significantly.",
+      "before_income": 180000,
+      "after_income": 288000,
+      "improvement_percentage": 60,
+      "year": 2023,
+      "image": "/images/success/ramesh_patel.jpg",
+      "metrics": {
+        "yield_increase": 40,
+        "cost_reduction": 25,
+        "water_savings": 35,
+        "profit_margin": 60
+      },
+      "tools_used": ["Yield Prediction", "Market Comparison", "Precision Farming"],
+      "likes": 245,
+      "comments": 18,
+      "shares": 32
+    },
+    {
+      "id": 2,
+      "farmer_name": "Sunita Devi",
+      "location": "Punjab, India",
+      "crop": "Wheat",
+      "story_title": "Organic Transition Success",
+      "story": "With AgriSuper's organic farming courses and soil knowledge base, I successfully transitioned to organic wheat farming. My premium organic wheat now sells at 40% higher prices, and I've built a loyal customer base through the platform.",
+      "before_income": 220000,
+      "after_income": 350000,
+      "improvement_percentage": 59,
+      "year": 2023,
+      "image": "/images/success/sunita_devi.jpg",
+      "metrics": {
+        "price_premium": 40,
+        "soil_health_improvement": 50,
+        "customer_retention": 85,
+        "certification_time": 18
+      },
+      "tools_used": ["E-Learning", "Soil Knowledge", "Market Access"],
+      "likes": 189,
+      "comments": 24,
+      "shares": 28
+    }
+  ],
+  "statistics": {
+    "total_stories": 1250,
+    "average_income_increase": 45,
+    "farmers_helped": 8500,
+    "success_rate": 78,
+    "top_improvements": [
+      { "category": "Yield Increase", "average": 35 },
+      { "category": "Income Growth", "average": 45 },
+      { "category": "Cost Reduction", "average": 28 },
+      { "category": "Market Access", "average": 52 }
+    ]
+  },
+  "featured_stories": [
+    {
+      "title": "Technology Adoption Success",
+      "count": 145,
+      "description": "Farmers who successfully adopted modern farming technologies"
+    },
+    {
+      "title": "Organic Transition",
+      "count": 89,
+      "description": "Successful transitions from conventional to organic farming"
+    },
+    {
+      "title": "Market Access Improvement",
+      "count": 156,
+      "description": "Farmers who improved market access and pricing"
+    }
+  ]
+}

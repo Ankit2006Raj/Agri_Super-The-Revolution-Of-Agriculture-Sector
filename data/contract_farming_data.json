@@ -1,0 +1,85 @@
+{
+  "contract_templates": [
+    {
+      "id": "wheat_contract_001",
+      "crop": "wheat",
+      "buyer": "Aashirvaad Mills Pvt Ltd",
+      "contract_type": "fixed_price",
+      "duration": "6_months",
+      "price_per_quintal": 2200,
+      "minimum_quantity": 1000,
+      "maximum_quantity": 5000,
+      "quality_specifications": {
+        "moisture": "max_12_percent",
+        "protein": "min_11_percent",
+        "foreign_matter": "max_2_percent"
+      },
+      "payment_terms": "30_days_after_delivery",
+      "advance_payment": 25,
+      "penalties": {
+        "quality_deviation": "5_percent_price_reduction",
+        "quantity_shortfall": "2_percent_penalty",
+        "delivery_delay": "1_percent_per_day"
+      }
+    },
+    {
+      "id": "rice_contract_002",
+      "crop": "rice",
+      "buyer": "India Gate Basmati Rice",
+      "contract_type": "premium_grade",
+      "duration": "4_months",
+      "price_per_quintal": 4500,
+      "minimum_quantity": 500,
+      "maximum_quantity": 2000,
+      "quality_specifications": {
+        "variety": "Pusa_1121",
+        "length": "min_7mm",
+        "aroma": "strong",
+        "broken_grains": "max_5_percent"
+      },
+      "payment_terms": "15_days_after_delivery",
+      "advance_payment": 30,
+      "bonus_incentives": {
+        "early_delivery": "2_percent_bonus",
+        "premium_quality": "5_percent_bonus",
+        "volume_bonus": "3_percent_above_2000_quintals"
+      }
+    }
+  ],
+  "active_contracts": [
+    {
+      "contract_id": "CF2024001",
+      "farmer_id": "F001",
+      "farmer_name": "Rajesh Kumar",
+      "crop": "wheat",
+      "area": "50_acres",
+      "expected_yield": "2000_quintals",
+      "contract_price": 2200,
+      "status": "active",
+      "sowing_date": "2024-11-15",
+      "expected_harvest": "2024-04-15",
+      "progress": {
+        "sowing": "completed",
+        "irrigation": "ongoing",
+        "fertilization": "scheduled",
+        "pest_control": "pending"
+      }
+    }
+  ],
+  "buyer_requirements": [
+    {
+      "buyer_id": "B001",
+      "company": "Patanjali Ayurved",
+      "requirements": {
+        "organic_wheat": { "quantity": "10000_quintals", "certification": "required" },
+        "organic_rice": { "quantity": "5000_quintals", "variety": "traditional" },
+        "pulses": { "quantity": "3000_quintals", "mixed_varieties": true }
+      },
+      "contract_terms": {
+        "advance_payment": 40,
+        "premium_over_market": 15,
+        "quality_bonus": 10
+      }
+    }
+  ]
+}

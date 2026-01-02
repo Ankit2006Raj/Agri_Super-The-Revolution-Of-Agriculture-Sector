@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+
+{% block title %}Crop Rotation{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-success mb-4">Crop Rotation Planner</h2>
+            <p class="lead">Optimize your farm's productivity with scientific crop rotation planning.</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Plan Your Rotation</h4>
+                    <form id="rotationForm">
+                        <div class="mb-3">
+                            <label for="farmLocation" class="form-label">Farm Location</label>
+                            <select class="form-select" id="farmLocation" required>
+                                <option value="" selected disabled>Select your location</option>
+                                <option value="north">Northern Region</option>
+                                <option value="south">Southern Region</option>
+                                <option value="east">Eastern Region</option>
+                                <option value="west">Western Region</option>
+                                <option value="central">Central Region</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="soilType" class="form-label">Soil Type</label>
+                            <select class="form-select" id="soilType" required>
+                                <option value="" selected disabled>Select soil type</option>
+                                <option value="clay">Clay Soil</option>
+                                <option value="sandy">Sandy Soil</option>
+                                <option value="loamy">Loamy Soil</option>
+                                <option value="silty">Silty Soil</option>
+                                <option value="peaty">Peaty Soil</option>
+                                <option value="chalky">Chalky Soil</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="farmSize" class="form-label">Farm Size (acres)</label>
+                            <input type="number" class="form-control" id="farmSize" min="0.1" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="previousCrop" class="form-label">Previous Crop</label>
+                            <select class="form-select" id="previousCrop" required>
+                                <option value="" selected disabled>Select previous crop</option>
+                                <option value="rice">Rice</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="maize">Maize</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="sugarcane">Sugarcane</option>
+                                <option value="pulses">Pulses</option>
+                                <option value="vegetables">Vegetables</option>
+                                <option value="none">First Planting (No Previous Crop)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Farming Goals (Select all that apply)</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="soilHealth" id="soilHealth">
+                                <label class="form-check-label" for="soilHealth">Improve Soil Health</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="pestControl" id="pestControl">
+                                <label class="form-check-label" for="pestControl">Natural Pest Control</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="yieldMax" id="yieldMax">
+                                <label class="form-check-label" for="yieldMax">Maximize Yield</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="organic" id="organic">
+                                <label class="form-check-label" for="organic">Organic Farming</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Generate Rotation Plan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Benefits of Crop Rotation</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Improves soil structure and fertility</li>
+                        <li class="list-group-item">Reduces pest and disease pressure</li>
+                        <li class="list-group-item">Prevents soil erosion and nutrient depletion</li>
+                        <li class="list-group-item">Increases biodiversity and ecosystem health</li>
+                        <li class="list-group-item">Optimizes water and nutrient use efficiency</li>
+                        <li class="list-group-item">Reduces dependency on chemical fertilizers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4" id="rotationPlanSection" style="display: none;">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Your Personalized Rotation Plan</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Season</th>
+                                    <th>Year 1</th>
+                                    <th>Year 2</th>
+                                    <th>Year 3</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rotationTable">
+                                <!-- Rotation plan will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h5 class="mt-4">Rotation Benefits</h5>
+                    <ul id="rotationBenefits">
+                        <!-- Benefits will be inserted here -->
+                    </ul>
+                    
+                    <h5 class="mt-4">Implementation Tips</h5>
+                    <div id="implementationTips">
+                        <!-- Tips will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Crop Rotation Principles</h4>
+                    <div class="accordion" id="rotationPrinciples">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Crop Family Rotation
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#rotationPrinciples">
+                                <div class="accordion-body">
+                                    <p>Rotate crops from different plant families to break pest and disease cycles. For example, follow a legume (beans, peas) with a leaf crop (lettuce, spinach), then a fruit crop (tomatoes, peppers), and finally a root crop (carrots, onions).</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Nutrient Management
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#rotationPrinciples">
+                                <div class="accordion-body">
+                                    <p>Follow heavy feeders (corn, cabbage) with light feeders (root vegetables), then soil builders (legumes). This helps maintain soil fertility and reduces the need for external inputs.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Cover Crops and Green Manures
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#rotationPrinciples">
+                                <div class="accordion-body">
+                                    <p>Incorporate cover crops like clover, vetch, or rye into your rotation to improve soil structure, add organic matter, and fix nitrogen. These can be planted during fallow periods or as part of a planned rotation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('rotationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Show the rotation plan section
+        document.getElementById('rotationPlanSection').style.display = 'block';
+        
+        // Get form values
+        const location = document.getElementById('farmLocation').value;
+        const soilType = document.getElementById('soilType').value;
+        const previousCrop = document.getElementById('previousCrop').value;
+        
+        // Sample rotation plan - in a real app, this would be generated based on the inputs
+        let rotationHTML = '';
+        
+        if (previousCrop === 'rice') {
+            rotationHTML = `
+                <tr>
+                    <td>Kharif (Monsoon)</td>
+                    <td>Pulses (Moong/Urad)</td>
+                    <td>Cotton</td>
+                    <td>Rice</td>
+                </tr>
+                <tr>
+                    <td>Rabi (Winter)</td>
+                    <td>Wheat</td>
+                    <td>Mustard</td>
+                    <td>Vegetables</td>
+                </tr>
+                <tr>
+                    <td>Zaid (Summer)</td>
+                    <td>Green Manure</td>
+                    <td>Moong Bean</td>
+                    <td>Fallow</td>
+                </tr>
+            `;
+        } else if (previousCrop === 'wheat') {
+            rotationHTML = `
+                <tr>
+                    <td>Kharif (Monsoon)</td>
+                    <td>Maize</td>
+                    <td>Soybean</td>
+                    <td>Rice</td>
+                </tr>
+                <tr>
+                    <td>Rabi (Winter)</td>
+                    <td>Vegetables</td>
+                    <td>Wheat</td>
+                    <td>Gram</td>
+                </tr>
+                <tr>
+                    <td>Zaid (Summer)</td>
+                    <td>Moong Bean</td>
+                    <td>Fallow</td>
+                    <td>Green Manure</td>
+                </tr>
+            `;
+        } else {
+            rotationHTML = `
+                <tr>
+                    <td>Kharif (Monsoon)</td>
+                    <td>Maize</td>
+                    <td>Rice</td>
+                    <td>Cotton</td>
+                </tr>
+                <tr>
+                    <td>Rabi (Winter)</td>
+                    <td>Wheat</td>
+                    <td>Pulses</td>
+                    <td>Vegetables</td>
+                </tr>
+                <tr>
+                    <td>Zaid (Summer)</td>
+                    <td>Green Manure</td>
+                    <td>Moong Bean</td>
+                    <td>Fallow</td>
+                </tr>
+            `;
+        }
+        
+        document.getElementById('rotationTable').innerHTML = rotationHTML;
+        
+        // Sample benefits
+        document.getElementById('rotationBenefits').innerHTML = `
+            <li>Improved soil fertility through nitrogen fixation from pulses</li>
+            <li>Reduced pest pressure by breaking pest cycles</li>
+            <li>Enhanced water use efficiency across seasons</li>
+            <li>Diversified income sources throughout the year</li>
+            <li>Reduced fertilizer requirements by 20-30%</li>
+        `;
+        
+        // Sample implementation tips
+        document.getElementById('implementationTips').innerHTML = `
+            <p>For your ${soilType} soil in the ${location} region, consider these implementation tips:</p>
+            <ul>
+                <li>Prepare your soil 2-3 weeks before sowing each crop</li>
+                <li>Apply organic compost during land preparation</li>
+                <li>Monitor soil moisture levels regularly</li>
+                <li>Consider intercropping compatible plants for better land utilization</li>
+                <li>Maintain detailed records of each crop's performance for future planning</li>
+            </ul>
+        `;
+        
+        // Scroll to the rotation plan
+        document.getElementById('rotationPlanSection').scrollIntoView({behavior: 'smooth'});
+    });
+</script>
+{% endblock %}

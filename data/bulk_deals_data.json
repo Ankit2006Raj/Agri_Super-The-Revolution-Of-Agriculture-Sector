@@ -1,0 +1,71 @@
+{
+  "active_pools": [
+    {
+      "pool_id": "BD2024001",
+      "crop": "tomato",
+      "target_quantity": 10000,
+      "current_quantity": 7500,
+      "participants": 45,
+      "price_per_kg": 25,
+      "market_price": 32,
+      "savings_percent": 21.9,
+      "deadline": "2024-12-31",
+      "delivery_location": "Delhi Mandi",
+      "quality_grade": "Grade-A",
+      "status": "active"
+    },
+    {
+      "pool_id": "BD2024002",
+      "crop": "onion",
+      "target_quantity": 15000,
+      "current_quantity": 12000,
+      "participants": 67,
+      "price_per_kg": 18,
+      "market_price": 24,
+      "savings_percent": 25.0,
+      "deadline": "2024-12-25",
+      "delivery_location": "Mumbai APMC",
+      "quality_grade": "Premium",
+      "status": "active"
+    }
+  ],
+  "completed_deals": [
+    {
+      "pool_id": "BD2024003",
+      "crop": "potato",
+      "final_quantity": 20000,
+      "participants": 89,
+      "final_price": 12,
+      "market_price": 16,
+      "total_savings": 80000,
+      "completion_date": "2024-11-15",
+      "satisfaction_rating": 4.7
+    }
+  ],
+  "deal_categories": {
+    "vegetables": {
+      "seasonal": ["tomato", "onion", "potato", "cabbage", "cauliflower"],
+      "year_round": ["carrot", "beetroot", "radish", "spinach"],
+      "premium": ["bell_pepper", "broccoli", "lettuce", "zucchini"]
+    },
+    "fruits": {
+      "seasonal": ["mango", "apple", "orange", "grapes"],
+      "exotic": ["avocado", "kiwi", "dragon_fruit", "passion_fruit"],
+      "dried": ["dates", "figs", "raisins", "almonds"]
+    },
+    "grains": {
+      "cereals": ["wheat", "rice", "corn", "barley"],
+      "pulses": ["chickpea", "lentil", "black_gram", "kidney_bean"],
+      "millets": ["pearl_millet", "finger_millet", "foxtail_millet"]
+    }
+  },
+  "logistics_partners": [
+    {
+      "partner_id": "LP001",
+      "name": "AgriTransport Solutions",
+      "coverage": ["North India", "Central India"],
+      "vehicle_types": ["trucks", "refrigerated_vans", "containers"],
+      "rates": { "per_km": 15, "per_quintal": 25, "refrigerated_premium": 40 }
+    }
+  ]
+}

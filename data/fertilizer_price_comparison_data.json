@@ -1,0 +1,93 @@
+{
+  "fertilizers": [
+    {
+      "name": "Urea",
+      "type": "Nitrogen",
+      "composition": "46% N",
+      "brands": [
+        {
+          "brand": "IFFCO",
+          "price_per_bag": 280,
+          "bag_weight": "50kg",
+          "availability": "In Stock",
+          "dealer": "Agri Store Delhi",
+          "rating": 4.5,
+          "discount": "5% on bulk orders"
+        },
+        {
+          "brand": "Coromandel",
+          "price_per_bag": 285,
+          "bag_weight": "50kg",
+          "availability": "Limited Stock",
+          "dealer": "Farm Supply Center",
+          "rating": 4.3,
+          "discount": "3% on advance payment"
+        }
+      ],
+      "application_rate": "120-150 kg/hectare",
+      "best_time": "Pre-sowing and top dressing",
+      "crops": ["Wheat", "Rice", "Sugarcane", "Cotton"]
+    },
+    {
+      "name": "DAP",
+      "type": "Phosphorus",
+      "composition": "18% N, 46% P2O5",
+      "brands": [
+        {
+          "brand": "IFFCO",
+          "price_per_bag": 1350,
+          "bag_weight": "50kg",
+          "availability": "In Stock",
+          "dealer": "Krishi Kendra",
+          "rating": 4.6,
+          "discount": "7% on orders above 10 bags"
+        },
+        {
+          "brand": "NFL",
+          "price_per_bag": 1340,
+          "bag_weight": "50kg",
+          "availability": "In Stock",
+          "dealer": "Agri Mart",
+          "rating": 4.4,
+          "discount": "Free delivery on bulk orders"
+        }
+      ],
+      "application_rate": "100-125 kg/hectare",
+      "best_time": "Basal application",
+      "crops": ["Wheat", "Rice", "Pulses", "Oilseeds"]
+    }
+  ],
+  "price_trends": [
+    {
+      "fertilizer": "Urea",
+      "monthly_prices": [
+        { "month": "Jan 2024", "price": 275 },
+        { "month": "Feb 2024", "price": 280 },
+        { "month": "Mar 2024", "price": 285 },
+        { "month": "Apr 2024", "price": 280 },
+        { "month": "May 2024", "price": 275 }
+      ],
+      "trend": "stable",
+      "forecast": "Expected to remain stable"
+    }
+  ],
+  "dealers": [
+    {
+      "name": "Agri Store Delhi",
+      "location": "Connaught Place, Delhi",
+      "contact": "+91-9876543210",
+      "rating": 4.5,
+      "services": ["Home Delivery", "Bulk Orders", "Credit Facility"],
+      "brands_available": ["IFFCO", "NFL", "Coromandel"]
+    }
+  ],
+  "subsidies": [
+    {
+      "fertilizer": "Urea",
+      "subsidy_amount": 120,
+      "subsidized_price": 280,
+      "eligibility": "All farmers with valid ID",
+      "application_process": "Through Fertilizer Dealer"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "emi_products": [
+    {
+      "product_id": "EP001",
+      "product_name": "Mahindra 575 DI Tractor",
+      "category": "Farm Equipment",
+      "price": 850000,
+      "down_payment_percentage": 20,
+      "emi_options": [
+        {
+          "tenure_months": 36,
+          "interest_rate": 12.5,
+          "monthly_emi": 27500,
+          "total_amount": 990000
+        },
+        {
+          "tenure_months": 48,
+          "interest_rate": 13.0,
+          "monthly_emi": 22800,
+          "total_amount": 1094400
+        }
+      ],
+      "eligibility_criteria": ["Minimum land holding: 2 acres", "Annual income: ₹3 lakhs", "Credit score: 650+"]
+    }
+  ],
+  "active_emis": [
+    {
+      "emi_id": "EMI001",
+      "farmer_id": "F12345",
+      "product_name": "John Deere 5050D",
+      "purchase_amount": 750000,
+      "down_payment": 150000,
+      "loan_amount": 600000,
+      "tenure_months": 42,
+      "monthly_emi": 18500,
+      "paid_installments": 6,
+      "remaining_installments": 36,
+      "next_due_date": "2024-02-05",
+      "status": "Active"
+    }
+  ],
+  "payment_history": [
+    {
+      "payment_id": "PAY001",
+      "emi_id": "EMI001",
+      "installment_number": 6,
+      "amount": 18500,
+      "payment_date": "2024-01-05",
+      "payment_method": "Auto Debit",
+      "status": "Paid"
+    }
+  ],
+  "insurance_coverage": [
+    {
+      "equipment_id": "EQ001",
+      "insurance_type": "Comprehensive",
+      "premium_annual": 25000,
+      "coverage_amount": 750000,
+      "policy_number": "INS2024001",
+      "validity": "2024-12-31"
+    }
+  ]
+}

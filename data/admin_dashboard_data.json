@@ -1,0 +1,71 @@
+{
+  "platform_statistics": {
+    "total_users": 45230,
+    "active_users_monthly": 32150,
+    "new_registrations_monthly": 2340,
+    "total_transactions": 125000,
+    "transaction_value_monthly": 15600000,
+    "revenue_monthly": 780000,
+    "support_tickets_open": 145,
+    "system_uptime": 99.8
+  },
+  "user_analytics": {
+    "user_types": [
+      { "type": "Farmers", "count": 35400, "percentage": 78.3 },
+      { "type": "Buyers", "count": 6200, "percentage": 13.7 },
+      { "type": "Service Providers", "count": 2800, "percentage": 6.2 },
+      { "type": "Experts", "count": 830, "percentage": 1.8 }
+    ],
+    "geographic_distribution": [
+      { "state": "Punjab", "users": 8900, "percentage": 19.7 },
+      { "state": "Uttar Pradesh", "users": 7200, "percentage": 15.9 },
+      { "state": "Maharashtra", "users": 6800, "percentage": 15.0 },
+      { "state": "Gujarat", "users": 5400, "percentage": 11.9 }
+    ],
+    "engagement_metrics": {
+      "daily_active_users": 12500,
+      "average_session_duration": "18 minutes",
+      "page_views_daily": 85000,
+      "feature_usage": [
+        { "feature": "Marketplace", "usage": 65 },
+        { "feature": "Price Discovery", "usage": 78 },
+        { "feature": "Weather Alerts", "usage": 45 },
+        { "feature": "Expert Consultation", "usage": 32 }
+      ]
+    }
+  },
+  "financial_metrics": {
+    "monthly_revenue": 780000,
+    "revenue_sources": [
+      { "source": "Transaction Fees", "amount": 450000, "percentage": 57.7 },
+      { "source": "Premium Subscriptions", "amount": 180000, "percentage": 23.1 },
+      { "source": "Advertisement", "amount": 100000, "percentage": 12.8 },
+      { "source": "Certification Fees", "amount": 50000, "percentage": 6.4 }
+    ],
+    "monthly_expenses": 520000,
+    "net_profit": 260000,
+    "growth_rate": 15.2
+  },
+  "system_health": {
+    "server_status": "Healthy",
+    "database_performance": "Optimal",
+    "api_response_time": "120ms",
+    "error_rate": 0.02,
+    "storage_usage": "68%",
+    "bandwidth_usage": "2.3 TB/month"
+  },
+  "recent_activities": [
+    {
+      "timestamp": "2024-01-20 14:30:00",
+      "activity": "New user registration",
+      "details": "Farmer from Haryana registered",
+      "user_id": "U45231"
+    },
+    {
+      "timestamp": "2024-01-20 14:25:00",
+      "activity": "Transaction completed",
+      "details": "₹125,000 wheat purchase transaction",
+      "transaction_id": "T125001"
+    }
+  ]
+}

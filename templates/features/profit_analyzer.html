@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block title %}Profit Analyzer - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Profit Analyzer</h1>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Calculate Your Farming Profits</h5>
+                    <p class="card-text">Enter your farming details to analyze costs, revenue, and potential profits.</p>
+                    
+                    <form id="profit-calculator-form">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6>Crop Information</h6>
+                                <div class="form-group mb-3">
+                                    <label for="crop-type">Crop Type</label>
+                                    <select class="form-control" id="crop-type" required>
+                                        <option value="">Select crop</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="maize">Maize</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="land-area">Land Area (Acres)</label>
+                                    <input type="number" class="form-control" id="land-area" min="0.1" step="0.1" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="expected-yield">Expected Yield (Quintals/Acre)</label>
+                                    <input type="number" class="form-control" id="expected-yield" min="1" step="0.5" required>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h6>Cost Information</h6>
+                                <div class="form-group mb-3">
+                                    <label for="seed-cost">Seed Cost (₹)</label>
+                                    <input type="number" class="form-control" id="seed-cost" min="0" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="fertilizer-cost">Fertilizer Cost (₹)</label>
+                                    <input type="number" class="form-control" id="fertilizer-cost" min="0" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="labor-cost">Labor Cost (₹)</label>
+                                    <input type="number" class="form-control" id="labor-cost" min="0" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="other-costs">Other Costs (₹)</label>
+                                    <input type="number" class="form-control" id="other-costs" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6>Revenue Information</h6>
+                                <div class="form-group mb-3">
+                                    <label for="expected-price">Expected Price (₹/Quintal)</label>
+                                    <input type="number" class="form-control" id="expected-price" min="0" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="subsidy-amount">Subsidy Amount (₹)</label>
+                                    <input type="number" class="form-control" id="subsidy-amount" min="0" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Calculate Profit</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm d-none" id="profit-results">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Profit Analysis Results</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Cost Breakdown</h6>
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td>Seed Cost</td>
+                                        <td id="result-seed-cost">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fertilizer Cost</td>
+                                        <td id="result-fertilizer-cost">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Labor Cost</td>
+                                        <td id="result-labor-cost">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other Costs</td>
+                                        <td id="result-other-costs">₹0</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <th>Total Cost</th>
+                                        <th id="result-total-cost">₹0</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h6>Revenue & Profit</h6>
+                            <table class="table table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td>Expected Yield</td>
+                                        <td id="result-total-yield">0 Quintals</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Crop Revenue</td>
+                                        <td id="result-crop-revenue">₹0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Subsidy Amount</td>
+                                        <td id="result-subsidy">₹0</td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <th>Total Revenue</th>
+                                        <th id="result-total-revenue">₹0</th>
+                                    </tr>
+                                    <tr class="table-success">
+                                        <th>Net Profit</th>
+                                        <th id="result-net-profit">₹0</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Profit per Acre</td>
+                                        <td id="result-profit-per-acre">₹0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h6>Profit Optimization Suggestions</h6>
+                        <ul id="optimization-suggestions" class="list-group">
+                            <!-- Suggestions will be added here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('profit-calculator-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get input values
+        const cropType = document.getElementById('crop-type').value;
+        const landArea = parseFloat(document.getElementById('land-area').value);
+        const expectedYield = parseFloat(document.getElementById('expected-yield').value);
+        const seedCost = parseFloat(document.getElementById('seed-cost').value);
+        const fertilizerCost = parseFloat(document.getElementById('fertilizer-cost').value);
+        const laborCost = parseFloat(document.getElementById('labor-cost').value);
+        const otherCosts = parseFloat(document.getElementById('other-costs').value);
+        const expectedPrice = parseFloat(document.getElementById('expected-price').value);
+        const subsidyAmount = parseFloat(document.getElementById('subsidy-amount').value);
+        
+        // Calculate results
+        const totalYield = landArea * expectedYield;
+        const totalCost = seedCost + fertilizerCost + laborCost + otherCosts;
+        const cropRevenue = totalYield * expectedPrice;
+        const totalRevenue = cropRevenue + subsidyAmount;
+        const netProfit = totalRevenue - totalCost;
+        const profitPerAcre = netProfit / landArea;
+        
+        // Update results in the UI
+        document.getElementById('result-seed-cost').textContent = `₹${seedCost.toLocaleString()}`;
+        document.getElementById('result-fertilizer-cost').textContent = `₹${fertilizerCost.toLocaleString()}`;
+        document.getElementById('result-labor-cost').textContent = `₹${laborCost.toLocaleString()}`;
+        document.getElementById('result-other-costs').textContent = `₹${otherCosts.toLocaleString()}`;
+        document.getElementById('result-total-cost').textContent = `₹${totalCost.toLocaleString()}`;
+        
+        document.getElementById('result-total-yield').textContent = `${totalYield.toLocaleString()} Quintals`;
+        document.getElementById('result-crop-revenue').textContent = `₹${cropRevenue.toLocaleString()}`;
+        document.getElementById('result-subsidy').textContent = `₹${subsidyAmount.toLocaleString()}`;
+        document.getElementById('result-total-revenue').textContent = `₹${totalRevenue.toLocaleString()}`;
+        document.getElementById('result-net-profit').textContent = `₹${netProfit.toLocaleString()}`;
+        document.getElementById('result-profit-per-acre').textContent = `₹${profitPerAcre.toLocaleString()}`;
+        
+        // Generate optimization suggestions
+        const suggestionsList = document.getElementById('optimization-suggestions');
+        suggestionsList.innerHTML = '';
+        
+        // Add some sample suggestions
+        const suggestions = [
+            'Consider using high-yield seed varieties to increase production.',
+            'Explore organic farming methods to reduce fertilizer costs.',
+            'Implement water conservation techniques to reduce irrigation costs.',
+            'Consider crop insurance to protect against yield losses.'
+        ];
+        
+        suggestions.forEach(suggestion => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.textContent = suggestion;
+            suggestionsList.appendChild(li);
+        });
+        
+        // Show results
+        document.getElementById('profit-results').classList.remove('d-none');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,98 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "title": "Best time to sow wheat in North India?",
+      "category": "Crop Management",
+      "subcategory": "Sowing",
+      "asked_by": "Farmer123",
+      "asked_date": "2024-01-15",
+      "question_text": "I'm planning to sow wheat in Punjab. What's the optimal time and what variety should I choose for maximum yield?",
+      "tags": ["wheat", "sowing", "punjab", "varieties"],
+      "upvotes": 15,
+      "views": 234,
+      "answers_count": 8,
+      "status": "Answered",
+      "best_answer_id": 101
+    },
+    {
+      "id": 2,
+      "title": "Organic pest control for tomato plants",
+      "category": "Pest Management",
+      "subcategory": "Organic Methods",
+      "asked_by": "OrganicFarmer",
+      "asked_date": "2024-01-12",
+      "question_text": "My tomato plants are affected by whiteflies. What are some effective organic methods to control them without using chemicals?",
+      "tags": ["tomato", "organic", "pest-control", "whiteflies"],
+      "upvotes": 22,
+      "views": 456,
+      "answers_count": 12,
+      "status": "Answered",
+      "best_answer_id": 102
+    }
+  ],
+  "answers": [
+    {
+      "id": 101,
+      "question_id": 1,
+      "answered_by": "Dr. Agricultural Expert",
+      "expert_verified": true,
+      "answered_date": "2024-01-15",
+      "answer_text": "For Punjab, the optimal wheat sowing time is mid-November to early December. I recommend HD-2967 or PBW-725 varieties for your region. These varieties give excellent yield (45-50 quintals per hectare) and are disease resistant.",
+      "upvotes": 28,
+      "helpful_count": 45,
+      "is_best_answer": true
+    },
+    {
+      "id": 102,
+      "question_id": 2,
+      "answered_by": "Organic Specialist",
+      "expert_verified": true,
+      "answered_date": "2024-01-12",
+      "answer_text": "For whitefly control on tomatoes, try these organic methods: 1) Neem oil spray (2ml per liter), 2) Yellow sticky traps, 3) Companion planting with marigolds, 4) Soap solution spray. Apply neem oil in evening hours for best results.",
+      "upvotes": 35,
+      "helpful_count": 67,
+      "is_best_answer": true
+    }
+  ],
+  "experts": [
+    {
+      "id": 1,
+      "name": "Dr. Rajesh Kumar",
+      "specialization": "Crop Science",
+      "qualification": "PhD in Agriculture",
+      "experience_years": 15,
+      "institution": "Punjab Agricultural University",
+      "rating": 4.9,
+      "answers_given": 245,
+      "helpful_answers": 230,
+      "verification_status": "Verified"
+    },
+    {
+      "id": 2,
+      "name": "Dr. Priya Sharma",
+      "specialization": "Organic Farming",
+      "qualification": "PhD in Organic Agriculture",
+      "experience_years": 12,
+      "institution": "IARI, New Delhi",
+      "rating": 4.8,
+      "answers_given": 189,
+      "helpful_answers": 175,
+      "verification_status": "Verified"
+    }
+  ],
+  "categories": [
+    { "name": "Crop Management", "question_count": 1250, "subcategories": ["Sowing", "Harvesting", "Varieties"] },
+    {
+      "name": "Pest Management",
+      "question_count": 890,
+      "subcategories": ["Organic Methods", "Chemical Control", "IPM"]
+    },
+    { "name": "Soil Health", "question_count": 675, "subcategories": ["Testing", "Fertilizers", "Organic Matter"] },
+    {
+      "name": "Weather & Climate",
+      "question_count": 445,
+      "subcategories": ["Seasonal Planning", "Climate Change", "Weather Forecast"]
+    }
+  ]
+}

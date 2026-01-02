@@ -1,0 +1,115 @@
+/* Financial Overview styles */
+.finance-overview-card {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+/* Progress bar styles */
+.progress {
+    height: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+}
+
+/* Progress bar percentage classes */
+.progress-38 { width: 38.6%; }
+.progress-62 { width: 62.5%; }
+.progress-37 { width: 37.5%; }
+.progress-77 { width: 77.5%; }
+.progress-95 { width: 95%; }
+.progress-50 { width: 50%; }
+.progress-84 { width: 84%; }
+.progress-108 { width: 108%; }
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Financial indicators */
+.financial-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Budget overview */
+.budget-overview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.budget-overview .progress {
+    flex-grow: 1;
+    margin: 0 1rem;
+}
+
+/* Chart containers */
+.chart-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.financial-chart {
+    height: 200px;
+}
+
+/* Progress bars */
+.loan-progress {
+    height: 5px;
+}
+
+/* Card styles */
+.financial-card {
+    border-radius: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.metric-card {
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* KPI cards */
+.kpi-card {
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Value indicators */
+.value-indicator {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.value-indicator .percentage {
+    font-size: 0.875rem;
+    opacity: 0.8;
+}
+
+/* Expense tracking */
+.expense-category {
+    margin-bottom: 1.5rem;
+}
+
+.expense-bar {
+    height: 8px;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}

@@ -1,0 +1,11 @@
+.password-strength .progress {
+    height: 5px;
+}
+
+.password-strength .progress-bar {
+    transition: width 0.3s ease;
+}
+
+.currency-suffix {
+    opacity: 0.7;
+}

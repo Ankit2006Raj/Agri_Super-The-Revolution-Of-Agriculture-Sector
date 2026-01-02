@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Fraud Detection{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Fraud Detection System</h1>
+    
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Fraud Patterns</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Pattern Name</th>
+                                    <th>Description</th>
+                                    <th>Risk Level</th>
+                                    <th>Detection Rate</th>
+                                    <th>False Positive Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pattern in fraud_patterns %}
+                                <tr>
+                                    <td>{{ pattern.pattern_name }}</td>
+                                    <td>{{ pattern.description }}</td>
+                                    <td>
+                                        <span class="badge {% if pattern.risk_level == 'High' %}bg-danger{% elif pattern.risk_level == 'Medium' %}bg-warning{% else %}bg-info{% endif %}">
+                                            {{ pattern.risk_level }}
+                                        </span>
+                                    </td>
+                                    <td>{{ pattern.detection_rate }}</td>
+                                    <td>{{ pattern.false_positive_rate }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Suspicious Activities</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Activity Type</th>
+                                    <th>Timestamp</th>
+                                    <th>Risk Score</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for activity in suspicious_activities %}
+                                <tr>
+                                    <td>{{ activity.user_id }}</td>
+                                    <td>{{ activity.activity_type }}</td>
+                                    <td>{{ activity.timestamp }}</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ activity.risk_score }}%;" aria-valuenow="{{ activity.risk_score }}" aria-valuemin="0" aria-valuemax="100">{{ activity.risk_score }}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge {% if activity.status == 'Under Investigation' %}bg-warning{% elif activity.status == 'Resolved' %}bg-success{% else %}bg-secondary{% endif %}">
+                                            {{ activity.status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">Investigate</button>
+                                        <button class="btn btn-sm btn-success">Mark Safe</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

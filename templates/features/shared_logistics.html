@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+
+{% block title %}Shared Logistics - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Shared Logistics</h1>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Find & Share Transportation</h5>
+                    <p class="card-text">Reduce costs by sharing transportation with other farmers in your area.</p>
+                    
+                    <ul class="nav nav-tabs" id="logisticsTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="available-tab" data-bs-toggle="tab" data-bs-target="#available" type="button" role="tab" aria-controls="available" aria-selected="true">Available Vehicles</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="post-tab" data-bs-toggle="tab" data-bs-target="#post" type="button" role="tab" aria-controls="post" aria-selected="false">Post Your Vehicle</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="request-tab" data-bs-toggle="tab" data-bs-target="#request" type="button" role="tab" aria-controls="request" aria-selected="false">Request Transport</button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content mt-3" id="logisticsTabContent">
+                        <!-- Available Vehicles Tab -->
+                        <div class="tab-pane fade show active" id="available" role="tabpanel" aria-labelledby="available-tab">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search by location" id="location-search">
+                                        <button class="btn btn-outline-secondary" type="button">Search</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="vehicle-type-filter">
+                                        <option value="">All Vehicle Types</option>
+                                        <option value="truck">Truck</option>
+                                        <option value="tractor">Tractor with Trailer</option>
+                                        <option value="pickup">Pickup</option>
+                                        <option value="van">Van</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="date-filter">
+                                        <option value="">Any Date</option>
+                                        <option value="today">Today</option>
+                                        <option value="tomorrow">Tomorrow</option>
+                                        <option value="week">This Week</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Vehicle Type</th>
+                                            <th>Capacity</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Date</th>
+                                            <th>Price (per km)</th>
+                                            <th>Contact</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tractor with Trailer</td>
+                                            <td>1.5 tons</td>
+                                            <td>Amritsar</td>
+                                            <td>Ludhiana</td>
+                                            <td>May 15, 2024</td>
+                                            <td>₹15</td>
+                                            <td>Gurpreet Singh</td>
+                                            <td><button class="btn btn-sm btn-primary">Book Now</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pickup Truck</td>
+                                            <td>800 kg</td>
+                                            <td>Jaipur</td>
+                                            <td>Delhi</td>
+                                            <td>May 16, 2024</td>
+                                            <td>₹12</td>
+                                            <td>Ramesh Kumar</td>
+                                            <td><button class="btn btn-sm btn-primary">Book Now</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mini Truck</td>
+                                            <td>2 tons</td>
+                                            <td>Pune</td>
+                                            <td>Mumbai</td>
+                                            <td>May 17, 2024</td>
+                                            <td>₹18</td>
+                                            <td>Sunil Patil</td>
+                                            <td><button class="btn btn-sm btn-primary">Book Now</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Post Your Vehicle Tab -->
+                        <div class="tab-pane fade" id="post" role="tabpanel" aria-labelledby="post-tab">
+                            <form id="post-vehicle-form">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="vehicle-type" class="form-label">Vehicle Type</label>
+                                            <select class="form-select" id="vehicle-type" required>
+                                                <option value="">Select vehicle type</option>
+                                                <option value="truck">Truck</option>
+                                                <option value="tractor">Tractor with Trailer</option>
+                                                <option value="pickup">Pickup</option>
+                                                <option value="van">Van</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="capacity" class="form-label">Capacity (kg)</label>
+                                            <input type="number" class="form-control" id="capacity" min="100" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="from-location" class="form-label">From Location</label>
+                                            <input type="text" class="form-control" id="from-location" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="to-location" class="form-label">To Location</label>
+                                            <input type="text" class="form-control" id="to-location" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="available-date" class="form-label">Available Date</label>
+                                            <input type="date" class="form-control" id="available-date" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="price-per-km" class="form-label">Price per km (₹)</label>
+                                            <input type="number" class="form-control" id="price-per-km" min="1" step="0.5" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="contact-name" class="form-label">Contact Name</label>
+                                            <input type="text" class="form-control" id="contact-name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="contact-phone" class="form-label">Contact Phone</label>
+                                            <input type="tel" class="form-control" id="contact-phone" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="additional-notes" class="form-label">Additional Notes</label>
+                                    <textarea class="form-control" id="additional-notes" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post Vehicle</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Request Transport Tab -->
+                        <div class="tab-pane fade" id="request" role="tabpanel" aria-labelledby="request-tab">
+                            <form id="request-transport-form">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="cargo-type" class="form-label">Cargo Type</label>
+                                            <select class="form-select" id="cargo-type" required>
+                                                <option value="">Select cargo type</option>
+                                                <option value="grains">Grains</option>
+                                                <option value="vegetables">Vegetables</option>
+                                                <option value="fruits">Fruits</option>
+                                                <option value="dairy">Dairy Products</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="cargo-weight" class="form-label">Cargo Weight (kg)</label>
+                                            <input type="number" class="form-control" id="cargo-weight" min="10" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="pickup-location" class="form-label">Pickup Location</label>
+                                            <input type="text" class="form-control" id="pickup-location" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="delivery-location" class="form-label">Delivery Location</label>
+                                            <input type="text" class="form-control" id="delivery-location" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="pickup-date" class="form-label">Pickup Date</label>
+                                            <input type="date" class="form-control" id="pickup-date" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="budget" class="form-label">Budget (₹)</label>
+                                            <input type="number" class="form-control" id="budget" min="100" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="requester-name" class="form-label">Your Name</label>
+                                            <input type="text" class="form-control" id="requester-name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="requester-phone" class="form-label">Your Phone</label>
+                                            <input type="tel" class="form-control" id="requester-phone" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="request-notes" class="form-label">Special Requirements</label>
+                                    <textarea class="form-control" id="request-notes" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Request</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Logistics Cost Calculator</h5>
+                    <p class="card-text">Calculate and compare costs between individual and shared logistics.</p>
+                    
+                    <form id="logistics-calculator-form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="distance" class="form-label">Distance (km)</label>
+                                    <input type="number" class="form-control" id="distance" min="1" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="cargo-weight-calc" class="form-label">Cargo Weight (kg)</label>
+                                    <input type="number" class="form-control" id="cargo-weight-calc" min="10" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="vehicle-type-calc" class="form-label">Vehicle Type</label>
+                                    <select class="form-select" id="vehicle-type-calc" required>
+                                        <option value="">Select vehicle type</option>
+                                        <option value="truck">Truck</option>
+                                        <option value="tractor">Tractor with Trailer</option>
+                                        <option value="pickup">Pickup</option>
+                                        <option value="van">Van</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Calculate</button>
+                    </form>
+                    
+                    <div id="calculation-results" class="mt-4" style="display: none;">
+                        <h6>Cost Comparison</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Individual Transport</h6>
+                                        <p class="display-6" id="individual-cost">₹0</p>
+                                        <ul class="list-unstyled">
+                                            <li>Fuel: <span id="fuel-cost">₹0</span></li>
+                                            <li>Driver: <span id="driver-cost">₹0</span></li>
+                                            <li>Maintenance: <span id="maintenance-cost">₹0</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Shared Transport</h6>
+                                        <p class="display-6" id="shared-cost">₹0</p>
+                                        <p class="text-success" id="savings">You save: ₹0</p>
+                                        <p class="text-muted">Based on average sharing with 2 other farmers</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Logistics Tips</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Benefits of Shared Logistics</h6>
+                            <ul>
+                                <li>Reduce transportation costs by up to 60%</li>
+                                <li>Lower environmental impact through reduced emissions</li>
+                                <li>Access to larger vehicles for bulk transport</li>
+                                <li>Build community connections with nearby farmers</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Best Practices</h6>
+                            <ul>
+                                <li>Plan shipments at least 3 days in advance</li>
+                                <li>Properly package produce to prevent damage</li>
+                                <li>Coordinate pickup and delivery times with all parties</li>
+                                <li>Share contact information for real-time updates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Logistics calculator functionality
+        const calculatorForm = document.getElementById('logistics-calculator-form');
+        const resultsSection = document.getElementById('calculation-results');
+        
+        if (calculatorForm) {
+            calculatorForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const distance = parseFloat(document.getElementById('distance').value);
+                const weight = parseFloat(document.getElementById('cargo-weight-calc').value);
+                const vehicleType = document.getElementById('vehicle-type-calc').value;
+                
+                // Calculate costs (simplified calculation)
+                let ratePerKm = 0;
+                switch(vehicleType) {
+                    case 'truck':
+                        ratePerKm = 25;
+                        break;
+                    case 'tractor':
+                        ratePerKm = 20;
+                        break;
+                    case 'pickup':
+                        ratePerKm = 15;
+                        break;
+                    case 'van':
+                        ratePerKm = 12;
+                        break;
+                    default:
+                        ratePerKm = 15;
+                }
+                
+                const fuelCost = distance * ratePerKm * 0.6;
+                const driverCost = distance * 5;
+                const maintenanceCost = distance * ratePerKm * 0.2;
+                
+                const individualCost = fuelCost + driverCost + maintenanceCost;
+                const sharedCost = individualCost / 3; // Assuming sharing with 2 others
+                const savings = individualCost - sharedCost;
+                
+                // Display results
+                document.getElementById('fuel-cost').textContent = '₹' + fuelCost.toFixed(2);
+                document.getElementById('driver-cost').textContent = '₹' + driverCost.toFixed(2);
+                document.getElementById('maintenance-cost').textContent = '₹' + maintenanceCost.toFixed(2);
+                document.getElementById('individual-cost').textContent = '₹' + individualCost.toFixed(2);
+                document.getElementById('shared-cost').textContent = '₹' + sharedCost.toFixed(2);
+                document.getElementById('savings').textContent = 'You save: ₹' + savings.toFixed(2);
+                
+                // Show results section
+                resultsSection.style.display = 'block';
+            });
+        }
+        
+        // Form submission handlers (just prevent default for demo)
+        const postVehicleForm = document.getElementById('post-vehicle-form');
+        if (postVehicleForm) {
+            postVehicleForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Vehicle posted successfully!');
+            });
+        }
+        
+        const requestTransportForm = document.getElementById('request-transport-form');
+        if (requestTransportForm) {
+            requestTransportForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Transport request submitted successfully!');
+            });
+        }
+    });
+</script>
+{% endblock %}

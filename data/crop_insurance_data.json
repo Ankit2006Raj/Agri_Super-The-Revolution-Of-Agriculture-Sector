@@ -1,0 +1,55 @@
+{
+  "insurance_schemes": [
+    {
+      "scheme_id": "PMFBY001",
+      "scheme_name": "Pradhan Mantri Fasal Bima Yojana",
+      "coverage_type": "Comprehensive",
+      "premium_rates": {
+        "kharif": 2.0,
+        "rabi": 1.5,
+        "annual_commercial": 5.0
+      },
+      "sum_insured_calculation": "Scale of Finance or District Level Yield",
+      "risks_covered": ["Drought", "Flood", "Hailstorm", "Cyclone", "Fire", "Disease", "Pest attack"],
+      "claim_settlement_days": 60
+    }
+  ],
+  "enrolled_farmers": [
+    {
+      "farmer_id": "F12345",
+      "farmer_name": "Suresh Patel",
+      "policy_number": "PMFBY2024001",
+      "crop": "Cotton",
+      "area_insured": 10,
+      "sum_insured": 500000,
+      "premium_paid": 10000,
+      "subsidy_received": 40000,
+      "season": "Kharif 2024",
+      "status": "Active"
+    }
+  ],
+  "claims_data": [
+    {
+      "claim_id": "CL2024001",
+      "farmer_id": "F12345",
+      "policy_number": "PMFBY2024001",
+      "loss_type": "Drought",
+      "loss_percentage": 65,
+      "claim_amount": 325000,
+      "assessment_date": "2024-01-10",
+      "settlement_date": "2024-02-15",
+      "status": "Settled"
+    }
+  ],
+  "yield_data": [
+    {
+      "district": "Ahmednagar",
+      "crop": "Cotton",
+      "season": "Kharif 2023",
+      "threshold_yield": 15,
+      "actual_yield": 9.5,
+      "yield_loss_percentage": 36.7,
+      "trigger_level": "Unit Area"
+    }
+  ]
+}

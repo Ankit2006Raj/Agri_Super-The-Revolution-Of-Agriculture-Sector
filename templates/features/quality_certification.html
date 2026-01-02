@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}Quality Certification{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-success mb-4">Agricultural Quality Certification</h2>
+            <p class="lead">Get your crops certified for quality standards and access premium markets.</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Submit Verification Request</h4>
+                    <form id="certificationForm">
+                        <div class="mb-3">
+                            <label for="cropType" class="form-label">Crop Type</label>
+                            <select class="form-select" id="cropType" required>
+                                <option value="" selected disabled>Select crop type</option>
+                                <option value="rice">Rice</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="maize">Maize</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="sugarcane">Sugarcane</option>
+                                <option value="vegetables">Vegetables</option>
+                                <option value="fruits">Fruits</option>
+                                <option value="pulses">Pulses</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="farmSize" class="form-label">Farm Size (acres)</label>
+                            <input type="number" class="form-control" id="farmSize" min="0.1" step="0.1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="certType" class="form-label">Certification Type</label>
+                            <select class="form-select" id="certType" required>
+                                <option value="" selected disabled>Select certification type</option>
+                                <option value="organic">Organic Certification</option>
+                                <option value="gapGood">Good Agricultural Practices (GAP)</option>
+                                <option value="fairtrade">Fair Trade Certification</option>
+                                <option value="pesticide">Pesticide-Free</option>
+                                <option value="quality">Quality Grading</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="harvestDate" class="form-label">Expected Harvest Date</label>
+                            <input type="date" class="form-control" id="harvestDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="farmingPractices" class="form-label">Farming Practices</label>
+                            <textarea class="form-control" id="farmingPractices" rows="3" placeholder="Describe your farming practices, inputs used, etc."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit Verification Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Certification Benefits</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Access to premium markets and better prices</li>
+                        <li class="list-group-item">Enhanced trust with buyers and consumers</li>
+                        <li class="list-group-item">Compliance with international export standards</li>
+                        <li class="list-group-item">Eligibility for government subsidies and incentives</li>
+                        <li class="list-group-item">Improved farm management practices</li>
+                    </ul>
+                    
+                    <h5 class="mt-4">Certification Process</h5>
+                    <div class="d-flex mb-2">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">1</div>
+                        <div class="ms-3">Submit verification request</div>
+                    </div>
+                    <div class="d-flex mb-2">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">2</div>
+                        <div class="ms-3">Schedule farm inspection</div>
+                    </div>
+                    <div class="d-flex mb-2">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">3</div>
+                        <div class="ms-3">Sample collection and testing</div>
+                    </div>
+                    <div class="d-flex mb-2">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">4</div>
+                        <div class="ms-3">Certification issuance</div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">5</div>
+                        <div class="ms-3">Annual renewal and monitoring</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Available Certification Types</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Certification</th>
+                                    <th>Description</th>
+                                    <th>Validity</th>
+                                    <th>Estimated Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Organic Certification</td>
+                                    <td>Certifies that crops are grown without synthetic pesticides or fertilizers</td>
+                                    <td>1 year</td>
+                                    <td>₹5,000 - ₹15,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Good Agricultural Practices (GAP)</td>
+                                    <td>Ensures food safety, sustainable production methods, and worker welfare</td>
+                                    <td>1 year</td>
+                                    <td>₹3,000 - ₹10,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Fair Trade Certification</td>
+                                    <td>Focuses on fair prices, community development, and environmental standards</td>
+                                    <td>1 year</td>
+                                    <td>₹8,000 - ₹20,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Pesticide-Free</td>
+                                    <td>Verifies crops are grown without chemical pesticides</td>
+                                    <td>1 year</td>
+                                    <td>₹4,000 - ₹12,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Quality Grading</td>
+                                    <td>Assesses and grades produce based on quality parameters</td>
+                                    <td>Per harvest</td>
+                                    <td>₹2,000 - ₹5,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('certificationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Your verification request has been submitted successfully. Our team will contact you within 48 hours to schedule an inspection.');
+    });
+</script>
+{% endblock %}

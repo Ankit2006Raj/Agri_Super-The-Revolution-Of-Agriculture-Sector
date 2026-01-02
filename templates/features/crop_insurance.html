@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block title %}Crop Insurance{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Crop Insurance</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Insurance Plans</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="cropType" class="form-label">Crop Type</label>
+                        <select class="form-select" id="cropType">
+                            <option selected>Select crop type</option>
+                            <option value="rice">Rice</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="corn">Corn</option>
+                            <option value="sugarcane">Sugarcane</option>
+                            <option value="cotton">Cotton</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="acreage" class="form-label">Acreage</label>
+                        <input type="number" class="form-control" id="acreage" placeholder="Enter acreage">
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" placeholder="Enter location">
+                    </div>
+                    <button class="btn btn-primary" id="findPlans">Find Insurance Plans</button>
+                </div>
+            </div>
+
+            <div class="card mb-4" id="plansSection" style="display: none;">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Available Plans</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group" id="plansList">
+                        <!-- Plans will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">My Insurance</h5>
+                </div>
+                <div class="card-body">
+                    <div id="noInsurance">
+                        <p class="text-muted">You don't have any active insurance plans.</p>
+                    </div>
+                    <div id="activeInsurance" style="display: none;">
+                        <h6 class="card-title">Active Plan</h6>
+                        <p><strong>Crop:</strong> <span id="insuredCrop"></span></p>
+                        <p><strong>Coverage:</strong> <span id="coverageAmount"></span></p>
+                        <p><strong>Premium:</strong> <span id="premiumAmount"></span></p>
+                        <p><strong>Expiry:</strong> <span id="expiryDate"></span></p>
+                        <button class="btn btn-sm btn-outline-danger" id="fileClaimBtn">File a Claim</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">Risk Assessment</h5>
+                </div>
+                <div class="card-body">
+                    <p>Get a personalized risk assessment for your crops based on:</p>
+                    <ul>
+                        <li>Historical weather data</li>
+                        <li>Soil conditions</li>
+                        <li>Pest prevalence</li>
+                        <li>Market volatility</li>
+                    </ul>
+                    <button class="btn btn-warning" id="riskAssessmentBtn">Get Assessment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="claimModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">File Insurance Claim</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="damageType" class="form-label">Damage Type</label>
+                    <select class="form-select" id="damageType">
+                        <option selected>Select damage type</option>
+                        <option value="flood">Flood</option>
+                        <option value="drought">Drought</option>
+                        <option value="pest">Pest Infestation</option>
+                        <option value="fire">Fire</option>
+                        <option value="hail">Hail</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="damageDate" class="form-label">Date of Damage</label>
+                    <input type="date" class="form-control" id="damageDate">
+                </div>
+                <div class="mb-3">
+                    <label for="damageDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="damageDescription" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="evidenceUpload" class="form-label">Upload Evidence (Photos)</label>
+                    <input type="file" class="form-control" id="evidenceUpload" multiple>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitClaimBtn">Submit Claim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Find plans button click
+        document.getElementById('findPlans').addEventListener('click', function() {
+            const cropType = document.getElementById('cropType').value;
+            const acreage = document.getElementById('acreage').value;
+            
+            if (cropType === 'Select crop type' || !acreage) {
+                alert('Please select a crop type and enter acreage');
+                return;
+            }
+            
+            // Simulate loading plans
+            const plansList = document.getElementById('plansList');
+            plansList.innerHTML = '';
+            
+            // Mock data - in a real app, this would come from an API
+            const plans = [
+                {id: 1, name: 'Basic Coverage', coverage: '₹20,000/acre', premium: '₹800/acre', description: 'Covers damage from floods and droughts'},
+                {id: 2, name: 'Standard Coverage', coverage: '₹35,000/acre', premium: '₹1,200/acre', description: 'Covers damage from floods, droughts, and pests'},
+                {id: 3, name: 'Premium Coverage', coverage: '₹50,000/acre', premium: '₹1,800/acre', description: 'Comprehensive coverage for all natural disasters and pest damage'}
+            ];
+            
+            plans.forEach(plan => {
+                const item = document.createElement('a');
+                item.href = '#';
+                item.className = 'list-group-item list-group-item-action';
+                item.innerHTML = `
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">${plan.name}</h5>
+                        <small class="text-primary">${plan.premium}</small>
+                    </div>
+                    <p class="mb-1">Coverage: ${plan.coverage}</p>
+                    <small>${plan.description}</small>
+                    <button class="btn btn-sm btn-success mt-2 select-plan" data-plan-id="${plan.id}">Select Plan</button>
+                `;
+                plansList.appendChild(item);
+            });
+            
+            document.getElementById('plansSection').style.display = 'block';
+            
+            // Add event listeners to select plan buttons
+            document.querySelectorAll('.select-plan').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const planId = this.getAttribute('data-plan-id');
+                    selectPlan(planId, cropType, acreage);
+                });
+            });
+        });
+        
+        // Select plan function
+        function selectPlan(planId, cropType, acreage) {
+            // In a real app, this would make an API call to purchase the insurance
+            
+            // Mock data for the selected plan
+            const planDetails = {
+                crop: cropType,
+                coverage: planId === '1' ? '₹20,000/acre' : planId === '2' ? '₹35,000/acre' : '₹50,000/acre',
+                premium: planId === '1' ? '₹800/acre' : planId === '2' ? '₹1,200/acre' : '₹1,800/acre',
+                expiry: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString()
+            };
+            
+            // Update the active insurance section
+            document.getElementById('insuredCrop').textContent = planDetails.crop;
+            document.getElementById('coverageAmount').textContent = planDetails.coverage + ' × ' + acreage + ' acres';
+            document.getElementById('premiumAmount').textContent = planDetails.premium + ' × ' + acreage + ' acres';
+            document.getElementById('expiryDate').textContent = planDetails.expiry;
+            
+            document.getElementById('noInsurance').style.display = 'none';
+            document.getElementById('activeInsurance').style.display = 'block';
+            
+            alert('Insurance plan selected successfully!');
+        }
+        
+        // File claim button click
+        document.getElementById('fileClaimBtn').addEventListener('click', function() {
+            const claimModal = new bootstrap.Modal(document.getElementById('claimModal'));
+            claimModal.show();
+        });
+        
+        // Submit claim button click
+        document.getElementById('submitClaimBtn').addEventListener('click', function() {
+            const damageType = document.getElementById('damageType').value;
+            const damageDate = document.getElementById('damageDate').value;
+            
+            if (damageType === 'Select damage type' || !damageDate) {
+                alert('Please select damage type and date');
+                return;
+            }
+            
+            alert('Claim submitted successfully! Our team will review your claim within 48 hours.');
+            bootstrap.Modal.getInstance(document.getElementById('claimModal')).hide();
+        });
+        
+        // Risk assessment button click
+        document.getElementById('riskAssessmentBtn').addEventListener('click', function() {
+            alert('Risk assessment feature will be available soon!');
+        });
+    });
+</script>
+{% endblock %}

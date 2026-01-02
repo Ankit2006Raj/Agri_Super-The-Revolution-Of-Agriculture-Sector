@@ -1,0 +1,44 @@
+{
+  "supported_languages": [
+    {
+      "language": "Hindi",
+      "code": "hi-IN",
+      "voice_model": "female",
+      "accuracy": 95,
+      "sample_queries": ["आज का मौसम कैसा है?", "धान की कीमत क्या है?", "खाद कब डालना चाहिए?"]
+    },
+    {
+      "language": "English",
+      "code": "en-IN",
+      "voice_model": "neutral",
+      "accuracy": 98,
+      "sample_queries": ["What is today's weather?", "Rice price in Delhi market", "When to apply fertilizer?"]
+    }
+  ],
+  "common_queries": [
+    {
+      "category": "Weather",
+      "queries": ["What is today's weather forecast?", "Will it rain tomorrow?", "Is it good time for sowing?"],
+      "response_templates": ["Today's weather: {temperature}°C, {condition}. {farming_advice}"]
+    },
+    {
+      "category": "Market Prices",
+      "queries": ["What is the price of rice?", "Wheat market rate today", "Best market to sell tomatoes"],
+      "response_templates": ["{crop} price is ₹{price} per quintal in {market}. {trend_info}"]
+    }
+  ],
+  "voice_commands": [
+    {
+      "command": "Check crop prices",
+      "action": "get_market_prices",
+      "parameters": ["crop_name", "location"],
+      "response_type": "audio"
+    },
+    {
+      "command": "Weather update",
+      "action": "get_weather_forecast",
+      "parameters": ["location", "days"],
+      "response_type": "audio_visual"
+    }
+  ]
+}

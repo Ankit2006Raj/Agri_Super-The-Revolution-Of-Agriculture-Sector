@@ -1,0 +1,588 @@
+{% extends "base.html" %}
+
+{% block title %}Soil Health Monitoring - AgriSuper{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/soil-health.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Soil Health Dashboard -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-seedling me-2"></i>Soil Health Dashboard</h5>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="fieldSelector" data-bs-toggle="dropdown" aria-expanded="false">
+                            North Field (5 acres)
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="fieldSelector">
+                            <li><a class="dropdown-item active" href="#">North Field (5 acres)</a></li>
+                            <li><a class="dropdown-item" href="#">South Field (3 acres)</a></li>
+                            <li><a class="dropdown-item" href="#">East Field (2 acres)</a></li>
+                            <li><a class="dropdown-item" href="#">West Field (4 acres)</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-plus-circle me-1"></i>Add New Field</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Soil Health Score -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center">
+                                <div class="soil-health-gauge me-3">
+                                    <svg width="120" height="120" viewBox="0 0 120 120">
+                                        <circle cx="60" cy="60" r="54" fill="none" stroke="#e6e6e6" stroke-width="12"/>
+                                        <circle cx="60" cy="60" r="54" fill="none" stroke="#28a745" stroke-width="12" stroke-dasharray="339.3" stroke-dashoffset="84.8" transform="rotate(-90 60 60)"/>
+                                        <text x="60" y="65" font-size="24" text-anchor="middle" fill="#28a745">75%</text>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="mb-1">Soil Health Score</h4>
+                                    <p class="mb-0 text-muted">Last tested: 15 days ago</p>
+                                    <span class="badge bg-success">Good</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">Current Crop</h6>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/50" alt="Wheat" class="me-3 rounded">
+                                        <div>
+                                            <h5 class="mb-0">Wheat</h5>
+                                            <p class="mb-0 text-muted">Planted: 45 days ago</p>
+                                            <p class="mb-0 text-success">Soil compatibility: High</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Soil Composition -->
+                    <h5 class="mb-3">Soil Composition</h5>
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Sand</h6>
+                                    <div class="soil-percentage">
+                                        <svg width="100" height="100" viewBox="0 0 100 100">
+                                            <circle cx="50" cy="50" r="45" fill="none" stroke="#e6e6e6" stroke-width="10"/>
+                                            <circle cx="50" cy="50" r="45" fill="none" stroke="#ffc107" stroke-width="10" stroke-dasharray="282.7" stroke-dashoffset="169.6" transform="rotate(-90 50 50)"/>
+                                            <text x="50" y="55" font-size="20" text-anchor="middle" fill="#ffc107">40%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Silt</h6>
+                                    <div class="soil-percentage">
+                                        <svg width="100" height="100" viewBox="0 0 100 100">
+                                            <circle cx="50" cy="50" r="45" fill="none" stroke="#e6e6e6" stroke-width="10"/>
+                                            <circle cx="50" cy="50" r="45" fill="none" stroke="#17a2b8" stroke-width="10" stroke-dasharray="282.7" stroke-dashoffset="197.9" transform="rotate(-90 50 50)"/>
+                                            <text x="50" y="55" font-size="20" text-anchor="middle" fill="#17a2b8">30%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-muted">Clay</h6>
+                                    <div class="soil-percentage">
+                                        <svg width="100" height="100" viewBox="0 0 100 100">
+                                            <circle cx="50" cy="50" r="45" fill="none" stroke="#e6e6e6" stroke-width="10"/>
+                                            <circle cx="50" cy="50" r="45" fill="none" stroke="#dc3545" stroke-width="10" stroke-dasharray="282.7" stroke-dashoffset="197.9" transform="rotate(-90 50 50)"/>
+                                            <text x="50" y="55" font-size="20" text-anchor="middle" fill="#dc3545">30%</text>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Soil Nutrients -->
+                    <h5 class="mb-3">Soil Nutrients</h5>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nutrient</th>
+                                    <th>Current Level</th>
+                                    <th>Optimal Range</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Nitrogen (N)</td>
+                                    <td>120 kg/ha</td>
+                                    <td>120-180 kg/ha</td>
+                                    <td><span class="badge bg-warning text-dark">Borderline</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Phosphorus (P)</td>
+                                    <td>25 kg/ha</td>
+                                    <td>20-40 kg/ha</td>
+                                    <td><span class="badge bg-success">Optimal</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Potassium (K)</td>
+                                    <td>180 kg/ha</td>
+                                    <td>150-250 kg/ha</td>
+                                    <td><span class="badge bg-success">Optimal</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Organic Matter</td>
+                                    <td>2.1%</td>
+                                    <td>3-5%</td>
+                                    <td><span class="badge bg-danger">Low</span></td>
+                                </tr>
+                                <tr>
+                                    <td>pH Level</td>
+                                    <td>6.5</td>
+                                    <td>6.0-7.0</td>
+                                    <td><span class="badge bg-success">Optimal</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Soil Health History -->
+                    <h5 class="mb-3">Soil Health History</h5>
+                    <div class="soil-history-chart mb-4">
+                        <canvas id="soilHistoryChart" height="250"></canvas>
+                    </div>
+                    
+                    <!-- Soil Testing -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Soil Testing</h5>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#soilTestModal">
+                            <i class="fas fa-plus-circle me-1"></i>Request Soil Test
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Test Type</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>July 5, 2023</td>
+                                    <td>Comprehensive Soil Analysis</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary"><i class="fas fa-file-pdf me-1"></i>View Report</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>May 10, 2023</td>
+                                    <td>Nutrient Analysis</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary"><i class="fas fa-file-pdf me-1"></i>View Report</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>March 15, 2023</td>
+                                    <td>pH and Organic Matter Test</td>
+                                    <td><span class="badge bg-success">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary"><i class="fas fa-file-pdf me-1"></i>View Report</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Soil Management Recommendations -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Soil Management Recommendations</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-exclamation-triangle fa-2x text-warning"></i>
+                            </div>
+                            <div>
+                                <h5 class="alert-heading">Low Organic Matter</h5>
+                                <p class="mb-0">Your soil's organic matter content is below optimal levels. This can affect soil structure, water retention, and nutrient availability.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-item mb-3 pb-3 border-bottom">
+                        <h5><i class="fas fa-check-circle text-success me-2"></i>Add Organic Amendments</h5>
+                        <p>Incorporate compost or well-rotted manure at a rate of 5-10 tons per hectare before your next planting. This will improve soil structure, water retention, and nutrient availability.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-info">High Impact</span>
+                            <button class="btn btn-sm btn-outline-success">Find Suppliers</button>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-item mb-3 pb-3 border-bottom">
+                        <h5><i class="fas fa-check-circle text-success me-2"></i>Consider Cover Crops</h5>
+                        <p>Plant cover crops such as clover or vetch during fallow periods to add organic matter and prevent soil erosion. These crops can also fix nitrogen and improve soil biology.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-info">Medium Impact</span>
+                            <button class="btn btn-sm btn-outline-success">View Cover Crop Options</button>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <h5><i class="fas fa-check-circle text-success me-2"></i>Nitrogen Management</h5>
+                        <p>Your nitrogen levels are at the lower end of the optimal range. Consider a split application of nitrogen fertilizer, with 60% applied at planting and 40% during the growing season to maximize efficiency.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-info">Medium Impact</span>
+                            <button class="btn btn-sm btn-outline-success">Calculate Fertilizer Needs</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-success w-100">Generate Custom Soil Management Plan</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Soil Health Map -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-map-marked-alt me-2"></i>Soil Health Map</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="soil-map">
+                        <p class="text-muted">Interactive soil map would be displayed here</p>
+                    </div>
+                    <div class="p-3">
+                        <div class="soil-health-legend">
+                            <span class="soil-health-legend-item">
+                                <span class="badge bg-danger me-2 soil-health-indicator"></span>
+                                Poor
+                            </span>
+                            <span class="soil-health-legend-item">
+                                <span class="badge bg-warning me-2 soil-health-indicator"></span>
+                                Fair
+                            </span>
+                            <span class="soil-health-legend-item">
+                                <span class="badge bg-success me-2 soil-health-indicator"></span>
+                                Good
+                            </span>
+                            <span class="soil-health-legend-item">
+                                <span class="badge bg-primary me-2 soil-health-indicator"></span>
+                                Excellent
+                            </span>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary w-100 mt-2">
+                            <i class="fas fa-expand-alt me-1"></i>View Full Map
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Crop Compatibility -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-leaf me-2"></i>Crop Compatibility</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Based on your current soil conditions, these crops are most compatible:</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="https://via.placeholder.com/30" alt="Wheat" class="me-2 rounded">
+                                <span>Wheat</span>
+                            </div>
+                            <span class="badge bg-success rounded-pill">95%</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="https://via.placeholder.com/30" alt="Barley" class="me-2 rounded">
+                                <span>Barley</span>
+                            </div>
+                            <span class="badge bg-success rounded-pill">90%</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="https://via.placeholder.com/30" alt="Chickpeas" class="me-2 rounded">
+                                <span>Chickpeas</span>
+                            </div>
+                            <span class="badge bg-success rounded-pill">85%</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="https://via.placeholder.com/30" alt="Mustard" class="me-2 rounded">
+                                <span>Mustard</span>
+                            </div>
+                            <span class="badge bg-warning text-dark rounded-pill">75%</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <img src="https://via.placeholder.com/30" alt="Rice" class="me-2 rounded">
+                                <span>Rice</span>
+                            </div>
+                            <span class="badge bg-danger rounded-pill">60%</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-light">
+                    <button class="btn btn-sm btn-outline-success w-100">View All Compatible Crops</button>
+                </div>
+            </div>
+            
+            <!-- Soil Health Resources -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-book me-2"></i>Soil Health Resources</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="fas fa-file-pdf text-danger me-2"></i>Soil Health Management Guide
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="fas fa-video text-primary me-2"></i>Understanding Soil Test Results
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="fas fa-calendar-alt text-success me-2"></i>Upcoming Soil Workshop (July 25)
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="fas fa-users text-info me-2"></i>Join Soil Health Community
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="text-decoration-none">
+                                <i class="fas fa-question-circle text-warning me-2"></i>Ask Soil Expert
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Soil Test Request Modal -->
+<div class="modal fade" id="soilTestModal" tabindex="-1" aria-labelledby="soilTestModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="soilTestModalLabel"><i class="fas fa-flask me-2"></i>Request Soil Test</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="testField" class="form-label">Select Field</label>
+                            <select class="form-select" id="testField">
+                                <option selected>North Field (5 acres)</option>
+                                <option>South Field (3 acres)</option>
+                                <option>East Field (2 acres)</option>
+                                <option>West Field (4 acres)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="testType" class="form-label">Test Type</label>
+                            <select class="form-select" id="testType">
+                                <option selected>Comprehensive Soil Analysis</option>
+                                <option>Basic Nutrient Test (N, P, K)</option>
+                                <option>pH and Organic Matter Test</option>
+                                <option>Micronutrient Analysis</option>
+                                <option>Soil Biology Assessment</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="preferredDate" class="form-label">Preferred Sample Collection Date</label>
+                            <input type="date" class="form-control" id="preferredDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="urgency" class="form-label">Urgency</label>
+                            <select class="form-select" id="urgency">
+                                <option>Standard (7-10 days)</option>
+                                <option selected>Priority (3-5 days)</option>
+                                <option>Urgent (24-48 hours)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="testNotes" class="form-label">Additional Notes</label>
+                        <textarea class="form-control" id="testNotes" rows="3" placeholder="Any specific concerns or observations about your soil?"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="selfCollection" checked>
+                            <label class="form-check-label" for="selfCollection">
+                                I will collect soil samples myself (instructions will be provided)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="technicianCollection">
+                            <label class="form-check-label" for="technicianCollection">
+                                Request a technician to collect samples (additional charges apply)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="alert alert-info">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="fas fa-info-circle fa-2x text-info"></i>
+                            </div>
+                            <div>
+                                <h6 class="alert-heading">Pricing Information</h6>
+                                <p class="mb-0">Comprehensive Soil Analysis: ₹2,500 per sample<br>
+                                Technician Collection Service: ₹1,000 per visit<br>
+                                Priority Processing: ₹500 additional</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success">Submit Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Soil History Chart
+        var ctx = document.getElementById('soilHistoryChart').getContext('2d');
+        var soilHistoryChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [
+                    {
+                        label: 'Soil Health Score',
+                        data: [65, 68, 70, 72, 68, 70, 75],
+                        backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Organic Matter (%)',
+                        data: [1.8, 1.9, 1.9, 2.0, 2.0, 2.1, 2.1],
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                        borderColor: 'rgba(255, 193, 7, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'pH Level',
+                        data: [6.2, 6.3, 6.4, 6.4, 6.5, 6.5, 6.5],
+                        backgroundColor: 'rgba(23, 162, 184, 0.2)',
+                        borderColor: 'rgba(23, 162, 184, 1)',
+                        borderWidth: 2,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 0,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Handle soil test modal submission
+        $('.modal .btn-success').click(function() {
+            // In a real app, this would submit the form data
+            $('#soilTestModal').modal('hide');
+            
+            // Show confirmation toast
+            showToast('Soil test request submitted successfully! You will receive a confirmation shortly.');
+        });
+        
+        // Function to show toast notification
+        function showToast(message) {
+            // Create toast element
+            var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'+
+                          '<div class="toast-header bg-success text-white">'+
+                          '<strong class="me-auto">Soil Health</strong>'+
+                          '<small>Just now</small>'+
+                          '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>'+
+                          '</div>'+
+                          '<div class="toast-body">'+message+'</div>'+
+                          '</div>');
+            
+            // Add to container
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('.toast-container').append(toast);
+            
+            // Initialize and show toast
+            var toastEl = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 5000
+            });
+            toastEl.show();
+            
+            // Remove after hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}Soil Knowledge{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-success mb-4">Soil Knowledge Center</h2>
+            <p class="lead">Understanding your soil is the foundation of successful farming. Learn about soil types, testing, and improvement techniques.</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Soil Types and Characteristics</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Soil Type</th>
+                                    <th>Characteristics</th>
+                                    <th>Best Crops</th>
+                                    <th>Management Tips</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sandy Soil</td>
+                                    <td>Light, warm, dry, tends to be acidic and low in nutrients</td>
+                                    <td>Carrots, Potatoes, Radishes</td>
+                                    <td>Add organic matter, mulch to retain moisture</td>
+                                </tr>
+                                <tr>
+                                    <td>Clay Soil</td>
+                                    <td>Heavy, cold, nutrient-rich, drains slowly</td>
+                                    <td>Late season crops, Wheat, Corn</td>
+                                    <td>Add organic matter, avoid working when wet</td>
+                                </tr>
+                                <tr>
+                                    <td>Silt Soil</td>
+                                    <td>Fertile, light but moisture-retentive, easily compacted</td>
+                                    <td>Most vegetables, Fruit trees</td>
+                                    <td>Add organic matter, avoid compaction</td>
+                                </tr>
+                                <tr>
+                                    <td>Loam Soil</td>
+                                    <td>Perfect balance of sand, silt and clay</td>
+                                    <td>Most crops</td>
+                                    <td>Maintain with regular organic matter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Soil Testing</h4>
+                    <p>Regular soil testing helps you understand your soil's needs and avoid over-application of fertilizers.</p>
+                    <div class="mb-3">
+                        <h5 class="text-success">What We Test For:</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">pH Level (Acidity/Alkalinity)</li>
+                            <li class="list-group-item">Nutrient Levels (N-P-K)</li>
+                            <li class="list-group-item">Organic Matter Content</li>
+                            <li class="list-group-item">Micronutrient Levels</li>
+                            <li class="list-group-item">Soil Structure</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-success w-100">Request Soil Test Kit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Soil Health Improvement Techniques</h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><i class="fas fa-leaf me-2"></i>Cover Cropping</h5>
+                                    <p class="card-text">Plant cover crops during off-seasons to prevent erosion, add organic matter, and improve soil structure.</p>
+                                    <p><strong>Recommended Cover Crops:</strong> Clover, Rye, Buckwheat</p>
+                                    <button class="btn btn-sm btn-outline-success">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><i class="fas fa-recycle me-2"></i>Composting</h5>
+                                    <p class="card-text">Add compost to improve soil structure, fertility, and microbial activity.</p>
+                                    <p><strong>Benefits:</strong> Adds nutrients, improves water retention, enhances soil life</p>
+                                    <button class="btn btn-sm btn-outline-success">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><i class="fas fa-sync-alt me-2"></i>Crop Rotation</h5>
+                                    <p class="card-text">Rotate crops to prevent nutrient depletion and break pest/disease cycles.</p>
+                                    <p><strong>Rotation Example:</strong> Legumes → Leafy Greens → Root Crops → Fruiting Crops</p>
+                                    <button class="btn btn-sm btn-outline-success">Learn More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Soil pH Management</h4>
+                    <p>Soil pH affects nutrient availability to plants. Most crops prefer a slightly acidic to neutral pH (6.0-7.0).</p>
+                    <div class="d-flex justify-content-center mb-3">
+                        <img src="/static/images/ph_scale.png" alt="Soil pH Scale" class="img-fluid" style="max-height: 200px;">
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="text-success">To Raise pH:</h5>
+                            <ul>
+                                <li>Add agricultural lime</li>
+                                <li>Add wood ash (carefully)</li>
+                                <li>Use dolomite lime for Mg deficiency</li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="text-success">To Lower pH:</h5>
+                            <ul>
+                                <li>Add elemental sulfur</li>
+                                <li>Use acidic organic matter</li>
+                                <li>Apply aluminum sulfate</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Ask a Soil Expert</h4>
+                    <p>Have specific questions about your soil? Our experts are here to help!</p>
+                    <form>
+                        <div class="mb-3">
+                            <label for="soilType" class="form-label">Soil Type (if known)</label>
+                            <select class="form-select" id="soilType">
+                                <option selected>Select your soil type</option>
+                                <option value="sandy">Sandy</option>
+                                <option value="clay">Clay</option>
+                                <option value="silt">Silt</option>
+                                <option value="loam">Loam</option>
+                                <option value="unknown">I don't know</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="soilQuestion" class="form-label">Your Question</label>
+                            <textarea class="form-control" id="soilQuestion" rows="3" placeholder="Describe your soil issue or question..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="soilPhoto" class="form-label">Upload Soil Photo (optional)</label>
+                            <input class="form-control" type="file" id="soilPhoto">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Submit Question</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

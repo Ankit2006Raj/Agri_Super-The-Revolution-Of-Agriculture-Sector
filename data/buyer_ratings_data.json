@@ -1,0 +1,89 @@
+{
+  "buyers": [
+    {
+      "buyer_id": "B001",
+      "company_name": "Reliance Fresh",
+      "buyer_type": "Retail Chain",
+      "location": "Mumbai, Maharashtra",
+      "overall_rating": 4.8,
+      "total_transactions": 1250,
+      "total_volume_purchased": 50000,
+      "payment_reliability": 4.9,
+      "communication_rating": 4.7,
+      "quality_standards": 4.8,
+      "timely_payments": 98.5,
+      "avg_payment_days": 25,
+      "preferred_products": ["Vegetables", "Fruits", "Grains"],
+      "verification_status": "Verified",
+      "member_since": "2022-03-15"
+    },
+    {
+      "buyer_id": "B002",
+      "company_name": "BigBasket",
+      "buyer_type": "Online Retailer",
+      "location": "Bangalore, Karnataka",
+      "overall_rating": 4.6,
+      "total_transactions": 890,
+      "total_volume_purchased": 35000,
+      "payment_reliability": 4.5,
+      "communication_rating": 4.8,
+      "quality_standards": 4.6,
+      "timely_payments": 95.2,
+      "avg_payment_days": 30,
+      "preferred_products": ["Organic Vegetables", "Fruits"],
+      "verification_status": "Verified",
+      "member_since": "2022-07-20"
+    }
+  ],
+  "farmer_reviews": [
+    {
+      "review_id": "R001",
+      "buyer_id": "B001",
+      "farmer_name": "Rajesh Kumar",
+      "transaction_id": "T001",
+      "rating": 5,
+      "review_text": "Excellent buyer! Payments are always on time and quality standards are clearly communicated. Highly recommended.",
+      "review_date": "2024-01-10",
+      "transaction_value": 125000,
+      "product": "Tomatoes"
+    },
+    {
+      "review_id": "R002",
+      "buyer_id": "B002",
+      "farmer_name": "Suresh Patel",
+      "transaction_id": "T002",
+      "rating": 4,
+      "review_text": "Good buyer with fair pricing. Sometimes payment gets delayed by a few days but overall experience is positive.",
+      "review_date": "2024-01-08",
+      "transaction_value": 85000,
+      "product": "Organic Onions"
+    }
+  ],
+  "rating_criteria": [
+    {
+      "criteria": "Payment Reliability",
+      "weight": 30,
+      "description": "Consistency in making payments on time"
+    },
+    {
+      "criteria": "Communication",
+      "weight": 20,
+      "description": "Clarity in requirements and responsiveness"
+    },
+    {
+      "criteria": "Quality Standards",
+      "weight": 25,
+      "description": "Fairness and clarity of quality expectations"
+    },
+    {
+      "criteria": "Overall Experience",
+      "weight": 25,
+      "description": "General satisfaction with the buyer"
+    }
+  ],
+  "top_rated_buyers": [
+    { "buyer_id": "B001", "company_name": "Reliance Fresh", "rating": 4.8, "category": "Retail Chain" },
+    { "buyer_id": "B003", "company_name": "ITC Limited", "rating": 4.7, "category": "Food Processor" },
+    { "buyer_id": "B002", "company_name": "BigBasket", "rating": 4.6, "category": "Online Retailer" }
+  ]
+}

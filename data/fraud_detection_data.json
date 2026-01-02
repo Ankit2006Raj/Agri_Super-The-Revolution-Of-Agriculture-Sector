@@ -1,0 +1,78 @@
+{
+  "fraud_patterns": [
+    {
+      "pattern_id": "FP001",
+      "pattern_name": "Fake Product Listings",
+      "description": "Users posting non-existent products with stolen images",
+      "detection_methods": ["Image reverse search", "Price anomaly detection", "User behavior analysis"],
+      "risk_level": "High",
+      "frequency": 45,
+      "success_rate": 92
+    },
+    {
+      "pattern_id": "FP002",
+      "pattern_name": "Payment Fraud",
+      "description": "Fraudulent payment methods or chargebacks",
+      "detection_methods": ["Payment gateway validation", "Bank account verification", "Transaction pattern analysis"],
+      "risk_level": "Critical",
+      "frequency": 23,
+      "success_rate": 98
+    }
+  ],
+  "ml_models": [
+    {
+      "model_name": "Transaction Anomaly Detector",
+      "model_type": "Isolation Forest",
+      "accuracy": 94.5,
+      "false_positive_rate": 2.1,
+      "features_used": ["transaction_amount", "user_history", "time_patterns", "location_data"],
+      "last_updated": "2024-01-15",
+      "training_data_size": 500000
+    },
+    {
+      "model_name": "User Behavior Classifier",
+      "model_type": "Random Forest",
+      "accuracy": 91.2,
+      "false_positive_rate": 3.8,
+      "features_used": ["login_patterns", "feature_usage", "communication_style", "profile_completeness"],
+      "last_updated": "2024-01-10",
+      "training_data_size": 250000
+    }
+  ],
+  "flagged_activities": [
+    {
+      "alert_id": "A001",
+      "user_id": "U12345",
+      "alert_type": "Suspicious Listing",
+      "risk_score": 85,
+      "description": "Product images match multiple other listings",
+      "timestamp": "2024-01-20 10:30:00",
+      "status": "Under Review",
+      "assigned_to": "Fraud Team Member 1"
+    },
+    {
+      "alert_id": "A002",
+      "user_id": "U67890",
+      "alert_type": "Payment Anomaly",
+      "risk_score": 92,
+      "description": "Multiple failed payment attempts from different cards",
+      "timestamp": "2024-01-20 09:15:00",
+      "status": "Blocked",
+      "assigned_to": "Fraud Team Member 2"
+    }
+  ],
+  "prevention_measures": [
+    {
+      "measure": "Identity Verification",
+      "implementation": "Mandatory KYC for all users",
+      "effectiveness": 78,
+      "cost_per_verification": 25
+    },
+    {
+      "measure": "Real-time Monitoring",
+      "implementation": "24/7 automated transaction monitoring",
+      "effectiveness": 89,
+      "cost_per_month": 50000
+    }
+  ]
+}

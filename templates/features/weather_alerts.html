@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Weather Alerts - AgriSuper{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/weather-alerts.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Weather Alert Dashboard -->
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-cloud-sun-rain me-2"></i>Weather Alerts Dashboard</h5>
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-outline-light active" id="btn-today">Today</button>
+                        <button class="btn btn-sm btn-outline-light" id="btn-week">7-Day Forecast</button>
+                        <button class="btn btn-sm btn-outline-light" id="btn-month">Monthly Outlook</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Current Location Weather -->
+                    <div class="current-weather mb-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="weather-icon me-3">
+                                        <i class="fas fa-sun fa-4x text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="mb-0">32°C</h2>
+                                        <p class="mb-0 text-muted">Feels like 34°C</p>
+                                        <h6>Sunny</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="location-info text-md-end">
+                                    <h5 class="mb-1">Patna, Bihar</h5>
+                                    <p class="mb-0 text-muted">Updated: Today, 2:30 PM</p>
+                                    <button class="btn btn-sm btn-outline-secondary mt-2">
+                                        <i class="fas fa-map-marker-alt me-1"></i>Change Location
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Weather Details -->
+                    <div class="row weather-details mb-4">
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-wind text-primary mb-2"></i>
+                                    <h6>Wind</h6>
+                                    <p class="mb-0">12 km/h</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-tint text-info mb-2"></i>
+                                    <h6>Humidity</h6>
+                                    <p class="mb-0">65%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-eye text-success mb-2"></i>
+                                    <h6>Visibility</h6>
+                                    <p class="mb-0">10 km</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3">
+                            <div class="card h-100 border-0 bg-light">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-umbrella text-danger mb-2"></i>
+                                    <h6>Precipitation</h6>
+                                    <p class="mb-0">0%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hourly Forecast -->
+                    <h5 class="mb-3">Hourly Forecast</h5>
+                    <div class="hourly-forecast mb-4 overflow-auto">
+                        <div class="d-flex">
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">Now</p>
+                                <i class="fas fa-sun text-warning mb-2"></i>
+                                <h6>32°C</h6>
+                            </div>
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">3 PM</p>
+                                <i class="fas fa-sun text-warning mb-2"></i>
+                                <h6>33°C</h6>
+                            </div>
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">4 PM</p>
+                                <i class="fas fa-sun text-warning mb-2"></i>
+                                <h6>32°C</h6>
+                            </div>
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">5 PM</p>
+                                <i class="fas fa-cloud-sun text-warning mb-2"></i>
+                                <h6>30°C</h6>
+                            </div>
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">6 PM</p>
+                                <i class="fas fa-cloud-sun text-warning mb-2"></i>
+                                <h6>29°C</h6>
+                            </div>
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">7 PM</p>
+                                <i class="fas fa-cloud text-secondary mb-2"></i>
+                                <h6>28°C</h6>
+                            </div>
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">8 PM</p>
+                                <i class="fas fa-cloud text-secondary mb-2"></i>
+                                <h6>27°C</h6>
+                            </div>
+                            <div class="hourly-item text-center me-4">
+                                <p class="mb-2">9 PM</p>
+                                <i class="fas fa-cloud text-secondary mb-2"></i>
+                                <h6>26°C</h6>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 7-Day Forecast (Hidden by default) -->
+                    <div class="weekly-forecast">
+                        <h5 class="mb-3">7-Day Forecast</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="align-middle">Today</td>
+                                        <td class="align-middle"><i class="fas fa-sun text-warning"></i></td>
+                                        <td class="align-middle">Sunny</td>
+                                        <td class="align-middle">32°C / 24°C</td>
+                                        <td class="align-middle">0% Precipitation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Tomorrow</td>
+                                        <td class="align-middle"><i class="fas fa-cloud-sun text-warning"></i></td>
+                                        <td class="align-middle">Partly Cloudy</td>
+                                        <td class="align-middle">30°C / 23°C</td>
+                                        <td class="align-middle">10% Precipitation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Wednesday</td>
+                                        <td class="align-middle"><i class="fas fa-cloud-sun-rain text-info"></i></td>
+                                        <td class="align-middle">Light Rain</td>
+                                        <td class="align-middle">29°C / 23°C</td>
+                                        <td class="align-middle">40% Precipitation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Thursday</td>
+                                        <td class="align-middle"><i class="fas fa-cloud-showers-heavy text-info"></i></td>
+                                        <td class="align-middle">Heavy Rain</td>
+                                        <td class="align-middle">27°C / 22°C</td>
+                                        <td class="align-middle">80% Precipitation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Friday</td>
+                                        <td class="align-middle"><i class="fas fa-cloud-rain text-info"></i></td>
+                                        <td class="align-middle">Rain</td>
+                                        <td class="align-middle">28°C / 22°C</td>
+                                        <td class="align-middle">60% Precipitation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Saturday</td>
+                                        <td class="align-middle"><i class="fas fa-cloud-sun text-warning"></i></td>
+                                        <td class="align-middle">Partly Cloudy</td>
+                                        <td class="align-middle">29°C / 23°C</td>
+                                        <td class="align-middle">20% Precipitation</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Sunday</td>
+                                        <td class="align-middle"><i class="fas fa-sun text-warning"></i></td>
+                                        <td class="align-middle">Sunny</td>
+                                        <td class="align-middle">31°C / 24°C</td>
+                                        <td class="align-middle">0% Precipitation</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Monthly Outlook (Hidden by default) -->
+                    <div class="monthly-outlook">
+                        <h5 class="mb-3">Monthly Outlook</h5>
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-info-circle me-2"></i>Monsoon Season Forecast</h6>
+                            <p class="mb-0">The monsoon is expected to be normal this year with rainfall at 102% of the long-period average. Expect increased precipitation from mid-July through August.</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Temperature Trend</h6>
+                                        <p class="card-text">Temperatures are expected to remain 1-2°C above normal for the next 30 days, with occasional heat waves possible in the third week of the month.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Precipitation Outlook</h6>
+                                        <p class="card-text">Rainfall is expected to be above average for the month, with heavy precipitation events likely in the latter half of the month.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Active Weather Alerts -->
+            <div class="card mb-4 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Active Weather Alerts</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Heavy Rainfall Warning</h5>
+                            <span class="badge bg-danger">High Priority</span>
+                        </div>
+                        <p class="mb-2">Heavy rainfall expected in your region over the next 48 hours. Consider harvesting mature crops or providing additional drainage to prevent waterlogging.</p>
+                        <small class="text-muted">Issued: July 15, 2023 | Valid until: July 17, 2023</small>
+                    </div>
+                    <div class="alert alert-warning mb-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Heat Wave Advisory</h5>
+                            <span class="badge bg-warning text-dark">Medium Priority</span>
+                        </div>
+                        <p class="mb-2">Temperatures expected to reach 38-40°C in the coming week. Ensure adequate irrigation for crops and provide shade where possible.</p>
+                        <small class="text-muted">Issued: July 14, 2023 | Valid until: July 20, 2023</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Weather Impact on Crops -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-seedling me-2"></i>Weather Impact on Crops</h5>
+                </div>
+                <div class="card-body">
+                    <div class="crop-impact mb-3 pb-3 border-bottom">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Rice" class="me-2 rounded">
+                            <h6 class="mb-0">Rice</h6>
+                            <span class="ms-auto badge bg-success">Favorable</span>
+                        </div>
+                        <p class="mb-0 small">Current conditions are optimal for rice growth. Maintain water levels in paddy fields.</p>
+                    </div>
+                    <div class="crop-impact mb-3 pb-3 border-bottom">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Wheat" class="me-2 rounded">
+                            <h6 class="mb-0">Wheat</h6>
+                            <span class="ms-auto badge bg-warning text-dark">Caution</span>
+                        </div>
+                        <p class="mb-0 small">High temperatures may stress wheat crops. Consider additional irrigation during peak heat hours.</p>
+                    </div>
+                    <div class="crop-impact mb-3 pb-3 border-bottom">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Maize" class="me-2 rounded">
+                            <h6 class="mb-0">Maize</h6>
+                            <span class="ms-auto badge bg-danger">Unfavorable</span>
+                        </div>
+                        <p class="mb-0 small">Expected heavy rainfall may affect maize crops. Ensure proper drainage to prevent waterlogging.</p>
+                    </div>
+                    <div class="crop-impact">
+                        <div class="d-flex align-items-center mb-2">
+                            <img src="https://via.placeholder.com/40" alt="Vegetables" class="me-2 rounded">
+                            <h6 class="mb-0">Vegetables</h6>
+                            <span class="ms-auto badge bg-info text-white">Mixed</span>
+                        </div>
+                        <p class="mb-0 small">Variable conditions expected. Consider protective measures for sensitive vegetable crops.</p>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <a href="#" class="btn btn-sm btn-outline-success w-100">View All Crop Recommendations</a>
+                </div>
+            </div>
+            
+            <!-- Weather-Based Recommendations -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Weather-Based Recommendations</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Irrigation Planning</h6>
+                                <small class="text-success">Today</small>
+                            </div>
+                            <p class="mb-1 small">Skip irrigation today due to expected rainfall in the next 24 hours.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Pest Alert</h6>
+                                <small class="text-warning">High Risk</small>
+                            </div>
+                            <p class="mb-1 small">Current humidity levels increase risk of fungal diseases. Consider preventive spraying.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Harvesting Advisory</h6>
+                                <small class="text-danger">Urgent</small>
+                            </div>
+                            <p class="mb-1 small">Complete harvesting of mature crops before expected heavy rainfall on Thursday.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Livestock Care</h6>
+                                <small class="text-info">Important</small>
+                            </div>
+                            <p class="mb-1 small">Ensure adequate shade and water for livestock during the upcoming heat wave.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer bg-light">
+                    <a href="#" class="btn btn-sm btn-outline-success w-100">View All Recommendations</a>
+                </div>
+            </div>
+            
+            <!-- Weather Notification Settings -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-bell me-2"></i>Alert Settings</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="rainAlerts" checked>
+                        <label class="form-check-label" for="rainAlerts">Rainfall Alerts</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="tempAlerts" checked>
+                        <label class="form-check-label" for="tempAlerts">Temperature Alerts</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="windAlerts">
+                        <label class="form-check-label" for="windAlerts">Wind Alerts</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="cropSpecific" checked>
+                        <label class="form-check-label" for="cropSpecific">Crop-Specific Alerts</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="smsAlerts" checked>
+                        <label class="form-check-label" for="smsAlerts">SMS Notifications</label>
+                    </div>
+                    <button class="btn btn-success btn-sm w-100">Save Preferences</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Toggle between forecast views
+        $('#btn-today').click(function() {
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.hourly-forecast').show();
+            $('.weekly-forecast, .monthly-outlook').hide();
+        });
+        
+        $('#btn-week').click(function() {
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.weekly-forecast').show();
+            $('.hourly-forecast, .monthly-outlook').hide();
+        });
+        
+        $('#btn-month').click(function() {
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.monthly-outlook').show();
+            $('.hourly-forecast, .weekly-forecast').hide();
+        });
+        
+        // Location change modal
+        $('[data-bs-toggle="tooltip"]').tooltip();
+        
+        // Weather alert dismissal
+        $('.alert .close').click(function() {
+            $(this).parent().fadeOut();
+        });
+        
+        // Save alert preferences
+        $('.btn-success').click(function() {
+            // In a real app, this would save to the server
+            showToast('Alert preferences saved successfully!');
+        });
+        
+        // Function to show toast notification
+        function showToast(message) {
+            // Create toast element
+            var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'+
+                          '<div class="toast-header bg-success text-white">'+
+                          '<strong class="me-auto">Weather Alerts</strong>'+
+                          '<small>Just now</small>'+
+                          '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>'+
+                          '</div>'+
+                          '<div class="toast-body">'+message+'</div>'+
+                          '</div>');
+            
+            // Add to container
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('.toast-container').append(toast);
+            
+            // Initialize and show toast
+            var toastEl = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 3000
+            });
+            toastEl.show();
+            
+            // Remove after hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
+{% endblock %}

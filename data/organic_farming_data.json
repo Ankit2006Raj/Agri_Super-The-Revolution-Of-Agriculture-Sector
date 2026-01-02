@@ -1,0 +1,103 @@
+{
+  "certification_process": [
+    {
+      "step": 1,
+      "title": "Application Submission",
+      "description": "Submit application with farm details and current practices",
+      "duration": "1-2 weeks",
+      "documents_required": ["Land records", "Soil test reports", "Water test reports"],
+      "cost": 5000
+    },
+    {
+      "step": 2,
+      "title": "Inspection",
+      "description": "On-site inspection by certified inspector",
+      "duration": "1 day",
+      "documents_required": ["Farm map", "Input records", "Production records"],
+      "cost": 8000
+    },
+    {
+      "step": 3,
+      "title": "Conversion Period",
+      "description": "3-year transition period for soil and crops",
+      "duration": "36 months",
+      "documents_required": ["Monthly practice records", "Input purchase bills"],
+      "cost": 0
+    },
+    {
+      "step": 4,
+      "title": "Certification",
+      "description": "Final certification and organic label approval",
+      "duration": "2-4 weeks",
+      "documents_required": ["Final inspection report", "Lab test results"],
+      "cost": 3000
+    }
+  ],
+  "organic_practices": [
+    {
+      "category": "Soil Management",
+      "practices": [
+        {
+          "name": "Composting",
+          "description": "Prepare organic compost from farm waste and cow dung",
+          "benefits": ["Improves soil fertility", "Reduces input costs", "Enhances soil structure"],
+          "implementation": "Mix farm waste with cow dung in 3:1 ratio, turn weekly for 3 months"
+        },
+        {
+          "name": "Green Manuring",
+          "description": "Grow nitrogen-fixing crops and incorporate into soil",
+          "benefits": ["Adds nitrogen naturally", "Improves soil organic matter", "Breaks pest cycles"],
+          "implementation": "Grow dhaincha or sunhemp for 45-60 days, then incorporate"
+        }
+      ]
+    },
+    {
+      "category": "Pest Management",
+      "practices": [
+        {
+          "name": "Neem-based Sprays",
+          "description": "Use neem oil and neem cake for pest control",
+          "benefits": ["Natural pesticide", "Safe for beneficial insects", "No residue issues"],
+          "implementation": "Mix 2ml neem oil per liter water, spray in evening hours"
+        },
+        {
+          "name": "Companion Planting",
+          "description": "Plant pest-repelling crops alongside main crops",
+          "benefits": ["Natural pest deterrent", "Biodiversity enhancement", "Space optimization"],
+          "implementation": "Plant marigold with tomatoes, basil with peppers"
+        }
+      ]
+    }
+  ],
+  "organic_inputs": [
+    {
+      "name": "Vermicompost",
+      "type": "Fertilizer",
+      "price_per_kg": 8,
+      "application_rate": "2-3 tons per hectare",
+      "benefits": ["Rich in nutrients", "Improves soil structure", "Slow release"],
+      "suppliers": ["Local SHGs", "Organic input dealers"]
+    },
+    {
+      "name": "Neem Cake",
+      "type": "Pest Control",
+      "price_per_kg": 25,
+      "application_rate": "200-250 kg per hectare",
+      "benefits": ["Pest deterrent", "Soil conditioner", "Organic nitrogen"],
+      "suppliers": ["Oil mills", "Organic stores"]
+    }
+  ],
+  "success_stories": [
+    {
+      "farmer_name": "Ramesh Chandra",
+      "location": "Uttarakhand",
+      "crop": "Basmati Rice",
+      "area": 5,
+      "conversion_year": 2021,
+      "before_income": 180000,
+      "after_income": 320000,
+      "improvement": "78% increase",
+      "key_practices": ["Vermicompost", "SRI method", "Neem-based pest control"]
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block title %}Pest Alerts - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Pest Alerts</h1>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Early Warning System for Crop Pests</h5>
+                    <p class="card-text">Stay ahead of pest outbreaks with our predictive alert system. Get timely notifications about potential pest threats in your area.</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="crop-type">Crop Type</label>
+                                <select class="form-control" id="crop-type">
+                                    <option value="">Select your crop</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="sugarcane">Sugarcane</option>
+                                    <option value="vegetables">Vegetables</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="location">Your Location</label>
+                                <select class="form-control" id="location">
+                                    <option value="">Select your region</option>
+                                    <option value="north">North India</option>
+                                    <option value="south">South India</option>
+                                    <option value="east">East India</option>
+                                    <option value="west">West India</option>
+                                    <option value="central">Central India</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="alert-radius">Alert Radius (km)</label>
+                                <select class="form-control" id="alert-radius">
+                                    <option value="5">5 km</option>
+                                    <option value="10" selected>10 km</option>
+                                    <option value="25">25 km</option>
+                                    <option value="50">50 km</option>
+                                    <option value="100">100 km</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="check-alerts">Check for Alerts</button>
+                </div>
+            </div>
+            
+            <div class="card mt-4 shadow-sm d-none" id="current-alerts">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0">Current Pest Alerts</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert-list">
+                        <!-- Alert items will be populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Common Pests Library</h5>
+                            <p class="card-text">Learn about common pests affecting various crops and how to identify them.</p>
+                            
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Aphids</h6>
+                                        <small>Multiple crops</small>
+                                    </div>
+                                    <p class="mb-1">Small sap-sucking insects that can transmit plant viruses</p>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Bollworms</h6>
+                                        <small>Cotton</small>
+                                    </div>
+                                    <p class="mb-1">Caterpillars that feed on cotton bolls and flowers</p>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Stem Borers</h6>
+                                        <small>Rice, Maize</small>
+                                    </div>
+                                    <p class="mb-1">Larvae that tunnel into plant stems causing wilting</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Integrated Pest Management</h5>
+                            <p class="card-text">Sustainable approaches to manage pests while minimizing environmental impact.</p>
+                            
+                            <div class="accordion" id="ipmAccordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne">
+                                                Biological Control
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" data-parent="#ipmAccordion">
+                                        <div class="card-body">
+                                            Using natural enemies like predatory insects, parasitoids, and pathogens to control pest populations.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseTwo">
+                                                Cultural Practices
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" data-parent="#ipmAccordion">
+                                        <div class="card-body">
+                                            Modifying growing practices to reduce pest establishment, reproduction, and survival.
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseThree">
+                                                Resistant Varieties
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" data-parent="#ipmAccordion">
+                                        <div class="card-body">
+                                            Using crop varieties that are resistant or tolerant to specific pests.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('check-alerts').addEventListener('click', function() {
+        const cropType = document.getElementById('crop-type').value;
+        const location = document.getElementById('location').value;
+        
+        if (!cropType || !location) {
+            alert('Please select both crop type and location');
+            return;
+        }
+        
+        // In a real application, this would make an API call to get data
+        // For demo purposes, we'll just show some sample alerts
+        const alertsData = [
+            {
+                pest: 'Fall Armyworm',
+                severity: 'High',
+                crops: 'Maize, Rice',
+                location: 'Within 15km of your location',
+                date: '2023-06-15',
+                description: 'Fall armyworm outbreak detected in neighboring districts. Immediate inspection recommended.'
+            },
+            {
+                pest: 'Brown Planthopper',
+                severity: 'Medium',
+                crops: 'Rice',
+                location: 'Within 8km of your location',
+                date: '2023-06-12',
+                description: 'Increasing populations observed. Monitor fields closely and prepare control measures.'
+            },
+            {
+                pest: 'Aphids',
+                severity: 'Low',
+                crops: 'Multiple crops',
+                location: 'Within 20km of your location',
+                date: '2023-06-10',
+                description: 'Seasonal aphid activity beginning. Preventive measures recommended for vulnerable crops.'
+            }
+        ];
+        
+        const alertList = document.querySelector('.alert-list');
+        alertList.innerHTML = '';
+        
+        alertsData.forEach(alert => {
+            const severityClass = alert.severity === 'High' ? 'danger' : 
+                                 alert.severity === 'Medium' ? 'warning' : 'info';
+            
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert alert-${severityClass} mb-3`;
+            alertElement.innerHTML = `
+                <h5 class="alert-heading">${alert.pest} - ${alert.severity} Risk</h5>
+                <p><strong>Affected Crops:</strong> ${alert.crops}</p>
+                <p><strong>Location:</strong> ${alert.location}</p>
+                <p><strong>Reported:</strong> ${alert.date}</p>
+                <hr>
+                <p class="mb-0">${alert.description}</p>
+            `;
+            
+            alertList.appendChild(alertElement);
+        });
+        
+        document.getElementById('current-alerts').classList.remove('d-none');
+    });
+</script>
+{% endblock %}

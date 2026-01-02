@@ -1,0 +1,69 @@
+/* Market Price Dashboard styles */
+.market-selector-group {
+    width: 150px;
+}
+
+/* Form switch styles */
+.form-check-input {
+    cursor: pointer;
+}
+
+.form-check-label {
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Price alerts */
+.price-alert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-alert-info {
+    flex-grow: 1;
+}
+
+.price-alert-status {
+    text-align: right;
+}
+
+/* Search and filters */
+.search-filters {
+    margin-bottom: 1.5rem;
+}
+
+/* Market selector container */
+.market-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Price trend indicators */
+.price-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.price-trend.up {
+    color: #28a745;
+}
+
+.price-trend.down {
+    color: #dc3545;
+}
+
+/* Market comparison table */
+.market-price-table th,
+.market-price-table td {
+    vertical-align: middle;
+}
+
+/* Chart containers */
+.price-chart-container {
+    min-height: 300px;
+    margin-bottom: 1.5rem;
+}

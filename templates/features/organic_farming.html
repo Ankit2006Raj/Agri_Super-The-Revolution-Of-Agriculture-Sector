@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block title %}Organic Farming{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-success mb-4">Organic Farming Practices</h2>
+            <p class="lead">Learn sustainable farming methods that improve soil health and produce chemical-free crops.</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Organic Farming Principles</h4>
+                    <p>Organic farming works in harmony with nature rather than against it. This involves using techniques to achieve good crop yields without harming the natural environment or the people who live and work in it.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><i class="fas fa-seedling me-2"></i>Soil Health</h5>
+                                    <p class="card-text">Building and maintaining soil health through composting, crop rotation, and minimal tillage.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><i class="fas fa-bug me-2"></i>Natural Pest Control</h5>
+                                    <p class="card-text">Using beneficial insects, companion planting, and natural repellents instead of synthetic pesticides.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><i class="fas fa-recycle me-2"></i>Biodiversity</h5>
+                                    <p class="card-text">Encouraging diverse plant and animal life to create a balanced ecosystem on your farm.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success"><i class="fas fa-tint me-2"></i>Water Conservation</h5>
+                                    <p class="card-text">Implementing efficient irrigation systems and water management practices.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Certification Process</h4>
+                    <p>Get your farm certified organic to access premium markets and prices.</p>
+                    <ol class="list-group list-group-numbered mb-3">
+                        <li class="list-group-item">Submit application to certification body</li>
+                        <li class="list-group-item">Complete farm documentation</li>
+                        <li class="list-group-item">Schedule and complete inspection</li>
+                        <li class="list-group-item">Review and certification decision</li>
+                        <li class="list-group-item">Annual renewal and compliance</li>
+                    </ol>
+                    <button class="btn btn-success w-100">Start Certification Process</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">Organic Farming Techniques</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <tr>
+                                    <th>Technique</th>
+                                    <th>Description</th>
+                                    <th>Benefits</th>
+                                    <th>Implementation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Composting</td>
+                                    <td>Converting organic waste into nutrient-rich soil amendment</td>
+                                    <td>Improves soil structure, adds nutrients, reduces waste</td>
+                                    <td><button class="btn btn-sm btn-outline-success">Learn More</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Cover Cropping</td>
+                                    <td>Growing plants specifically to cover and protect soil</td>
+                                    <td>Prevents erosion, adds organic matter, fixes nitrogen</td>
+                                    <td><button class="btn btn-sm btn-outline-success">Learn More</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Biological Pest Control</td>
+                                    <td>Using natural predators to control pest populations</td>
+                                    <td>Reduces chemical use, maintains ecosystem balance</td>
+                                    <td><button class="btn btn-sm btn-outline-success">Learn More</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Green Manuring</td>
+                                    <td>Growing and incorporating plants into soil as fertilizer</td>
+                                    <td>Adds nutrients, improves soil structure</td>
+                                    <td><button class="btn btn-sm btn-outline-success">Learn More</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Market Opportunities</h4>
+                    <p>Organic products typically command premium prices in the market.</p>
+                    <div class="d-flex justify-content-center">
+                        <div class="chart-container" style="position: relative; height:200px; width:100%">
+                            <canvas id="organicMarketChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <p><strong>Premium Price Range:</strong> 20-50% higher than conventional products</p>
+                        <p><strong>Growing Market:</strong> 15% annual growth in organic sector</p>
+                        <button class="btn btn-outline-success w-100">Find Organic Buyers</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Success Stories</h4>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Ramesh Kumar - Bihar</h5>
+                            <p class="card-text">"Switching to organic farming doubled my income within 3 years while reducing my input costs by 30%."</p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Sunita Devi - Madhya Pradesh</h5>
+                            <p class="card-text">"My organic vegetables are now in high demand at local markets, and I've expanded to direct sales to restaurants."</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-success w-100">Share Your Story</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Market chart
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('organicMarketChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Vegetables', 'Fruits', 'Grains', 'Pulses', 'Spices'],
+                datasets: [{
+                    label: 'Premium % Over Conventional',
+                    data: [35, 40, 25, 30, 50],
+                    backgroundColor: [
+                        'rgba(75, 192, 75, 0.6)',
+                        'rgba(75, 192, 75, 0.6)',
+                        'rgba(75, 192, 75, 0.6)',
+                        'rgba(75, 192, 75, 0.6)',
+                        'rgba(75, 192, 75, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 75, 1)',
+                        'rgba(75, 192, 75, 1)',
+                        'rgba(75, 192, 75, 1)',
+                        'rgba(75, 192, 75, 1)',
+                        'rgba(75, 192, 75, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Premium %'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

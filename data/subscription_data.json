@@ -1,0 +1,60 @@
+{
+  "subscription_plans": [
+    {
+      "id": "basic_monthly",
+      "name": "Basic Monthly",
+      "type": "monthly",
+      "price": 299,
+      "features": ["Price alerts", "Basic market data", "Email support"],
+      "limits": { "alerts": 10, "api_calls": 100, "storage": "1GB" }
+    },
+    {
+      "id": "premium_monthly",
+      "name": "Premium Monthly",
+      "type": "monthly",
+      "price": 599,
+      "features": ["Advanced analytics", "Real-time data", "Priority support", "Custom reports"],
+      "limits": { "alerts": 50, "api_calls": 500, "storage": "5GB" }
+    },
+    {
+      "id": "enterprise_monthly",
+      "name": "Enterprise Monthly",
+      "type": "monthly",
+      "price": 1299,
+      "features": ["All premium features", "API access", "Dedicated support", "Custom integrations"],
+      "limits": { "alerts": "unlimited", "api_calls": "unlimited", "storage": "50GB" }
+    }
+  ],
+  "buyer_profiles": [
+    {
+      "id": "rest_001",
+      "name": "Green Valley Restaurant Chain",
+      "type": "restaurant",
+      "location": "Delhi",
+      "requirements": {
+        "vegetables": { "quantity": "500kg/week", "quality": "Grade-A", "organic": true },
+        "fruits": { "quantity": "200kg/week", "quality": "Premium", "seasonal": true }
+      },
+      "subscription": "premium_monthly",
+      "loyalty_tier": "gold"
+    },
+    {
+      "id": "retail_001",
+      "name": "FreshMart Supermarket",
+      "type": "retailer",
+      "location": "Mumbai",
+      "requirements": {
+        "grains": { "quantity": "2000kg/month", "quality": "Grade-A", "packaging": "bulk" },
+        "pulses": { "quantity": "800kg/month", "quality": "Premium", "varieties": ["moong", "chana", "masoor"] }
+      },
+      "subscription": "enterprise_monthly",
+      "loyalty_tier": "platinum"
+    }
+  ],
+  "loyalty_programs": {
+    "bronze": { "discount": 5, "benefits": ["Basic support", "Monthly newsletter"] },
+    "silver": { "discount": 10, "benefits": ["Priority support", "Quarterly reports", "Free shipping"] },
+    "gold": { "discount": 15, "benefits": ["Dedicated manager", "Custom analytics", "Premium support"] },
+    "platinum": { "discount": 20, "benefits": ["All gold benefits", "API access", "Custom integrations"] }
+  }
+}

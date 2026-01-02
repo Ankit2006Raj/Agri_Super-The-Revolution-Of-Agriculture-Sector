@@ -1,0 +1,56 @@
+# AgriSuper-App - Core Dependencies
+# For full production requirements, see requirements-production.txt
+
+flask==3.0.3
+werkzeug>=3.0.0
+itsdangerous>=2.1.2
+jinja2>=3.1.2
+
+# Data Processing
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Machine Learning
+scikit-learn>=1.2.0
+
+# Visualization
+matplotlib>=3.7.0
+
+# HTTP Requests
+requests>=2.28.0
+
+# Database (PostgreSQL recommended for production)
+SQLAlchemy==2.0.23
+psycopg2-binary==2.9.9  # PostgreSQL driver
+Flask-SQLAlchemy==3.1.1
+
+# Authentication & Security
+Flask-JWT-Extended==4.6.0
+Flask-Bcrypt==1.0.1
+python-dotenv==1.0.0
+
+# Caching
+redis==5.0.1
+Flask-Caching==2.1.0
+
+# Background Tasks
+celery==5.3.4
+
+# API Integrations (External Services)
+# Get API keys from respective providers
+google-cloud-speech==2.23.0  # Voice recognition
+google-cloud-texttospeech==2.16.0  # Text-to-speech
+twilio==8.11.1  # SMS notifications
+razorpay==1.4.1  # Payment gateway
+
+# CORS Support
+Flask-CORS==4.0.0
+
+# Production Server
+gunicorn==21.2.0
+
+# Note: For complete production deployment with monitoring,
+# Docker, and all advanced features, use:
+# pip install -r requirements-production.txt
+
+

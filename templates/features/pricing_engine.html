@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Dynamic Pricing Engine{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-chart-line me-2"></i>Dynamic Pricing Engine</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label" for="cropSelect">Select Crop</label>
+                            <select class="form-select" id="cropSelect" title="Select a crop type" aria-label="Select crop type">
+                                <option value="">Choose crop...</option>
+                                <option value="rice">Rice</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="cotton">Cotton</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="marketSelect">Market Location</label>
+                            <select class="form-select" id="marketSelect" title="Select a market location" aria-label="Select market location">
+                                <option value="">Choose market...</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="kolkata">Kolkata</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="pricingResults" class="row">
+                        <!-- Dynamic content will be loaded here -->
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h5>Current Price</h5>
+                                    <h3 id="currentPrice">₹3,500</h3>
+                                    <small>per quintal</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h5>Predicted Price</h5>
+                                    <h3 id="predictedPrice">₹3,750</h3>
+                                    <small>next week</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h5>Price Trend</h5>
+                                    <h3 id="priceTrend">↗ +7.1%</h3>
+                                    <small>this month</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cropSelect = document.getElementById('cropSelect');
+    const marketSelect = document.getElementById('marketSelect');
+    
+    function loadPricingData() {
+        const crop = cropSelect.value;
+        const market = marketSelect.value;
+        
+        if (crop && market) {
+            fetch(`/api/pricing-engine?crop=${crop}&market=${market}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('currentPrice').textContent = `₹${data.current_price}`;
+                    document.getElementById('predictedPrice').textContent = `₹${data.predicted_price}`;
+                    document.getElementById('priceTrend').textContent = `${data.trend_direction} ${data.trend_percentage}%`;
+                });
+        }
+    }
+    
+    cropSelect.addEventListener('change', loadPricingData);
+    marketSelect.addEventListener('change', loadPricingData);
+});
+</script>
+{% endblock %}

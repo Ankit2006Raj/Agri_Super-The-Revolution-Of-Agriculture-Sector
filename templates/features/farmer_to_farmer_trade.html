@@ -1,0 +1,530 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section bg-gradient-primary text-white p-4 rounded mb-4">
+                <h1 class="display-5 fw-bold mb-2">Farmer-to-Farmer Trade</h1>
+                <p class="lead mb-0">Direct peer-to-peer trading platform for farmers</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Navigation Tabs -->
+        <div class="col-12 mb-4">
+            <ul class="nav nav-tabs" id="tradeTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="browse-tab" data-bs-toggle="tab" data-bs-target="#browse" type="button" role="tab" aria-controls="browse" aria-selected="true">
+                        <i class="fas fa-search me-2" aria-hidden="true"></i>Browse Offers
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="my-offers-tab" data-bs-toggle="tab" data-bs-target="#my-offers" type="button" role="tab" aria-controls="my-offers" aria-selected="false">
+                        <i class="fas fa-list me-2" aria-hidden="true"></i>My Offers
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="create-offer-tab" data-bs-toggle="tab" data-bs-target="#create-offer" type="button" role="tab" aria-controls="create-offer" aria-selected="false">
+                        <i class="fas fa-plus me-2" aria-hidden="true"></i>Create Offer
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="trades-tab" data-bs-toggle="tab" data-bs-target="#trades" type="button" role="tab" aria-controls="trades" aria-selected="false">
+                        <i class="fas fa-handshake me-2" aria-hidden="true"></i>My Trades
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tab-content" id="tradeTabContent">
+        <!-- Browse Offers Tab -->
+        <div class="tab-pane fade show active" id="browse" role="tabpanel">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h6 class="mb-0"><i class="fas fa-filter me-2"></i>Search Filters</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Trade Type</label>
+                                <select class="form-select" id="tradeTypeFilter" title="Filter by trade type" aria-label="Filter trades by type">
+                                    <option value="">All Types</option>
+                                    <option value="sell">Selling</option>
+                                    <option value="buy">Buying</option>
+                                    <option value="exchange">Exchange</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Crop/Product</label>
+                                <input type="text" class="form-control" id="cropFilter" placeholder="Search crops...">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location (km)</label>
+                                <select class="form-select" id="locationFilter" title="Filter by distance" aria-label="Filter trades by distance">
+                                    <option value="">Any Distance</option>
+                                    <option value="10">Within 10 km</option>
+                                    <option value="25">Within 25 km</option>
+                                    <option value="50">Within 50 km</option>
+                                    <option value="100">Within 100 km</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary w-100" onclick="searchOffers()">Search Offers</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5>Available Offers <span class="badge bg-primary" id="offerCount">0</span></h5>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-primary btn-sm" onclick="sortOffers('date')">Latest</button>
+                            <button class="btn btn-outline-primary btn-sm" onclick="sortOffers('price')">Price</button>
+                            <button class="btn btn-outline-primary btn-sm" onclick="sortOffers('distance')">Distance</button>
+                        </div>
+                    </div>
+
+                    <div id="offersContainer">
+                        <!-- Offers will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Offers Tab -->
+        <div class="tab-pane fade" id="my-offers" role="tabpanel">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">My Active Offers</h5>
+                            <button class="btn btn-primary btn-sm" onclick="refreshMyOffers()">
+                                <i class="fas fa-sync-alt me-1"></i>Refresh
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="myOffersContainer">
+                                <!-- My offers will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Offer Tab -->
+        <div class="tab-pane fade" id="create-offer" role="tabpanel">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="fas fa-plus me-2"></i>Create New Trade Offer</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="createOfferForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Trade Type *</label>
+                                        <select class="form-select" id="offerType" required title="Select trade type" aria-label="Type of trade offer">
+                                            <option value="">Select Type</option>
+                                            <option value="sell">I want to sell</option>
+                                            <option value="buy">I want to buy</option>
+                                            <option value="exchange">I want to exchange</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Crop/Product *</label>
+                                        <input type="text" class="form-control" id="offerCrop" required placeholder="e.g., Wheat, Rice, Tomatoes">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Quantity *</label>
+                                        <input type="number" class="form-control" id="offerQuantity" required placeholder="0">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Unit</label>
+                                        <select class="form-select" id="offerUnit" title="Select measurement unit" aria-label="Unit of measurement">
+                                            <option value="kg">Kilograms</option>
+                                            <option value="quintal">Quintals</option>
+                                            <option value="ton">Tons</option>
+                                            <option value="bags">Bags</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Price per Unit (₹)</label>
+                                        <input type="number" class="form-control" id="offerPrice" placeholder="0">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" id="offerDescription" rows="3" placeholder="Describe your offer, quality, conditions, etc."></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Available From</label>
+                                        <input type="date" class="form-control" id="offerFromDate" title="Select start date" aria-label="Offer available from date">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Available Until</label>
+                                        <input type="date" class="form-control" id="offerToDate" title="Select end date" aria-label="Offer available until date">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Information</label>
+                                    <input type="tel" class="form-control" id="offerContact" placeholder="Your phone number">
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="fas fa-plus me-2"></i>Create Offer
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Trades Tab -->
+        <div class="tab-pane fade" id="trades" role="tabpanel">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h5 class="mb-0">Trade History</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="tradesContainer">
+                                <!-- Trade history will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trade Details Modal -->
+<div class="modal fade" id="tradeModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tradeModalTitle">Trade Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close details" title="Close"></button>
+            </div>
+            <div class="modal-body" id="tradeModalBody">
+                <!-- Trade details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="contactTrader()">Contact Trader</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let allOffers = [];
+let myOffers = [];
+let myTrades = [];
+
+// Load offers
+async function loadOffers() {
+    try {
+        const response = await fetch('/api/farmer_to_farmer_trade/offers');
+        const data = await response.json();
+        allOffers = data.offers;
+        displayOffers(allOffers);
+        updateOfferCount(allOffers.length);
+    } catch (error) {
+        console.error('Error loading offers:', error);
+    }
+}
+
+// Display offers
+function displayOffers(offers) {
+    const container = document.getElementById('offersContainer');
+    
+    if (offers.length === 0) {
+        container.innerHTML = '<div class="text-center text-muted py-4">No offers found</div>';
+        return;
+    }
+
+    container.innerHTML = offers.map(offer => `
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-${offer.type === 'sell' ? 'success' : offer.type === 'buy' ? 'primary' : 'warning'} me-2">
+                                ${offer.type.toUpperCase()}
+                            </span>
+                            <h6 class="mb-0">${offer.crop}</h6>
+                        </div>
+                        <p class="text-muted mb-2">${offer.description}</p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-user me-1"></i>${offer.farmer_name}<br>
+                                    <i class="fas fa-map-marker-alt me-1"></i>${offer.location} (${offer.distance} km away)
+                                </small>
+                            </div>
+                            <div class="col-sm-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-1"></i>Posted ${offer.posted_date}<br>
+                                    <i class="fas fa-clock me-1"></i>Valid until ${offer.valid_until}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="mb-2">
+                            <span class="h5 text-success">₹${offer.price}/${offer.unit}</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="badge bg-light text-dark">${offer.quantity} ${offer.unit}</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="showTradeDetails('${offer.id}')">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Search offers
+function searchOffers() {
+    const tradeType = document.getElementById('tradeTypeFilter').value;
+    const crop = document.getElementById('cropFilter').value.toLowerCase();
+    const maxDistance = parseInt(document.getElementById('locationFilter').value) || Infinity;
+
+    const filteredOffers = allOffers.filter(offer => {
+        return (!tradeType || offer.type === tradeType) &&
+               (!crop || offer.crop.toLowerCase().includes(crop)) &&
+               (offer.distance <= maxDistance);
+    });
+
+    displayOffers(filteredOffers);
+    updateOfferCount(filteredOffers.length);
+}
+
+// Sort offers
+function sortOffers(sortBy) {
+    let sortedOffers = [...allOffers];
+    
+    switch(sortBy) {
+        case 'date':
+            sortedOffers.sort((a, b) => new Date(b.posted_date) - new Date(a.posted_date));
+            break;
+        case 'price':
+            sortedOffers.sort((a, b) => a.price - b.price);
+            break;
+        case 'distance':
+            sortedOffers.sort((a, b) => a.distance - b.distance);
+            break;
+    }
+    
+    displayOffers(sortedOffers);
+}
+
+// Show trade details
+async function showTradeDetails(offerId) {
+    try {
+        const response = await fetch(`/api/farmer_to_farmer_trade/offer/${offerId}`);
+        const offer = await response.json();
+        
+        document.getElementById('tradeModalTitle').textContent = `${offer.type.toUpperCase()}: ${offer.crop}`;
+        document.getElementById('tradeModalBody').innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Offer Details</h6>
+                    <table class="table table-sm">
+                        <tr><td><strong>Type:</strong></td><td><span class="badge bg-${offer.type === 'sell' ? 'success' : 'primary'}">${offer.type.toUpperCase()}</span></td></tr>
+                        <tr><td><strong>Crop:</strong></td><td>${offer.crop}</td></tr>
+                        <tr><td><strong>Quantity:</strong></td><td>${offer.quantity} ${offer.unit}</td></tr>
+                        <tr><td><strong>Price:</strong></td><td>₹${offer.price}/${offer.unit}</td></tr>
+                        <tr><td><strong>Total Value:</strong></td><td>₹${offer.price * offer.quantity}</td></tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h6>Farmer Details</h6>
+                    <table class="table table-sm">
+                        <tr><td><strong>Name:</strong></td><td>${offer.farmer_name}</td></tr>
+                        <tr><td><strong>Location:</strong></td><td>${offer.location}</td></tr>
+                        <tr><td><strong>Distance:</strong></td><td>${offer.distance} km away</td></tr>
+                        <tr><td><strong>Rating:</strong></td><td>${'★'.repeat(offer.rating)}${'☆'.repeat(5-offer.rating)} (${offer.total_trades} trades)</td></tr>
+                        <tr><td><strong>Contact:</strong></td><td>${offer.contact}</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-3">
+                <h6>Description</h6>
+                <p>${offer.description}</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <small class="text-muted">Available from: ${offer.available_from}</small>
+                </div>
+                <div class="col-md-6">
+                    <small class="text-muted">Valid until: ${offer.valid_until}</small>
+                </div>
+            </div>
+        `;
+        
+        new bootstrap.Modal(document.getElementById('tradeModal')).show();
+    } catch (error) {
+        console.error('Error loading trade details:', error);
+    }
+}
+
+// Create offer
+document.getElementById('createOfferForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const offerData = {
+        type: document.getElementById('offerType').value,
+        crop: document.getElementById('offerCrop').value,
+        quantity: document.getElementById('offerQuantity').value,
+        unit: document.getElementById('offerUnit').value,
+        price: document.getElementById('offerPrice').value,
+        description: document.getElementById('offerDescription').value,
+        available_from: document.getElementById('offerFromDate').value,
+        available_until: document.getElementById('offerToDate').value,
+        contact: document.getElementById('offerContact').value
+    };
+
+    try {
+        const response = await fetch('/api/farmer_to_farmer_trade/create_offer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(offerData)
+        });
+
+        if (response.ok) {
+            alert('Offer created successfully!');
+            document.getElementById('createOfferForm').reset();
+            // Switch to My Offers tab
+            document.getElementById('my-offers-tab').click();
+            refreshMyOffers();
+        } else {
+            alert('Error creating offer. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error creating offer:', error);
+        alert('Error creating offer. Please try again.');
+    }
+});
+
+// Load my offers
+async function refreshMyOffers() {
+    try {
+        const response = await fetch('/api/farmer_to_farmer_trade/my_offers');
+        const data = await response.json();
+        myOffers = data.offers;
+        displayMyOffers(myOffers);
+    } catch (error) {
+        console.error('Error loading my offers:', error);
+    }
+}
+
+// Display my offers
+function displayMyOffers(offers) {
+    const container = document.getElementById('myOffersContainer');
+    
+    if (offers.length === 0) {
+        container.innerHTML = '<div class="text-center text-muted py-4">You have no active offers</div>';
+        return;
+    }
+
+    container.innerHTML = offers.map(offer => `
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-${offer.type === 'sell' ? 'success' : 'primary'} me-2">${offer.type.toUpperCase()}</span>
+                            <h6 class="mb-0">${offer.crop}</h6>
+                        </div>
+                        <p class="mb-2">${offer.quantity} ${offer.unit} @ ₹${offer.price}/${offer.unit}</p>
+                        <small class="text-muted">Posted: ${offer.posted_date} | Valid until: ${offer.valid_until}</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="mb-2">
+                            <span class="badge bg-light text-dark">${offer.inquiries} inquiries</span>
+                        </div>
+                        <div class="btn-group-vertical btn-group-sm">
+                            <button class="btn btn-outline-primary" onclick="editOffer('${offer.id}')">Edit</button>
+                            <button class="btn btn-outline-danger" onclick="deleteOffer('${offer.id}')">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Update offer count
+function updateOfferCount(count) {
+    document.getElementById('offerCount').textContent = count;
+}
+
+// Contact trader
+function contactTrader() {
+    alert('Contact functionality will be implemented');
+}
+
+// Edit offer
+function editOffer(offerId) {
+    alert('Edit offer functionality will be implemented');
+}
+
+// Delete offer
+async function deleteOffer(offerId) {
+    if (confirm('Are you sure you want to delete this offer?')) {
+        try {
+            const response = await fetch(`/api/farmer_to_farmer_trade/delete_offer/${offerId}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                alert('Offer deleted successfully!');
+                refreshMyOffers();
+            } else {
+                alert('Error deleting offer. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error deleting offer:', error);
+            alert('Error deleting offer. Please try again.');
+        }
+    }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    loadOffers();
+    
+    // Set default dates
+    const today = new Date().toISOString().split('T')[0];
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    const nextMonthStr = nextMonth.toISOString().split('T')[0];
+    
+    document.getElementById('offerFromDate').value = today;
+    document.getElementById('offerToDate').value = nextMonthStr;
+});
+</script>
+{% endblock %}

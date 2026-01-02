@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Purchase - AgriSuper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .emi-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .product-card {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .emi-plan {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .emi-plan:hover, .emi-plan.selected {
+            border-color: #667eea;
+            background: #e7f0ff;
+        }
+        .calculator-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        .emi-amount {
+            font-size: 36px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <button onclick="window.history.back()" class="btn btn-light mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <h1 class="text-white text-center mb-4">
+                    <i class="fas fa-credit-card"></i> EMI Purchase
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- EMI Calculator -->
+                <div class="emi-card">
+                    <h4 class="mb-4"><i class="fas fa-calculator"></i> EMI Calculator</h4>
+                    <form id="emiCalculator">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Product/Equipment</label>
+                                <select class="form-select" id="productSelect" required>
+                                    <option value="">Select Product</option>
+                                    <option value="tractor">Tractor</option>
+                                    <option value="harvester">Harvester</option>
+                                    <option value="sprayer">Sprayer</option>
+                                    <option value="seeds">Seeds (Bulk)</option>
+                                    <option value="fertilizer">Fertilizer (Bulk)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Product Price (₹)</label>
+                                <input type="number" class="form-control" id="productPrice" required min="10000" placeholder="Enter amount">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Down Payment (₹)</label>
+                                <input type="number" class="form-control" id="downPayment" value="0" min="0" placeholder="Optional">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Tenure (Months)</label>
+                                <select class="form-select" id="tenure" required>
+                                    <option value="3">3 Months</option>
+                                    <option value="6">6 Months</option>
+                                    <option value="9">9 Months</option>
+                                    <option value="12" selected>12 Months</option>
+                                    <option value="18">18 Months</option>
+                                    <option value="24">24 Months</option>
+                                    <option value="36">36 Months</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Interest Rate (%)</label>
+                                <input type="number" class="form-control" id="interestRate" value="12" step="0.1" min="0" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">&nbsp;</label>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-calculator"></i> Calculate EMI
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="calculatorResult" class="calculator-result" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <h6>Monthly EMI</h6>
+                                <div class="emi-amount" id="monthlyEMI">₹0</div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h6>Total Interest</h6>
+                                <div class="emi-amount" id="totalInterest">₹0</div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h6>Total Amount</h6>
+                                <div class="emi-amount" id="totalAmount">₹0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available EMI Products -->
+                <div class="emi-card">
+                    <h4 class="mb-3"><i class="fas fa-shopping-cart"></i> Available Products</h4>
+                    <div id="productsList">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Payment Schedule -->
+                <div class="emi-card" id="paymentSchedule" style="display: none;">
+                    <h4 class="mb-3"><i class="fas fa-calendar-alt"></i> Payment Schedule</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>EMI Amount</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- My EMI Plans -->
+                <div class="emi-card">
+                    <h5><i class="fas fa-list"></i> My Active EMIs</h5>
+                    <div id="activeEMIList">
+                        <div class="text-center text-muted py-3">
+                            <p>No active EMI plans</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EMI Benefits -->
+                <div class="emi-card">
+                    <h5><i class="fas fa-gift"></i> EMI Benefits</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Zero processing fee</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Flexible tenure options</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success"></i> No hidden charges</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Easy pre-payment</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success"></i> Instant approval</li>
+                    </ul>
+                </div>
+
+                <!-- Help & Support -->
+                <div class="emi-card">
+                    <h5><i class="fas fa-question-circle"></i> Need Help?</h5>
+                    <p class="text-muted small">Contact our support team for EMI assistance</p>
+                    <button class="btn btn-outline-primary btn-sm w-100">
+                        <i class="fas fa-phone"></i> Call Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load products on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            loadActiveEMIs();
+        });
+
+        // EMI Calculator
+        document.getElementById('emiCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calculateEMI();
+        });
+
+        function calculateEMI() {
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const downPayment = parseFloat(document.getElementById('downPayment').value) || 0;
+            const tenure = parseInt(document.getElementById('tenure').value);
+            const rate = parseFloat(document.getElementById('interestRate').value);
+
+            const principal = price - downPayment;
+            const monthlyRate = rate / (12 * 100);
+            
+            // EMI = [P x R x (1+R)^N]/[(1+R)^N-1]
+            const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, tenure)) / 
+                        (Math.pow(1 + monthlyRate, tenure) - 1);
+            
+            const totalAmount = emi * tenure;
+            const totalInterest = totalAmount - principal;
+
+            // Display results
+            document.getElementById('monthlyEMI').textContent = `₹${emi.toFixed(2)}`;
+            document.getElementById('totalInterest').textContent = `₹${totalInterest.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `₹${totalAmount.toFixed(2)}`;
+            document.getElementById('calculatorResult').style.display = 'block';
+
+            // Generate payment schedule
+            generatePaymentSchedule(principal, emi, monthlyRate, tenure);
+        }
+
+        function generatePaymentSchedule(principal, emi, rate, tenure) {
+            const scheduleBody = document.getElementById('scheduleBody');
+            scheduleBody.innerHTML = '';
+            
+            let balance = principal;
+            
+            for (let month = 1; month <= tenure; month++) {
+                const interest = balance * rate;
+                const principalPaid = emi - interest;
+                balance -= principalPaid;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>Month ${month}</td>
+                    <td>₹${emi.toFixed(2)}</td>
+                    <td>₹${principalPaid.toFixed(2)}</td>
+                    <td>₹${interest.toFixed(2)}</td>
+                    <td>₹${Math.max(0, balance).toFixed(2)}</td>
+                `;
+                scheduleBody.appendChild(row);
+            }
+            
+            document.getElementById('paymentSchedule').style.display = 'block';
+        }
+
+        async function loadProducts() {
+            // Mock products for demonstration
+            const products = [
+                {
+                    id: 1,
+                    name: 'Mahindra 475 DI Tractor',
+                    price: 750000,
+                    image: 'tractor.jpg',
+                    emiFrom: 22500,
+                    description: '42 HP, 4WD, Good for medium farms'
+                },
+                {
+                    id: 2,
+                    name: 'John Deere Harvester',
+                    price: 1500000,
+                    image: 'harvester.jpg',
+                    emiFrom: 45000,
+                    description: 'High efficiency, fuel efficient'
+                },
+                {
+                    id: 3,
+                    name: 'Power Sprayer System',
+                    price: 45000,
+                    image: 'sprayer.jpg',
+                    emiFrom: 1500,
+                    description: 'Motorized, 16L capacity'
+                }
+            ];
+
+            const productsList = document.getElementById('productsList');
+            productsList.innerHTML = '';
+
+            products.forEach(product => {
+                productsList.innerHTML += `
+                    <div class="product-card" onclick="selectProduct(${product.id}, ${product.price})">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <div class="bg-light text-center p-3 rounded">
+                                    <i class="fas fa-tractor fa-3x text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>${product.name}</h5>
+                                <p class="text-muted small mb-1">${product.description}</p>
+                                <p class="mb-0"><strong>Price: ₹${product.price.toLocaleString()}</strong></p>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <small class="text-muted">EMI from</small>
+                                <h4 class="text-primary mb-0">₹${product.emiFrom.toLocaleString()}/mo</h4>
+                                <button class="btn btn-sm btn-primary mt-2">
+                                    Calculate EMI
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function selectProduct(productId, price) {
+            document.getElementById('productPrice').value = price;
+            document.getElementById('productPrice').focus();
+        }
+
+        async function loadActiveEMIs() {
+            // This would fetch actual EMI data from backend
+            // Mock data for demonstration
+        }
+    </script>
+</body>
+</html>

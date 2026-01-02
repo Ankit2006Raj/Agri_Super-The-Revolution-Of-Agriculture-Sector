@@ -1,0 +1,70 @@
+{
+  "irrigation_techniques": [
+    {
+      "technique": "Drip Irrigation",
+      "water_efficiency": 90,
+      "initial_cost_per_acre": 45000,
+      "water_savings": "40-60%",
+      "suitable_crops": ["Vegetables", "Fruits", "Cotton"],
+      "maintenance_cost_annual": 3000,
+      "lifespan_years": 8,
+      "benefits": ["Precise water application", "Reduced weed growth", "Fertilizer efficiency", "Labor savings"]
+    },
+    {
+      "technique": "Sprinkler Irrigation",
+      "water_efficiency": 75,
+      "initial_cost_per_acre": 25000,
+      "water_savings": "20-40%",
+      "suitable_crops": ["Wheat", "Maize", "Sugarcane"],
+      "maintenance_cost_annual": 2000,
+      "lifespan_years": 10,
+      "benefits": ["Uniform water distribution", "Suitable for uneven terrain", "Frost protection", "Dust control"]
+    }
+  ],
+  "water_harvesting": [
+    {
+      "method": "Farm Ponds",
+      "capacity": "1000-5000 cubic meters",
+      "construction_cost": 150000,
+      "area_required": "0.1 acres",
+      "water_storage_months": 6,
+      "benefits": ["Rainwater collection", "Groundwater recharge", "Fish farming potential", "Microclimate creation"]
+    },
+    {
+      "method": "Check Dams",
+      "capacity": "500-2000 cubic meters",
+      "construction_cost": 80000,
+      "area_required": "Across seasonal streams",
+      "water_storage_months": 4,
+      "benefits": ["Groundwater recharge", "Soil erosion control", "Community water source", "Flood control"]
+    }
+  ],
+  "conservation_practices": [
+    {
+      "practice": "Mulching",
+      "water_savings": "25-30%",
+      "cost_per_acre": 5000,
+      "materials": ["Crop residue", "Plastic sheets", "Organic matter"],
+      "benefits": ["Reduces evaporation", "Maintains soil moisture", "Weed suppression", "Soil temperature control"]
+    },
+    {
+      "practice": "Crop Rotation",
+      "water_savings": "15-20%",
+      "cost_per_acre": 0,
+      "implementation": "Alternate water-intensive and drought-tolerant crops",
+      "benefits": ["Optimizes water use", "Improves soil health", "Breaks pest cycles", "Diversifies income"]
+    }
+  ],
+  "success_stories": [
+    {
+      "farmer_name": "Prakash Patil",
+      "location": "Maharashtra",
+      "technique_adopted": "Drip Irrigation",
+      "area_covered": 3,
+      "water_savings_percentage": 55,
+      "yield_increase": 35,
+      "cost_recovery_period": "2.5 years",
+      "annual_savings": 25000
+    }
+  ]
+}

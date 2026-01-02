@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% block title %}Carbon Credits - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Carbon Credits</h1>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Calculate Your Carbon Credits</h5>
+                    <p class="card-text">Enter your farming practices to estimate potential carbon credits and revenue.</p>
+                    
+                    <form id="carbon-calculator-form">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6>Farm Information</h6>
+                                <div class="form-group mb-3">
+                                    <label for="farm-area">Farm Area (Hectares)</label>
+                                    <input type="number" class="form-control" id="farm-area" min="0.1" step="0.1" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="practice-type">Sustainable Practice</label>
+                                    <select class="form-control" id="practice-type" required>
+                                        <option value="">Select practice</option>
+                                        <option value="cover-cropping">Cover Cropping</option>
+                                        <option value="no-till">No-Till Farming</option>
+                                        <option value="agroforestry">Agroforestry</option>
+                                        <option value="organic-farming">Organic Farming</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h6>Project Information</h6>
+                                <div class="form-group mb-3">
+                                    <label for="project-duration">Project Duration (Years)</label>
+                                    <select class="form-control" id="project-duration">
+                                        <option value="5">5 years</option>
+                                        <option value="10" selected>10 years</option>
+                                        <option value="20">20 years</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="verification-standard">Verification Standard</label>
+                                    <select class="form-control" id="verification-standard">
+                                        <option value="vcs">Verified Carbon Standard (VCS)</option>
+                                        <option value="car">Climate Action Reserve (CAR)</option>
+                                        <option value="gold">Gold Standard</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Calculate Carbon Credits</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="results-section" class="card shadow-sm mb-4" style="display: none;">
+                <div class="card-body">
+                    <h5 class="card-title">Carbon Credit Potential</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">Annual Carbon Sequestration</h6>
+                                    <p class="display-4" id="annual-carbon">0</p>
+                                    <p class="text-muted">Tons CO₂ equivalent per year</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">Annual Revenue Potential</h6>
+                                    <p class="display-4" id="annual-revenue">₹0</p>
+                                    <p class="text-muted">Based on current carbon market prices</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">Long-term Revenue Potential</h6>
+                                    <p class="h3" id="long-term-revenue">₹0</p>
+                                    <p class="text-muted" id="duration-text">Over 10 years (not accounting for price changes)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Carbon Credit Programs</h5>
+                    <p class="card-text">Available carbon credit programs for farmers:</p>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Program Name</th>
+                                    <th>Description</th>
+                                    <th>Credit Rate (₹/ton)</th>
+                                    <th>Minimum Area</th>
+                                    <th>Contract Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody id="programs-table">
+                                <tr>
+                                    <td>Soil Carbon Enhancement</td>
+                                    <td>Earn credits by increasing soil organic carbon through sustainable practices</td>
+                                    <td>₹1,200</td>
+                                    <td>5 hectares</td>
+                                    <td>10 years</td>
+                                </tr>
+                                <tr>
+                                    <td>Methane Reduction in Rice</td>
+                                    <td>Reduce methane emissions from rice cultivation through water management</td>
+                                    <td>₹960</td>
+                                    <td>2 hectares</td>
+                                    <td>5 years</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Carbon Market Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Current Market Data</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Current Price Range
+                                    <span class="badge bg-primary rounded-pill">₹800-₹1,440 per ton</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Price Trend
+                                    <span class="badge bg-success rounded-pill">Increasing</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Total Credits Traded
+                                    <span class="badge bg-info rounded-pill">125,000 tons</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Top Buyers</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Microsoft Corporation</li>
+                                <li class="list-group-item">Carbon Credit Exchange</li>
+                                <li class="list-group-item">Other Corporate Buyers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('carbon-calculator-form');
+        const resultsSection = document.getElementById('results-section');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const farmArea = parseFloat(document.getElementById('farm-area').value);
+            const practiceType = document.getElementById('practice-type').value;
+            const projectDuration = parseInt(document.getElementById('project-duration').value);
+            
+            // Calculate carbon credits (simplified calculation)
+            let carbonRate = 0;
+            switch(practiceType) {
+                case 'cover-cropping':
+                    carbonRate = 0.9;
+                    break;
+                case 'no-till':
+                    carbonRate = 0.6;
+                    break;
+                case 'agroforestry':
+                    carbonRate = 5.0;
+                    break;
+                case 'organic-farming':
+                    carbonRate = 1.2;
+                    break;
+                default:
+                    carbonRate = 0.5;
+            }
+            
+            const annualCarbon = farmArea * carbonRate;
+            const carbonPrice = 1000; // ₹1000 per ton CO2
+            const annualRevenue = annualCarbon * carbonPrice;
+            const longTermRevenue = annualRevenue * projectDuration;
+            
+            // Display results
+            document.getElementById('annual-carbon').textContent = annualCarbon.toFixed(2);
+            document.getElementById('annual-revenue').textContent = '₹' + annualRevenue.toLocaleString();
+            document.getElementById('long-term-revenue').textContent = '₹' + longTermRevenue.toLocaleString();
+            document.getElementById('duration-text').textContent = `Over ${projectDuration} years (not accounting for price changes)`;
+            
+            // Show results section
+            resultsSection.style.display = 'block';
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+{% endblock %}

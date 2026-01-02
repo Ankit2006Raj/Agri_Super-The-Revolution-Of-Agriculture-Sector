@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}E-Learning Courses{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">E-Learning Courses</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Featured Courses</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for course in courses[:3] %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ course.title }}</h5>
+                                    <p class="card-text">{{ course.description }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-info">{{ course.category }}</span>
+                                        <span class="badge bg-secondary">{{ course.difficulty }}</span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted">{{ course.duration }} | {{ course.instructor }}</small>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-2">
+                                                <i class="fas fa-star text-warning"></i> {{ course.rating }}
+                                            </div>
+                                            <div>
+                                                <i class="fas fa-users"></i> {{ course.enrolled }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="btn btn-primary btn-sm">Enroll Now</a>
+                                    <a href="#" class="btn btn-outline-secondary btn-sm">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Filter Courses</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Categories</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="organic">
+                        <label class="form-check-label" for="organic">Organic</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="crop">
+                        <label class="form-check-label" for="crop">Crop Management</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="business">
+                        <label class="form-check-label" for="business">Agribusiness</label>
+                    </div>
+                    
+                    <h6 class="mt-3">Difficulty</h6>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="beginner">
+                        <label class="form-check-label" for="beginner">Beginner</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="intermediate">
+                        <label class="form-check-label" for="intermediate">Intermediate</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="advanced">
+                        <label class="form-check-label" for="advanced">Advanced</label>
+                    </div>
+                    
+                    <button class="btn btn-primary mt-3">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">All Courses</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Difficulty</th>
+                                    <th>Duration</th>
+                                    <th>Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for course in courses %}
+                                <tr>
+                                    <td>{{ course.title }}</td>
+                                    <td><span class="badge bg-info">{{ course.category }}</span></td>
+                                    <td><span class="badge bg-secondary">{{ course.difficulty }}</span></td>
+                                    <td>{{ course.duration }}</td>
+                                    <td>
+                                        <i class="fas fa-star text-warning"></i> {{ course.rating }}
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm">Enroll</a>
+                                        <a href="#" class="btn btn-info btn-sm">View</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

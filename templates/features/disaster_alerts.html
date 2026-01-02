@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+
+{% block title %}Disaster Alerts - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Disaster Alerts</h1>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Natural Disaster Early Warning System</h5>
+                    <p class="card-text">Stay informed about potential natural disasters that could affect your farming operations.</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="location">Your Location</label>
+                                <select class="form-control" id="location">
+                                    <option value="">Select your region</option>
+                                    <option value="north">North India</option>
+                                    <option value="south">South India</option>
+                                    <option value="east">East India</option>
+                                    <option value="west">West India</option>
+                                    <option value="central">Central India</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="alert-radius">Alert Radius (km)</label>
+                                <select class="form-control" id="alert-radius">
+                                    <option value="10">10 km</option>
+                                    <option value="25" selected>25 km</option>
+                                    <option value="50">50 km</option>
+                                    <option value="100">100 km</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="alert-types">Alert Types</label>
+                                <select class="form-control" id="alert-types" multiple>
+                                    <option value="flood" selected>Floods</option>
+                                    <option value="drought" selected>Droughts</option>
+                                    <option value="cyclone" selected>Cyclones</option>
+                                    <option value="heatwave" selected>Heat Waves</option>
+                                    <option value="frost" selected>Frost</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="check-alerts">Check for Alerts</button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card shadow-sm mb-4 d-none" id="current-alerts">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0">Current Disaster Alerts</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert-list">
+                                <!-- Alert items will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Weather Forecast</h5>
+                            <p class="card-text">5-day weather forecast for your region</p>
+                            
+                            <div class="row" id="weather-forecast">
+                                <!-- Weather forecast will be populated here -->
+                                <div class="col text-center">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6>Today</h6>
+                                            <div class="weather-icon">☀️</div>
+                                            <div>32°C / 24°C</div>
+                                            <div class="small text-muted">Clear</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6>Tomorrow</h6>
+                                            <div class="weather-icon">⛅</div>
+                                            <div>30°C / 23°C</div>
+                                            <div class="small text-muted">Partly Cloudy</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6>Day 3</h6>
+                                            <div class="weather-icon">🌧️</div>
+                                            <div>28°C / 22°C</div>
+                                            <div class="small text-muted">Rain</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6>Day 4</h6>
+                                            <div class="weather-icon">🌧️</div>
+                                            <div>27°C / 21°C</div>
+                                            <div class="small text-muted">Heavy Rain</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-center">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6>Day 5</h6>
+                                            <div class="weather-icon">⛅</div>
+                                            <div>29°C / 22°C</div>
+                                            <div class="small text-muted">Partly Cloudy</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Disaster Preparedness</h5>
+                            <p class="card-text">Tips to prepare for potential disasters</p>
+                            
+                            <div class="accordion" id="disasterAccordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingFlood">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseFlood">
+                                                Flood Preparedness
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFlood" class="collapse" data-parent="#disasterAccordion">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li>Move livestock to higher ground</li>
+                                                <li>Secure farm equipment</li>
+                                                <li>Create drainage channels</li>
+                                                <li>Store seeds and fertilizers in waterproof containers</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header" id="headingDrought">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseDrought">
+                                                Drought Management
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseDrought" class="collapse" data-parent="#disasterAccordion">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li>Implement water conservation techniques</li>
+                                                <li>Use drought-resistant crop varieties</li>
+                                                <li>Apply mulch to reduce evaporation</li>
+                                                <li>Consider drip irrigation systems</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header" id="headingCyclone">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseCyclone">
+                                                Cyclone Protection
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseCyclone" class="collapse" data-parent="#disasterAccordion">
+                                        <div class="card-body">
+                                            <ul>
+                                                <li>Harvest mature crops early</li>
+                                                <li>Reinforce farm structures</li>
+                                                <li>Create windbreaks</li>
+                                                <li>Secure loose items</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Emergency Contacts</h5>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    National Disaster Response Force
+                                    <span class="badge badge-primary badge-pill">1078</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    State Agricultural Department
+                                    <span class="badge badge-primary badge-pill">1800-180-1551</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Local Emergency Services
+                                    <span class="badge badge-primary badge-pill">112</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('check-alerts').addEventListener('click', function() {
+        const location = document.getElementById('location').value;
+        
+        if (!location) {
+            alert('Please select your location');
+            return;
+        }
+        
+        // In a real application, this would make an API call to get data
+        // For demo purposes, we'll just show some sample alerts
+        const alertsData = [
+            {
+                type: 'Flood Warning',
+                severity: 'High',
+                location: 'River basins in your district',
+                date: '2023-07-15',
+                description: 'Heavy rainfall expected in the next 48 hours. Potential flooding in low-lying agricultural areas.'
+            },
+            {
+                type: 'Heat Wave Alert',
+                severity: 'Medium',
+                location: 'Your region',
+                date: '2023-07-20',
+                description: 'Temperatures expected to rise above 40°C for the next week. Take precautions for crops and livestock.'
+            }
+        ];
+        
+        const alertList = document.querySelector('.alert-list');
+        alertList.innerHTML = '';
+        
+        alertsData.forEach(alert => {
+            const severityClass = alert.severity === 'High' ? 'danger' : 
+                                 alert.severity === 'Medium' ? 'warning' : 'info';
+            
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert alert-${severityClass} mb-3`;
+            alertElement.innerHTML = `
+                <h5 class="alert-heading">${alert.type} - ${alert.severity} Risk</h5>
+                <p><strong>Location:</strong> ${alert.location}</p>
+                <p><strong>Expected Date:</strong> ${alert.date}</p>
+                <hr>
+                <p class="mb-0">${alert.description}</p>
+            `;
+            
+            alertList.appendChild(alertElement);
+        });
+        
+        document.getElementById('current-alerts').classList.remove('d-none');
+    });
+</script>
+{% endblock %}

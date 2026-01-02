@@ -1,0 +1,878 @@
+{% extends "base.html" %}
+
+{% block title %}Financial Management - AgriSuper{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/financial-management.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Financial Overview -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Financial Overview</h5>
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-light" id="monthView" title="View monthly overview" aria-label="Switch to monthly view">Month</button>
+                        <button class="btn btn-sm btn-outline-light" id="quarterView" title="View quarterly overview" aria-label="Switch to quarterly view">Quarter</button>
+                        <button class="btn btn-sm btn-outline-light" id="yearView">Year</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted">Total Income</h6>
+                                    <h3 class="card-text text-success">₹1,45,000</h3>
+                                    <p class="card-text"><small class="text-success"><i class="fas fa-arrow-up"></i> 12% from last month</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted">Total Expenses</h6>
+                                    <h3 class="card-text text-danger">₹87,500</h3>
+                                    <p class="card-text"><small class="text-danger"><i class="fas fa-arrow-up"></i> 8% from last month</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted">Net Profit</h6>
+                                    <h3 class="card-text text-primary">₹57,500</h3>
+                                    <p class="card-text"><small class="text-success"><i class="fas fa-arrow-up"></i> 18% from last month</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted">Profit Margin</h6>
+                                    <h3 class="card-text text-info">39.7%</h3>
+                                    <p class="card-text"><small class="text-success"><i class="fas fa-arrow-up"></i> 5.2% from last month</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="mb-3">Income vs Expenses</h6>
+                        <div class="chart-container">
+                            <canvas id="incomeExpensesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Transactions -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Recent Transactions</h5>
+                    <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addTransactionModal">
+                        <i class="fas fa-plus-circle me-1"></i>Add Transaction
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Aug 10, 2023</td>
+                                    <td>Wheat Harvest Sale</td>
+                                    <td><span class="badge bg-success">Crop Sales</span></td>
+                                    <td class="text-success">₹75,000</td>
+                                    <td><span class="badge bg-success">Income</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" title="Edit Wheat Harvest Sale transaction" aria-label="Edit Wheat Harvest Sale transaction"><i class="fas fa-edit" aria-hidden="true"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete Wheat Harvest Sale transaction" aria-label="Delete Wheat Harvest Sale transaction"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 8, 2023</td>
+                                    <td>Fertilizer Purchase</td>
+                                    <td><span class="badge bg-warning text-dark">Supplies</span></td>
+                                    <td class="text-danger">₹12,500</td>
+                                    <td><span class="badge bg-danger">Expense</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" title="Edit Fertilizer Purchase transaction" aria-label="Edit Fertilizer Purchase transaction"><i class="fas fa-edit" aria-hidden="true"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete Fertilizer Purchase transaction" aria-label="Delete Fertilizer Purchase transaction"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 5, 2023</td>
+                                    <td>Tractor Repair</td>
+                                    <td><span class="badge bg-info text-white">Equipment</span></td>
+                                    <td class="text-danger">₹8,500</td>
+                                    <td><span class="badge bg-danger">Expense</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" title="Edit Tractor Repair transaction" aria-label="Edit Tractor Repair transaction"><i class="fas fa-edit" aria-hidden="true"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete Tractor Repair transaction" aria-label="Delete Tractor Repair transaction"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 3, 2023</td>
+                                    <td>Vegetable Market Sales</td>
+                                    <td><span class="badge bg-success">Crop Sales</span></td>
+                                    <td class="text-success">₹18,500</td>
+                                    <td><span class="badge bg-success">Income</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" title="Edit Vegetable Market Sales transaction" aria-label="Edit Vegetable Market Sales transaction"><i class="fas fa-edit" aria-hidden="true"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete Vegetable Market Sales transaction" aria-label="Delete Vegetable Market Sales transaction"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 1, 2023</td>
+                                    <td>Seasonal Labor Payment</td>
+                                    <td><span class="badge bg-secondary">Labor</span></td>
+                                    <td class="text-danger">₹25,000</td>
+                                    <td><span class="badge bg-danger">Expense</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" title="Edit Seasonal Labor Payment transaction" aria-label="Edit Seasonal Labor Payment transaction"><i class="fas fa-edit" aria-hidden="true"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete Seasonal Labor Payment transaction" aria-label="Delete Seasonal Labor Payment transaction"><i class="fas fa-trash" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-outline-success">View All Transactions</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Budget Tracking -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-wallet me-2"></i>Budget Tracking</h5>
+                    <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#editBudgetModal">
+                        <i class="fas fa-edit me-1"></i>Edit Budget
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>Expense Categories</h6>
+                            <div class="chart-container financial-chart">
+                                <canvas id="expenseCategoriesChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Budget vs Actual</h6>
+                            <div class="chart-container financial-chart">
+                                <canvas id="budgetVsActualChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Budget</th>
+                                    <th>Spent</th>
+                                    <th>Remaining</th>
+                                    <th>Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Seeds & Plants</td>
+                                    <td>₹20,000</td>
+                                    <td>₹15,500</td>
+                                    <td>₹4,500</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success progress-77" role="progressbar" title="Seeds & Plants budget usage" aria-label="Seeds & Plants budget progress: 77.5%" aria-valuenow="77.5" aria-valuemin="0" aria-valuemax="100">77.5%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fertilizers</td>
+                                    <td>₹30,000</td>
+                                    <td>₹28,500</td>
+                                    <td>₹1,500</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning progress-95" role="progressbar" title="Fertilizers budget usage" aria-label="Fertilizers budget progress: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">95%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Equipment Maintenance</td>
+                                    <td>₹25,000</td>
+                                    <td>₹12,500</td>
+                                    <td>₹12,500</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success progress-50" role="progressbar" title="Equipment Maintenance budget usage" aria-label="Equipment Maintenance budget progress: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Labor</td>
+                                    <td>₹50,000</td>
+                                    <td>₹42,000</td>
+                                    <td>₹8,000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning progress-84" role="progressbar" title="Labor budget usage" aria-label="Labor budget progress: 84%" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100">84%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fuel</td>
+                                    <td>₹15,000</td>
+                                    <td>₹16,200</td>
+                                    <td class="text-danger">-₹1,200</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-danger progress-108" role="progressbar" title="Fuel budget usage" aria-label="Fuel budget progress: Over budget at 108%" aria-valuenow="108" aria-valuemin="0" aria-valuemax="100">108%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Financial Health -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-heartbeat me-2"></i>Financial Health</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="position-relative d-inline-block">
+                            <canvas id="financialHealthGauge" width="200" height="200"></canvas>
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <h3 class="mb-0">76</h3>
+                                <p class="mb-0 text-muted">Good</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Debt-to-Asset Ratio</h6>
+                                <small class="text-muted">Lower is better</small>
+                            </div>
+                            <span class="badge bg-success rounded-pill">0.32</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Current Ratio</h6>
+                                <small class="text-muted">Higher is better</small>
+                            </div>
+                            <span class="badge bg-success rounded-pill">2.4</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Operating Profit Margin</h6>
+                                <small class="text-muted">Higher is better</small>
+                            </div>
+                            <span class="badge bg-warning text-dark rounded-pill">18%</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Return on Assets</h6>
+                                <small class="text-muted">Higher is better</small>
+                            </div>
+                            <span class="badge bg-success rounded-pill">12%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loans & Credit -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Loans & Credit</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Tractor Loan</h6>
+                                <span class="badge bg-info text-white">Active</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Principal: ₹3,50,000</small>
+                                <small class="text-muted">Interest: 8.5%</small>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Remaining: ₹2,15,000</small>
+                                <small class="text-muted">Due: 15th monthly</small>
+                            </div>
+                            <div class="progress mt-2 loan-progress">
+                                <div class="progress-bar bg-success progress-38" role="progressbar" title="Tractor Loan Repayment Progress" aria-label="Tractor Loan Repayment Progress" aria-valuenow="38.6" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Irrigation System Loan</h6>
+                                <span class="badge bg-info text-white">Active</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Principal: ₹1,20,000</small>
+                                <small class="text-muted">Interest: 7.5%</small>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Remaining: ₹45,000</small>
+                                <small class="text-muted">Due: 10th monthly</small>
+                            </div>
+                            <div class="progress mt-2 loan-progress">
+                                <div class="progress-bar bg-success progress-62" role="progressbar" title="Irrigation System Loan Repayment Progress" aria-label="Irrigation System Loan Repayment Progress" aria-valuenow="62.5" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Kisan Credit Card</h6>
+                                <span class="badge bg-success">Good Standing</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Limit: ₹2,00,000</small>
+                                <small class="text-muted">Interest: 4%</small>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Used: ₹75,000</small>
+                                <small class="text-muted">Available: ₹1,25,000</small>
+                            </div>
+                            <div class="progress mt-2 loan-progress">
+                                <div class="progress-bar bg-success progress-37" role="progressbar" title="Kisan Credit Card Usage Progress" aria-label="Kisan Credit Card Usage Progress" aria-valuenow="37.5" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <button class="btn btn-sm btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#addLoanModal">
+                            <i class="fas fa-plus-circle me-1"></i>Add New Loan
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tax Calendar -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Tax Calendar</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Quarterly GST Filing</h6>
+                                <small class="text-danger">Due in 5 days</small>
+                            </div>
+                            <p class="mb-1 small">File GSTR-1 and GSTR-3B for the quarter ending June 2023.</p>
+                            <small class="text-muted">Due Date: August 20, 2023</small>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Advance Tax Payment</h6>
+                                <small class="text-muted">Due in 30 days</small>
+                            </div>
+                            <p class="mb-1 small">Second installment of advance tax for FY 2023-24.</p>
+                            <small class="text-muted">Due Date: September 15, 2023</small>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Agricultural Income Declaration</h6>
+                                <small class="text-muted">Due in 45 days</small>
+                            </div>
+                            <p class="mb-1 small">Submit agricultural income declaration to local revenue office.</p>
+                            <small class="text-muted">Due Date: September 30, 2023</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <a href="#" class="btn btn-sm btn-outline-success w-100">View Full Tax Calendar</a>
+                </div>
+            </div>
+            
+            <!-- Financial Tips -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Financial Tips</h5>
+                </div>
+                <div class="card-body">
+                    <div id="financialTipsCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <h6>Diversify Your Income Sources</h6>
+                                <p class="small">Consider adding value-added products or agri-tourism to supplement your farm income during off-seasons.</p>
+                            </div>
+                            <div class="carousel-item">
+                                <h6>Build an Emergency Fund</h6>
+                                <p class="small">Aim to save 3-6 months of operating expenses to handle unexpected events like equipment breakdowns or crop failures.</p>
+                            </div>
+                            <div class="carousel-item">
+                                <h6>Review Insurance Coverage</h6>
+                                <p class="small">Regularly review your crop insurance to ensure adequate coverage against weather events and price fluctuations.</p>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#financialTipsCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#financialTipsCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Transaction Modal -->
+<div class="modal fade" id="addTransactionModal" tabindex="-1" aria-labelledby="addTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addTransactionModalLabel"><i class="fas fa-plus-circle me-2"></i>Add Transaction</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="transactionType" class="form-label">Transaction Type</label>
+                        <select class="form-select" id="transactionType">
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transactionDate" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="transactionDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="transactionAmount" class="form-label">Amount (₹)</label>
+                        <input type="number" class="form-control" id="transactionAmount" placeholder="Enter amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="transactionDescription" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="transactionDescription" placeholder="Enter description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="transactionCategory" class="form-label">Category</label>
+                        <select class="form-select" id="transactionCategory">
+                            <option>Crop Sales</option>
+                            <option>Livestock Sales</option>
+                            <option>Government Subsidies</option>
+                            <option>Seeds & Plants</option>
+                            <option>Fertilizers</option>
+                            <option>Pesticides</option>
+                            <option>Equipment</option>
+                            <option>Fuel</option>
+                            <option>Labor</option>
+                            <option>Utilities</option>
+                            <option>Loan Payment</option>
+                            <option>Insurance</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transactionNotes" class="form-label">Notes (Optional)</label>
+                        <textarea class="form-control" id="transactionNotes" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="transactionReceipt" class="form-label">Attach Receipt (Optional)</label>
+                        <input class="form-control" type="file" id="transactionReceipt">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="saveTransactionBtn">Save Transaction</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Budget Modal -->
+<div class="modal fade" id="editBudgetModal" tabindex="-1" aria-labelledby="editBudgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="editBudgetModalLabel"><i class="fas fa-edit me-2"></i>Edit Budget</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Current Budget (₹)</th>
+                                    <th>New Budget (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Seeds & Plants</td>
+                                    <td>20,000</td>
+                                    <td><input type="number" class="form-control" value="20000"></td>
+                                </tr>
+                                <tr>
+                                    <td>Fertilizers</td>
+                                    <td>30,000</td>
+                                    <td><input type="number" class="form-control" value="30000"></td>
+                                </tr>
+                                <tr>
+                                    <td>Equipment Maintenance</td>
+                                    <td>25,000</td>
+                                    <td><input type="number" class="form-control" value="25000"></td>
+                                </tr>
+                                <tr>
+                                    <td>Labor</td>
+                                    <td>50,000</td>
+                                    <td><input type="number" class="form-control" value="50000"></td>
+                                </tr>
+                                <tr>
+                                    <td>Fuel</td>
+                                    <td>15,000</td>
+                                    <td><input type="number" class="form-control" value="15000"></td>
+                                </tr>
+                                <tr>
+                                    <td>Pesticides</td>
+                                    <td>18,000</td>
+                                    <td><input type="number" class="form-control" value="18000"></td>
+                                </tr>
+                                <tr>
+                                    <td>Utilities</td>
+                                    <td>12,000</td>
+                                    <td><input type="number" class="form-control" value="12000"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <label for="budgetPeriod" class="form-label">Budget Period</label>
+                        <select class="form-select" id="budgetPeriod">
+                            <option selected>August 2023</option>
+                            <option>September 2023</option>
+                            <option>October 2023</option>
+                            <option>November 2023</option>
+                            <option>December 2023</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="budgetNotes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="budgetNotes" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="saveBudgetBtn">Save Budget</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Loan Modal -->
+<div class="modal fade" id="addLoanModal" tabindex="-1" aria-labelledby="addLoanModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addLoanModalLabel"><i class="fas fa-plus-circle me-2"></i>Add New Loan</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="loanName" class="form-label">Loan Name/Purpose</label>
+                        <input type="text" class="form-control" id="loanName" placeholder="E.g., Tractor Loan, Irrigation System">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanAmount" class="form-label">Principal Amount (₹)</label>
+                        <input type="number" class="form-control" id="loanAmount" placeholder="Enter loan amount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanInterest" class="form-label">Interest Rate (%)</label>
+                        <input type="number" step="0.01" class="form-control" id="loanInterest" placeholder="Enter interest rate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanTerm" class="form-label">Loan Term</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="loanTerm" placeholder="Enter term length">
+                            <select class="form-select" id="loanTermUnit">
+                                <option value="months">Months</option>
+                                <option value="years">Years</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanStartDate" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="loanStartDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanPaymentFrequency" class="form-label">Payment Frequency</label>
+                        <select class="form-select" id="loanPaymentFrequency">
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="biannually">Bi-annually</option>
+                            <option value="annually">Annually</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanLender" class="form-label">Lender</label>
+                        <input type="text" class="form-control" id="loanLender" placeholder="Bank or financial institution name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loanNotes" class="form-label">Notes (Optional)</label>
+                        <textarea class="form-control" id="loanNotes" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="saveLoanBtn">Save Loan</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    $(document).ready(function() {
+        // Income vs Expenses Chart
+        const incomeExpensesCtx = document.getElementById('incomeExpensesChart').getContext('2d');
+        const incomeExpensesChart = new Chart(incomeExpensesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                datasets: [
+                    {
+                        label: 'Income',
+                        data: [125000, 98000, 115000, 132000, 128000, 145000],
+                        backgroundColor: 'rgba(40, 167, 69, 0.7)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Expenses',
+                        data: [82000, 75000, 79000, 85000, 81000, 87500],
+                        backgroundColor: 'rgba(220, 53, 69, 0.7)',
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Expense Categories Chart
+        const expenseCategoriesCtx = document.getElementById('expenseCategoriesChart').getContext('2d');
+        const expenseCategoriesChart = new Chart(expenseCategoriesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Seeds & Plants', 'Fertilizers', 'Equipment', 'Labor', 'Fuel', 'Others'],
+                datasets: [{
+                    data: [15500, 28500, 12500, 42000, 16200, 14800],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.7)',
+                        'rgba(255, 193, 7, 0.7)',
+                        'rgba(23, 162, 184, 0.7)',
+                        'rgba(108, 117, 125, 0.7)',
+                        'rgba(220, 53, 69, 0.7)',
+                        'rgba(111, 66, 193, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(40, 167, 69, 1)',
+                        'rgba(255, 193, 7, 1)',
+                        'rgba(23, 162, 184, 1)',
+                        'rgba(108, 117, 125, 1)',
+                        'rgba(220, 53, 69, 1)',
+                        'rgba(111, 66, 193, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            boxWidth: 12
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Budget vs Actual Chart
+        const budgetVsActualCtx = document.getElementById('budgetVsActualChart').getContext('2d');
+        const budgetVsActualChart = new Chart(budgetVsActualCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Seeds', 'Fertilizers', 'Equipment', 'Labor', 'Fuel'],
+                datasets: [
+                    {
+                        label: 'Budget',
+                        data: [20000, 30000, 25000, 50000, 15000],
+                        backgroundColor: 'rgba(40, 167, 69, 0.5)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Actual',
+                        data: [15500, 28500, 12500, 42000, 16200],
+                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Financial Health Gauge
+        const financialHealthCtx = document.getElementById('financialHealthGauge').getContext('2d');
+        const financialHealthGauge = new Chart(financialHealthCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Score', 'Remaining'],
+                datasets: [{
+                    data: [76, 24],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.8)',
+                        'rgba(233, 236, 239, 0.5)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '80%',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            }
+        });
+        
+        // Handle view toggle buttons
+        $('#monthView, #quarterView, #yearView').click(function() {
+            // Remove active class from all buttons
+            $('#monthView, #quarterView, #yearView').removeClass('btn-light').addClass('btn-outline-light');
+            // Add active class to clicked button
+            $(this).removeClass('btn-outline-light').addClass('btn-light');
+            
+            // In a real app, this would update the charts with new data
+            // For demo purposes, we'll just show a toast notification
+            showToast('View changed to ' + $(this).text() + ' view. Data would be updated in a real application.');
+        });
+        
+        // Handle save transaction button
+        $('#saveTransactionBtn').click(function() {
+            $('#addTransactionModal').modal('hide');
+            showToast('Transaction saved successfully!');
+        });
+        
+        // Handle save budget button
+        $('#saveBudgetBtn').click(function() {
+            $('#editBudgetModal').modal('hide');
+            showToast('Budget updated successfully!');
+        });
+        
+        // Handle save loan button
+        $('#saveLoanBtn').click(function() {
+            $('#addLoanModal').modal('hide');
+            showToast('New loan added successfully!');
+        });
+        
+        // Function to show toast notification
+        function showToast(message) {
+            // Create toast element
+            var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'+
+                          '<div class="toast-header bg-success text-white">'+
+                          '<strong class="me-auto">Financial Management</strong>'+
+                          '<small>Just now</small>'+
+                          '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>'+
+                          '</div>'+
+                          '<div class="toast-body">'+message+'</div>'+
+                          '</div>');
+            
+            // Add to container
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('.toast-container').append(toast);
+            
+            // Initialize and show toast
+            var toastEl = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 5000
+            });
+            toastEl.show();
+            
+            // Remove after hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
+{% endblock %}

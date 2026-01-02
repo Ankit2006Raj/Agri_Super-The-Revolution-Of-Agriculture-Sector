@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ऑफ़लाइन - AgriSuper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .offline-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .offline-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: #FFF3E0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+        
+        h1 {
+            color: #FF6B6B;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: #2E7D32;
+            font-size: 22px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        
+        .message {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            background: #F5F5F5;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        
+        .features h3 {
+            color: #2E7D32;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #E0E0E0;
+            font-size: 15px;
+            color: #555;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list li::before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .retry-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .retry-button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .retry-button:active {
+            transform: translateY(0);
+        }
+        
+        .tips {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px solid #E0E0E0;
+        }
+        
+        .tips h4 {
+            color: #FF9800;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .tips ul {
+            list-style: none;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .tips li {
+            padding: 8px 0;
+            text-align: left;
+        }
+        
+        .tips li::before {
+            content: "💡 ";
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .offline-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .offline-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">
+            📡
+        </div>
+        
+        <h1>आप ऑफ़लाइन हैं</h1>
+        <p class="subtitle">You are Offline</p>
+        
+        <p class="message">
+            इंटरनेट कनेक्शन नहीं मिल रहा है। कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें।<br>
+            <em>No internet connection found. Please check your connection and try again.</em>
+        </p>
+        
+        <div class="features">
+            <h3>
+                <span>📱</span>
+                ऑफ़लाइन उपलब्ध सुविधाएं (Available Offline)
+            </h3>
+            <ul class="feature-list">
+                <li>पहले देखी गई मंडी भाव (Previously viewed prices)</li>
+                <li>सहेजे गए मौसम पूर्वानुमान (Saved weather forecasts)</li>
+                <li>ऑफ़लाइन पाठ्यक्रम (Offline courses)</li>
+                <li>सहेजे गए लेख और सुझाव (Saved articles & tips)</li>
+                <li>पढ़े गए प्रश्न और उत्तर (Read Q&A)</li>
+            </ul>
+        </div>
+        
+        <button class="retry-button" onclick="retryConnection()">
+            🔄 पुनः प्रयास करें (Retry)
+        </button>
+        
+        <div class="tips">
+            <h4>
+                <span>⚡</span>
+                सुझाव (Tips)
+            </h4>
+            <ul>
+                <li>अपना मोबाइल डेटा चालू करें (Turn on mobile data)</li>
+                <li>Wi-Fi कनेक्शन जांचें (Check Wi-Fi connection)</li>
+                <li>एयरप्लेन मोड बंद करें (Disable airplane mode)</li>
+                <li>SMS के लिए 56767 पर संदेश भेजें (SMS to 56767)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function retryConnection() {
+            // Show loading state
+            const button = document.querySelector('.retry-button');
+            const originalText = button.textContent;
+            button.textContent = '🔄 जाँच रहे हैं... (Checking...)';
+            button.disabled = true;
+            
+            // Try to reload the page
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    window.location.href = '/';
+                } else {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    
+                    // Show friendly message
+                    const message = document.querySelector('.message');
+                    message.innerHTML = `
+                        <strong style="color: #FF6B6B;">अभी भी ऑफ़लाइन हैं (Still Offline)</strong><br>
+                        कृपया अपना इंटरनेट कनेक्शन जांचें। आप SMS के माध्यम से भी जानकारी प्राप्त कर सकते हैं।<br>
+                        <em>Please check your internet connection. You can also get info via SMS.</em>
+                    `;
+                }
+            }, 1500);
+        }
+        
+        // Auto-reload when online
+        window.addEventListener('online', () => {
+            console.log('Connection restored, reloading...');
+            window.location.href = '/';
+        });
+        
+        // Listen for connection status
+        window.addEventListener('load', () => {
+            if (navigator.onLine) {
+                console.log('Online - redirecting to home');
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+{
+  "logistics_requests": [
+    {
+      "request_id": "LR001",
+      "farmer_id": "F12345",
+      "crop": "Wheat",
+      "quantity_quintals": 50,
+      "pickup_location": "Village Rampur, Meerut",
+      "destination": "Delhi Azadpur Mandi",
+      "preferred_date": "2024-01-20",
+      "vehicle_type": "Truck (10 MT)",
+      "cost_per_quintal": 25,
+      "sharing_slots_available": 3,
+      "status": "Open"
+    }
+  ],
+  "shared_bookings": [
+    {
+      "booking_id": "SB001",
+      "primary_farmer": "F12345",
+      "shared_farmers": [
+        {
+          "farmer_id": "F12346",
+          "quantity": 30,
+          "cost_share": 750
+        },
+        {
+          "farmer_id": "F12347",
+          "quantity": 20,
+          "cost_share": 500
+        }
+      ],
+      "total_quantity": 100,
+      "total_cost": 2500,
+      "cost_per_farmer": [1250, 750, 500],
+      "vehicle_details": {
+        "vehicle_number": "UP14AB1234",
+        "driver_name": "Ramesh Kumar",
+        "driver_phone": "+919876543210"
+      },
+      "pickup_time": "2024-01-20T06:00:00",
+      "estimated_arrival": "2024-01-20T12:00:00"
+    }
+  ],
+  "transport_partners": [
+    {
+      "partner_id": "TP001",
+      "company_name": "Green Logistics Pvt Ltd",
+      "vehicle_fleet": [
+        {
+          "vehicle_type": "Mini Truck (3 MT)",
+          "count": 15,
+          "rate_per_km": 12
+        },
+        {
+          "vehicle_type": "Truck (10 MT)",
+          "count": 8,
+          "rate_per_km": 18
+        }
+      ],
+      "service_areas": ["Delhi NCR", "Western UP", "Haryana"],
+      "rating": 4.5,
+      "insurance_coverage": true
+    }
+  ],
+  "route_optimization": [
+    {
+      "route_id": "RT001",
+      "pickup_points": [
+        { "location": "Village A", "quantity": 30 },
+        { "location": "Village B", "quantity": 25 },
+        { "location": "Village C", "quantity": 45 }
+      ],
+      "destination": "Delhi Mandi",
+      "optimized_distance": 180,
+      "estimated_time": "6 hours",
+      "fuel_cost": 2160,
+      "toll_charges": 400
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}Route Optimization - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-route me-2"></i>Smart Route Optimization</h4>
+                    <p class="mb-0 opacity-75">Optimize your delivery routes for maximum efficiency</p>
+                </div>
+                <div class="card-body">
+                    <!-- Route Planning Form -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Plan New Route</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="routeForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Origin Location</label>
+                                            <input type="text" class="form-control" id="origin" placeholder="Enter starting point">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Destination</label>
+                                            <input type="text" class="form-control" id="destination" placeholder="Enter destination">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="vehicleType">Vehicle Type</label>
+                                            <select class="form-select" id="vehicleType" title="Select vehicle type" aria-label="Select type of transport vehicle">
+                                                <option value="small">Small Truck (3 tons)</option>
+                                                <option value="medium">Medium Truck (7 tons)</option>
+                                                <option value="large">Large Truck (15 tons)</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="optimization">Optimization Priority</label>
+                                            <select class="form-select" id="optimization" title="Select route optimization priority" aria-label="Select route optimization priority">
+                                                <option value="cost">Cost Optimal</option>
+                                                <option value="time">Time Optimal</option>
+                                                <option value="distance">Shortest Path</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-success w-100">
+                                            <i class="fas fa-search me-2"></i>Find Optimal Route
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0">Route Results</h5>
+                                </div>
+                                <div class="card-body" id="routeResults">
+                                    <div class="text-center text-muted py-4">
+                                        <i class="fas fa-map-marked-alt fa-3x mb-3"></i>
+                                        <p>Enter route details to see optimization results</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Routes -->
+                    <div class="card border-secondary mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0">Recent Routes</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Route</th>
+                                            <th>Distance</th>
+                                            <th>Time</th>
+                                            <th>Cost</th>
+                                            <th>Savings</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="routeHistory">
+                                        <tr>
+                                            <td>Farm A → Delhi Market</td>
+                                            <td>245 km</td>
+                                            <td>4h 30m</td>
+                                            <td>₹2,630</td>
+                                            <td class="text-success">₹420 saved</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">View</button>
+                                                <button class="btn btn-sm btn-outline-success">Use Again</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Warehouse → Mumbai Port</td>
+                                            <td>1,420 km</td>
+                                            <td>18h 45m</td>
+                                            <td>₹15,050</td>
+                                            <td class="text-success">₹2,100 saved</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">View</button>
+                                                <button class="btn btn-sm btn-outline-success">Use Again</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Dashboard -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                    <h4>₹25,420</h4>
+                                    <p class="mb-0">Total Savings</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-clock fa-2x mb-2"></i>
+                                    <h4>48 hrs</h4>
+                                    <p class="mb-0">Time Saved</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-gas-pump fa-2x mb-2"></i>
+                                    <h4>1,250 L</h4>
+                                    <p class="mb-0">Fuel Saved</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-leaf fa-2x mb-2"></i>
+                                    <h4>2.8 tons</h4>
+                                    <p class="mb-0">CO₂ Reduced</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('routeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const origin = document.getElementById('origin').value;
+    const destination = document.getElementById('destination').value;
+    const vehicleType = document.getElementById('vehicleType').value;
+    const optimization = document.getElementById('optimization').value;
+    
+    if (!origin || !destination) {
+        alert('Please enter both origin and destination');
+        return;
+    }
+    
+    // Simulate route optimization
+    const resultsDiv = document.getElementById('routeResults');
+    resultsDiv.innerHTML = `
+        <div class="alert alert-success">
+            <h6><i class="fas fa-check-circle me-2"></i>Optimal Route Found!</h6>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <strong>Distance:</strong> 245 km<br>
+                <strong>Time:</strong> 4h 30m<br>
+                <strong>Fuel Cost:</strong> ₹2,450
+            </div>
+            <div class="col-6">
+                <strong>Toll Charges:</strong> ₹180<br>
+                <strong>Total Cost:</strong> ₹2,630<br>
+                <strong class="text-success">Savings:</strong> ₹420
+            </div>
+        </div>
+        <hr>
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary">Save Route</button>
+            <button class="btn btn-outline-secondary">Share Route</button>
+        </div>
+    `;
+});
+</script>
+{% endblock %}

@@ -1,0 +1,416 @@
+{% extends "base.html" %}
+
+{% block title %}Login & Registration - AgriSuper{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/auth.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow border-0 overflow-hidden">
+                <div class="row g-0">
+                    <!-- Left Side - Image/Info -->
+                    <div class="col-lg-5 d-none d-lg-block bg-success text-white">
+                        <div class="d-flex flex-column h-100 p-4">
+                            <div class="text-center mb-4 mt-5">
+                                <img src="{{ url_for('static', filename='img/logo-white.png') }}" alt="AgriSuper Logo" class="img-fluid mb-3 auth-logo">
+                                <h3 class="fw-bold">Welcome to AgriSuper</h3>
+                                <p class="lead">Your complete agriculture management solution</p>
+                            </div>
+                            <div class="mt-auto mb-5">
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-chart-line fa-2x me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Data-Driven Farming</h5>
+                                            <p class="mb-0 small">Make informed decisions with real-time insights</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fas fa-mobile-alt fa-2x me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Farm Management</h5>
+                                            <p class="mb-0 small">Track crops, equipment, and finances in one place</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-users fa-2x me-3"></i>
+                                        <div>
+                                            <h5 class="mb-0">Community Support</h5>
+                                            <p class="mb-0 small">Connect with experts and fellow farmers</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side - Auth Forms -->
+                    <div class="col-lg-7">
+                        <div class="p-4 p-lg-5">
+                            <!-- Auth Tabs -->
+                            <ul class="nav nav-tabs nav-fill mb-4" id="authTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">
+                                        <i class="fas fa-user-plus me-2"></i>Register
+                                    </button>
+                                </li>
+                            </ul>
+                            
+                            <!-- Tab Content -->
+                            <div class="tab-content" id="authTabsContent">
+                                <!-- Login Tab -->
+                                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                                    <h4 class="fw-bold mb-4">Login to Your Account</h4>
+                                    
+                                    <!-- Social Login Buttons -->
+                                    <div class="d-grid gap-2 mb-4">
+                                        <button class="btn btn-outline-primary">
+                                            <i class="fab fa-google me-2"></i>Continue with Google
+                                        </button>
+                                        <button class="btn btn-outline-primary">
+                                            <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="text-center mb-4">
+                                        <span class="divider-text bg-white px-3">OR</span>
+                                    </div>
+                                    
+                                    <!-- Login Form -->
+                                    <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+                                        {% if login_error %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ login_error }}
+                                        </div>
+                                        {% endif %}
+                                        
+                                        <div class="mb-3">
+                                            <label for="loginEmail" class="form-label">Email Address</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="email" class="form-control" id="loginEmail" name="email" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="loginPassword" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control" id="loginPassword" name="password" required>
+                                                <button type="button" class="btn btn-outline-secondary toggle-password" title="Toggle password visibility" aria-label="Toggle password visibility">
+                                                    <i class="fas fa-eye" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
+                                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                                            </div>
+                                            <a href="#" class="text-decoration-none small" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot Password?</a>
+                                        </div>
+                                        
+                                        <div class="d-grid">
+                                            <button type="submit" name="login" value="login" class="btn btn-success btn-lg">Login</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Register Tab -->
+                                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                                    <h4 class="fw-bold mb-4">Create New Account</h4>
+                                    
+                                    <!-- Social Register Buttons -->
+                                    <div class="d-grid gap-2 mb-4">
+                                        <button class="btn btn-outline-primary">
+                                            <i class="fab fa-google me-2"></i>Register with Google
+                                        </button>
+                                        <button class="btn btn-outline-primary">
+                                            <i class="fab fa-facebook-f me-2"></i>Register with Facebook
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="text-center mb-4">
+                                        <span class="divider-text bg-white px-3">OR</span>
+                                    </div>
+                                    
+                                    <!-- Register Form -->
+                                    <form id="registerForm" method="POST" action="{{ url_for('login') }}">
+                                        {% if register_success %}
+                                        <div class="alert alert-success" role="alert">
+                                            {{ register_success }}
+                                        </div>
+                                        {% endif %}
+                                        
+                                        {% if register_error %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ register_error }}
+                                        </div>
+                                        {% endif %}
+                                        
+                                        <div class="mb-3">
+                                            <label for="reg_full_name" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="reg_full_name" name="reg_full_name" placeholder="Enter your full name" required>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="reg_username" class="form-label">Username</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" class="form-control" id="reg_username" name="reg_username" placeholder="Choose a username" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="reg_email" class="form-label">Email Address</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="email" class="form-control" id="reg_email" name="reg_email" placeholder="Enter your email" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="reg_password" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control" id="reg_password" name="reg_password" placeholder="Create a password" required>
+                                                <button class="btn btn-outline-secondary toggle-password" type="button" aria-label="Toggle password visibility">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
+                                            <div class="password-strength mt-1">
+                                                <div class="progress password-strength-progress">
+                                                    <div class="progress-bar bg-danger" role="progressbar" aria-label="Password strength indicator" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <small class="text-muted">Password strength: <span id="password-strength-text">Weak</span></small>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="reg_confirm_password" class="form-label">Confirm Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control" id="reg_confirm_password" name="reg_confirm_password" placeholder="Confirm your password" required>
+                                                <button class="btn btn-outline-secondary toggle-password" type="button" aria-label="Toggle confirm password visibility">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="reg_user_type" class="form-label">I am a</label>
+                                            <select class="form-select" id="reg_user_type" name="reg_user_type" required>
+                                                <option value="" selected>Select user type</option>
+                                                <option value="farmer">Farmer</option>
+                                                <option value="buyer">Buyer/Trader</option>
+                                                <option value="supplier">Input Supplier</option>
+                                                <option value="expert">Agriculture Expert</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4 form-check">
+                                            <input type="checkbox" class="form-check-input" id="termsCheck" name="terms" required>
+                                            <label class="form-check-label" for="termsCheck">
+                                                I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and <a href="#" class="text-decoration-none">Privacy Policy</a>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-success btn-lg" name="register" value="register">Create Account</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title" id="forgotPasswordModalLabel"><i class="fas fa-key me-2"></i>Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-4">Enter your email address and we'll send you a link to reset your password.</p>
+                <form id="forgotPasswordForm">
+                    <div class="mb-3">
+                        <label for="resetEmail" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="resetEmail" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Send Reset Link</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    .divider-text {
+        position: relative;
+        display: inline-block;
+        z-index: 1;
+    }
+    
+    .divider-text:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -50px;
+        right: -50px;
+        height: 1px;
+        background-color: #dee2e6;
+        z-index: -1;
+    }
+    
+    .password-strength-progress {
+        height: 5px;
+    }
+    
+    .progress-bar {
+        transition: width 0.3s ease-in-out;
+    }
+</style>
+
+<!-- Custom JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle password visibility
+        const toggleButtons = document.querySelectorAll('.toggle-password');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+        
+        // Password strength meter
+        const passwordInput = document.getElementById('reg_password'); // Changed from registerPassword
+        const strengthBar = document.querySelector('.progress-bar');
+        const strengthText = document.getElementById('password-strength-text');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 25;
+            if (password.match(/[a-z]+/)) strength += 25;
+            if (password.match(/[A-Z]+/)) strength += 25;
+            if (password.match(/[0-9]+/) || password.match(/[^a-zA-Z0-9]+/)) strength += 25;
+            
+            strengthBar.style.width = strength + '%';
+            
+            if (strength <= 25) {
+                strengthBar.className = 'progress-bar bg-danger';
+                strengthText.textContent = 'Weak';
+            } else if (strength <= 50) {
+                strengthBar.className = 'progress-bar bg-warning';
+                strengthText.textContent = 'Fair';
+            } else if (strength <= 75) {
+                strengthBar.className = 'progress-bar bg-info';
+                strengthText.textContent = 'Good';
+            } else {
+                strengthBar.className = 'progress-bar bg-success';
+                strengthText.textContent = 'Strong';
+            }
+        });
+        
+        // Form submission handling
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        
+        forgotPasswordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value;
+            
+            fetch('/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('Password reset link sent to your email!', 'success');
+                    $('#forgotPasswordModal').modal('hide');
+                } else {
+                    showToast(data.message || 'Error sending reset link', 'danger');
+                }
+            })
+            .catch(error => {
+                showToast('Error sending reset link', 'danger');
+            });
+        });
+        
+        // Toast notification function
+        function showToast(message, type = 'info') {
+            const toastContainer = document.createElement('div');
+            toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+            toastContainer.style.zIndex = '5';
+            
+            const toastEl = document.createElement('div');
+            toastEl.className = `toast align-items-center text-white bg-${type} border-0`;
+            toastEl.setAttribute('role', 'alert');
+            toastEl.setAttribute('aria-live', 'assertive');
+            toastEl.setAttribute('aria-atomic', 'true');
+            
+            const toastBody = document.createElement('div');
+            toastBody.className = 'd-flex';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'toast-body';
+            messageDiv.textContent = message;
+            
+            const closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'btn-close btn-close-white me-2 m-auto';
+            closeButton.setAttribute('data-bs-dismiss', 'toast');
+            closeButton.setAttribute('aria-label', 'Close');
+            
+            toastBody.appendChild(messageDiv);
+            toastBody.appendChild(closeButton);
+            toastEl.appendChild(toastBody);
+            toastContainer.appendChild(toastEl);
+            document.body.appendChild(toastContainer);
+            
+            const toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+            toast.show();
+            
+            toastEl.addEventListener('hidden.bs.toast', function() {
+                document.body.removeChild(toastContainer);
+            });
+        }
+    });
+</script>
+{% endblock %}

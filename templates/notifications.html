@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-bell me-2"></i>Notification Settings</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="#all" class="list-group-item list-group-item-action active" data-bs-toggle="list">All Notifications</a>
+                        <a href="#unread" class="list-group-item list-group-item-action" data-bs-toggle="list">Unread <span class="badge bg-danger float-end">5</span></a>
+                        <a href="#market" class="list-group-item list-group-item-action" data-bs-toggle="list">Market Updates</a>
+                        <a href="#weather" class="list-group-item list-group-item-action" data-bs-toggle="list">Weather Alerts</a>
+                        <a href="#community" class="list-group-item list-group-item-action" data-bs-toggle="list">Community</a>
+                        <a href="#system" class="list-group-item list-group-item-action" data-bs-toggle="list">System</a>
+                    </div>
+                    <hr>
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" id="pushNotifications" checked>
+                        <label class="form-check-label" for="pushNotifications">Push Notifications</label>
+                    </div>
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                        <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                    </div>
+                    <div class="form-check form-switch mb-2">
+                        <input class="form-check-input" type="checkbox" id="smsNotifications">
+                        <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
+                    </div>
+                    <button class="btn btn-success btn-sm w-100 mt-3">Save Settings</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="card">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Notifications</h5>
+                    <div>
+                        <button class="btn btn-sm btn-outline-light me-2"><i class="fas fa-check-double me-1"></i>Mark All Read</button>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-filter me-1"></i>Filter
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#">Newest First</a></li>
+                                <li><a class="dropdown-item" href="#">Oldest First</a></li>
+                                <li><a class="dropdown-item" href="#">Unread Only</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Clear All Filters</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="all">
+                            <div class="list-group list-group-flush">
+                                <!-- Unread notification with high priority -->
+                                <div class="list-group-item list-group-item-action unread border-start border-danger border-4">
+                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <h6 class="mb-1 fw-bold"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Weather Alert: Heavy Rain Expected</h6>
+                                        <small class="text-muted">2 hours ago</small>
+                                    </div>
+                                    <p class="mb-1">Heavy rainfall expected in your region over the next 48 hours. Consider harvesting mature crops or providing additional drainage to prevent waterlogging.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-danger"><i class="fas fa-circle me-1"></i>High Priority</small>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-success me-1">View Details</button>
+                                            <button class="btn btn-sm btn-outline-secondary" aria-label="Mark as read"><i class="fas fa-check"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Unread notification -->
+                                <div class="list-group-item list-group-item-action unread border-start border-primary border-4">
+                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <h6 class="mb-1 fw-bold"><i class="fas fa-chart-line text-primary me-2"></i>Market Price Update</h6>
+                                        <small class="text-muted">5 hours ago</small>
+                                    </div>
+                                    <p class="mb-1">Wheat prices have increased by 8% in the last 24 hours. Consider reviewing your selling strategy.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-primary"><i class="fas fa-circle me-1"></i>Market Update</small>
+                                        <div>
+                                            <button class="btn btn-sm btn-outline-success me-1">View Market</button>
+                                            <button class="btn btn-sm btn-outline-secondary" aria-label="Mark as read"><i class="fas fa-check"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Read notification -->
+                                <div class="list-group-item list-group-item-action border-start border-success border-4">
+                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <h6 class="mb-1"><i class="fas fa-users text-success me-2"></i>New Community Post</h6>
+                                        <small class="text-muted">Yesterday</small>
+                                    </div>
+                                    <p class="mb-1">Farmer Ramesh shared a new post about organic pest control techniques in the community forum.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-success"><i class="fas fa-circle me-1"></i>Community</small>
+                                        <button class="btn btn-sm btn-outline-success">View Post</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Read notification -->
+                                <div class="list-group-item list-group-item-action border-start border-info border-4">
+                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <h6 class="mb-1"><i class="fas fa-tractor text-info me-2"></i>Equipment Maintenance Reminder</h6>
+                                        <small class="text-muted">2 days ago</small>
+                                    </div>
+                                    <p class="mb-1">Your tractor is due for scheduled maintenance in 5 days. Schedule a service appointment to ensure optimal performance.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-info"><i class="fas fa-circle me-1"></i>Reminder</small>
+                                        <button class="btn btn-sm btn-outline-success">Schedule Service</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Read notification -->
+                                <div class="list-group-item list-group-item-action border-start border-warning border-4">
+                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <h6 class="mb-1"><i class="fas fa-rupee-sign text-warning me-2"></i>Loan Payment Due</h6>
+                                        <small class="text-muted">3 days ago</small>
+                                    </div>
+                                    <p class="mb-1">Your monthly loan payment of ₹15,000 is due in 7 days. Ensure sufficient funds in your linked account.</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-warning"><i class="fas fa-circle me-1"></i>Financial</small>
+                                        <button class="btn btn-sm btn-outline-success">Make Payment</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Load more button -->
+                                <div class="text-center p-3">
+                                    <button class="btn btn-outline-success">Load More</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Other tabs content would go here -->
+                        <div class="tab-pane fade" id="unread">
+                            <!-- Unread notifications would be listed here -->
+                            <div class="p-4 text-center">
+                                <p>Loading unread notifications...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="market">
+                            <!-- Market notifications would be listed here -->
+                            <div class="p-4 text-center">
+                                <p>Loading market notifications...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="weather">
+                            <!-- Weather notifications would be listed here -->
+                            <div class="p-4 text-center">
+                                <p>Loading weather notifications...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="community">
+                            <!-- Community notifications would be listed here -->
+                            <div class="p-4 text-center">
+                                <p>Loading community notifications...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="system">
+                            <!-- System notifications would be listed here -->
+                            <div class="p-4 text-center">
+                                <p>Loading system notifications...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+        
+        // Handle notification read status
+        $('.list-group-item-action .btn-outline-secondary').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).closest('.list-group-item-action').removeClass('unread');
+            $(this).closest('.list-group-item-action').find('h6').removeClass('fw-bold');
+            $(this).remove();
+            
+            // Update unread count
+            updateUnreadCount();
+        });
+        
+        // Mark all as read
+        $('.btn-outline-light').first().on('click', function() {
+            $('.list-group-item-action').removeClass('unread');
+            $('.list-group-item-action h6').removeClass('fw-bold');
+            $('.list-group-item-action .btn-outline-secondary').remove();
+            
+            // Update unread count
+            updateUnreadCount();
+        });
+        
+        // Function to update unread count
+        function updateUnreadCount() {
+            var unreadCount = $('.unread').length;
+            $('.badge').text(unreadCount);
+            
+            if (unreadCount === 0) {
+                $('.badge').addClass('d-none');
+            } else {
+                $('.badge').removeClass('d-none');
+            }
+        }
+        
+        // Handle notification settings changes
+        $('.form-check-input').on('change', function() {
+            // In a real app, this would save settings to the server
+            console.log('Notification setting changed:', $(this).attr('id'), $(this).prop('checked'));
+            
+            // Show toast notification
+            showToast('Settings updated successfully!');
+        });
+        
+        // Function to show toast notification
+        function showToast(message) {
+            // Create toast element
+            var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">'+
+                          '<div class="toast-header bg-success text-white">'+
+                          '<strong class="me-auto">Notification</strong>'+
+                          '<small>Just now</small>'+
+                          '<button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>'+
+                          '</div>'+
+                          '<div class="toast-body">'+message+'</div>'+
+                          '</div>');
+            
+            // Add to container
+            if ($('.toast-container').length === 0) {
+                $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+            }
+            $('.toast-container').append(toast);
+            
+            // Initialize and show toast
+            var toastEl = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 3000
+            });
+            toastEl.show();
+            
+            // Remove after hidden
+            toast.on('hidden.bs.toast', function() {
+                $(this).remove();
+            });
+        }
+    });
+</script>
+{% endblock %}

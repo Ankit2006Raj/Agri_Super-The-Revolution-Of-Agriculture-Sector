@@ -1,0 +1,78 @@
+{
+  "export_destinations": [
+    {
+      "country": "UAE",
+      "ports": ["Dubai", "Abu Dhabi"],
+      "documentation": ["Phytosanitary Certificate", "Certificate of Origin", "Commercial Invoice"],
+      "processing_time": "5-7 days",
+      "shipping_cost_per_kg": 45,
+      "popular_products": ["Basmati Rice", "Spices", "Fresh Fruits"],
+      "trade_volume_monthly": "2500 tons",
+      "regulations": {
+        "pesticide_limits": "EU Standards",
+        "packaging_requirements": "Food Grade Only",
+        "labeling": "Arabic + English"
+      }
+    },
+    {
+      "country": "USA",
+      "ports": ["Los Angeles", "New York"],
+      "documentation": ["FDA Registration", "Phytosanitary Certificate", "USDA Organic Certificate"],
+      "processing_time": "10-14 days",
+      "shipping_cost_per_kg": 85,
+      "popular_products": ["Organic Turmeric", "Tea", "Cashews"],
+      "trade_volume_monthly": "1800 tons",
+      "regulations": {
+        "pesticide_limits": "FDA Standards",
+        "packaging_requirements": "FDA Approved Materials",
+        "labeling": "English Only"
+      }
+    }
+  ],
+  "documentation_templates": [
+    {
+      "name": "Phytosanitary Certificate",
+      "required_fields": ["Product Description", "Quantity", "Origin", "Inspection Date"],
+      "validity": "14 days",
+      "issuing_authority": "Plant Quarantine Department"
+    },
+    {
+      "name": "Certificate of Origin",
+      "required_fields": ["Exporter Details", "Product Details", "Manufacturing Location"],
+      "validity": "12 months",
+      "issuing_authority": "Chamber of Commerce"
+    }
+  ],
+  "shipping_companies": [
+    {
+      "name": "Global Cargo Express",
+      "services": ["Air Freight", "Sea Freight", "Door-to-Door"],
+      "coverage": ["Asia", "Europe", "Americas"],
+      "rating": 4.5,
+      "contact": "+91-9876543210"
+    },
+    {
+      "name": "AgriShip International",
+      "services": ["Refrigerated Transport", "Bulk Cargo", "Express Delivery"],
+      "coverage": ["Middle East", "Africa", "Europe"],
+      "rating": 4.2,
+      "contact": "+91-9876543211"
+    }
+  ],
+  "quality_standards": [
+    {
+      "standard": "GlobalGAP",
+      "description": "Good Agricultural Practices certification",
+      "validity": "3 years",
+      "cost": 25000,
+      "benefits": ["Premium pricing", "Global market access"]
+    },
+    {
+      "standard": "Organic Certification",
+      "description": "Certified organic produce",
+      "validity": "1 year",
+      "cost": 15000,
+      "benefits": ["30% price premium", "Health-conscious market access"]
+    }
+  ]
+}

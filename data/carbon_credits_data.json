@@ -1,0 +1,73 @@
+{
+  "carbon_credit_programs": [
+    {
+      "program_name": "Soil Carbon Enhancement",
+      "description": "Earn credits by increasing soil organic carbon through sustainable practices",
+      "credit_rate_per_ton": 15,
+      "verification_standard": "Verified Carbon Standard (VCS)",
+      "minimum_area": 5,
+      "contract_duration": 10,
+      "eligible_practices": ["Cover cropping", "Reduced tillage", "Organic amendments", "Agroforestry"],
+      "monitoring_requirements": "Annual soil testing and practice documentation"
+    },
+    {
+      "program_name": "Methane Reduction in Rice",
+      "description": "Reduce methane emissions from rice cultivation through water management",
+      "credit_rate_per_ton": 12,
+      "verification_standard": "Gold Standard",
+      "minimum_area": 2,
+      "contract_duration": 5,
+      "eligible_practices": ["Alternate wetting and drying", "Direct seeded rice", "Organic amendments timing"],
+      "monitoring_requirements": "Water level monitoring and emission measurements"
+    }
+  ],
+  "enrolled_farmers": [
+    {
+      "farmer_name": "Suresh Kumar",
+      "location": "Punjab",
+      "program": "Soil Carbon Enhancement",
+      "enrolled_area": 8,
+      "enrollment_date": "2023-06-15",
+      "estimated_annual_credits": 24,
+      "estimated_annual_income": 36000,
+      "practices_implemented": ["Cover cropping", "Reduced tillage"],
+      "verification_status": "Pending first verification"
+    },
+    {
+      "farmer_name": "Ravi Patel",
+      "location": "Gujarat",
+      "program": "Methane Reduction in Rice",
+      "enrolled_area": 4,
+      "enrollment_date": "2023-08-20",
+      "estimated_annual_credits": 18,
+      "estimated_annual_income": 21600,
+      "practices_implemented": ["Alternate wetting and drying"],
+      "verification_status": "Verified - Credits issued"
+    }
+  ],
+  "carbon_buyers": [
+    {
+      "buyer_name": "Microsoft Corporation",
+      "buyer_type": "Corporate",
+      "credit_demand": 10000,
+      "price_range": "12-18 USD per ton",
+      "preferred_standards": ["VCS", "Gold Standard"],
+      "contract_terms": "Long-term agreements preferred"
+    },
+    {
+      "buyer_name": "Carbon Credit Exchange",
+      "buyer_type": "Trading Platform",
+      "credit_demand": 50000,
+      "price_range": "10-15 USD per ton",
+      "preferred_standards": ["VCS", "CDM"],
+      "contract_terms": "Spot and forward contracts"
+    }
+  ],
+  "market_data": {
+    "current_price_range": "10-18 USD per ton",
+    "price_trend": "Increasing",
+    "total_credits_traded": 125000,
+    "average_project_size": 150,
+    "top_credit_types": ["Soil carbon sequestration", "Methane reduction", "Afforestation"]
+  }
+}

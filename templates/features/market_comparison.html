@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block title %}Market Comparison - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Market Price Comparison</h1>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Compare Prices Across Markets</h5>
+                    <p class="card-text">Find the best prices for your crops by comparing rates across different markets.</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="crop-type">Crop Type</label>
+                                <select class="form-control" id="crop-type">
+                                    <option value="">Select crop</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="maize">Maize</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="sugarcane">Sugarcane</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="quality-grade">Quality Grade</label>
+                                <select class="form-control" id="quality-grade">
+                                    <option value="">Select grade</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="standard">Standard</option>
+                                    <option value="economy">Economy</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="location">Your Location</label>
+                                <select class="form-control" id="location">
+                                    <option value="">Select location</option>
+                                    <option value="north">North India</option>
+                                    <option value="south">South India</option>
+                                    <option value="east">East India</option>
+                                    <option value="west">West India</option>
+                                    <option value="central">Central India</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="compare-prices">Compare Prices</button>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm d-none" id="comparison-results">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Price Comparison Results</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Market</th>
+                                    <th>Price (₹/Quintal)</th>
+                                    <th>Distance (km)</th>
+                                    <th>Transport Cost (₹)</th>
+                                    <th>Net Price (₹)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-table">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Price Trends</h5>
+                            <p class="card-text">Historical price trends for selected crops</p>
+                            <div class="chart-container" style="height: 250px;">
+                                <canvas id="price-trends-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">Market Insights</h5>
+                            <p class="card-text">Latest market news and insights</p>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <strong>Wheat prices expected to rise</strong>
+                                    <p class="mb-0 small">Due to lower production estimates, wheat prices are expected to rise in the coming weeks.</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>New export policies for rice</strong>
+                                    <p class="mb-0 small">Government announces new export policies that may affect rice prices.</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Cotton demand increasing</strong>
+                                    <p class="mb-0 small">Textile industry showing increased demand for cotton.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('compare-prices').addEventListener('click', function() {
+        const cropType = document.getElementById('crop-type').value;
+        const qualityGrade = document.getElementById('quality-grade').value;
+        const location = document.getElementById('location').value;
+        
+        if (!cropType || !qualityGrade || !location) {
+            alert('Please select crop type, quality grade, and location');
+            return;
+        }
+        
+        // In a real application, this would make an API call to get data
+        // For demo purposes, we'll just show some sample data
+        const comparisonData = [
+            {
+                market: 'Local Mandi',
+                price: 2200,
+                distance: 15,
+                transportCost: 50,
+                netPrice: 2150
+            },
+            {
+                market: 'District Market',
+                price: 2350,
+                distance: 45,
+                transportCost: 150,
+                netPrice: 2200
+            },
+            {
+                market: 'State Agricultural Market',
+                price: 2500,
+                distance: 120,
+                transportCost: 300,
+                netPrice: 2200
+            },
+            {
+                market: 'Private Buyer',
+                price: 2400,
+                distance: 30,
+                transportCost: 100,
+                netPrice: 2300
+            }
+        ];
+        
+        const comparisonTable = document.getElementById('comparison-table');
+        comparisonTable.innerHTML = '';
+        
+        comparisonData.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.market}</td>
+                <td>${item.price}</td>
+                <td>${item.distance}</td>
+                <td>${item.transportCost}</td>
+                <td><strong>${item.netPrice}</strong></td>
+                <td><button class="btn btn-sm btn-outline-primary">Contact</button></td>
+            `;
+            
+            comparisonTable.appendChild(row);
+        });
+        
+        document.getElementById('comparison-results').classList.remove('d-none');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Conservation - AgriSuper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .water-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .technique-card {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        .technique-card:hover {
+            border-color: #0093E9;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .savings-display {
+            background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .water-usage-meter {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <button onclick="window.history.back()" class="btn btn-light mb-3">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <h1 class="text-white text-center mb-4">
+                    <i class="fas fa-tint"></i> Water Conservation Techniques
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Water Savings Calculator -->
+                <div class="water-card">
+                    <h4 class="mb-3"><i class="fas fa-calculator"></i> Water Savings Calculator</h4>
+                    <form id="savingsCalculator">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Crop Type</label>
+                                <select class="form-select" id="cropType" required>
+                                    <option value="">Select Crop</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="wheat">Wheat</option>
+                                    <option value="cotton">Cotton</option>
+                                    <option value="sugarcane">Sugarcane</option>
+                                    <option value="vegetables">Vegetables</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Farm Area (Acres)</label>
+                                <input type="number" class="form-control" id="farmArea" required min="0.1" step="0.1">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Irrigation Method</label>
+                                <select class="form-select" id="irrigationMethod" required>
+                                    <option value="flood">Flood Irrigation</option>
+                                    <option value="sprinkler">Sprinkler</option>
+                                    <option value="drip">Drip Irrigation</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-chart-line"></i> Calculate Savings
+                        </button>
+                    </form>
+
+                    <div id="savingsResult" class="savings-display mt-4" style="display: none;">
+                        <h3>Estimated Water Savings</h3>
+                        <div class="display-4" id="savingsAmount">0 L</div>
+                        <p>Per Season</p>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <h5>Cost Savings</h5>
+                                <p class="fs-4" id="costSavings">₹0</p>
+                            </div>
+                            <div class="col-6">
+                                <h5>Efficiency Gain</h5>
+                                <p class="fs-4" id="efficiencyGain">0%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conservation Techniques -->
+                <div class="water-card">
+                    <h4 class="mb-3"><i class="fas fa-lightbulb"></i> Recommended Techniques</h4>
+                    <div id="techniquesList">
+                        <!-- Techniques will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Best Practices -->
+                <div class="water-card">
+                    <h4 class="mb-3"><i class="fas fa-star"></i> Best Practices</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="technique-card">
+                                <h5><i class="fas fa-clock text-primary"></i> Optimal Timing</h5>
+                                <p>Water early morning or late evening to reduce evaporation</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="technique-card">
+                                <h5><i class="fas fa-seedling text-success"></i> Mulching</h5>
+                                <p>Use organic mulch to retain soil moisture</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="technique-card">
+                                <h5><i class="fas fa-water text-info"></i> Drip Irrigation</h5>
+                                <p>Most efficient method saving up to 70% water</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="technique-card">
+                                <h5><i class="fas fa-cloud-rain text-primary"></i> Rainwater Harvesting</h5>
+                                <p>Collect and store rainwater for irrigation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <!-- Water Usage Stats -->
+                <div class="water-card">
+                    <h5><i class="fas fa-chart-bar"></i> Your Water Usage</h5>
+                    <div class="water-usage-meter">
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Daily Average</span>
+                            <strong>2,500 L</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Monthly Total</span>
+                            <strong>75,000 L</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Cost per Month</span>
+                            <strong>₹1,250</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tips -->
+                <div class="water-card">
+                    <h5><i class="fas fa-info-circle"></i> Quick Tips</h5>
+                    <ul class="small">
+                        <li class="mb-2">Monitor soil moisture regularly</li>
+                        <li class="mb-2">Fix leaks immediately</li>
+                        <li class="mb-2">Use moisture sensors</li>
+                        <li class="mb-2">Choose drought-resistant varieties</li>
+                        <li class="mb-2">Implement crop rotation</li>
+                    </ul>
+                </div>
+
+                <!-- Government Schemes -->
+                <div class="water-card">
+                    <h5><i class="fas fa-landmark"></i> Government Schemes</h5>
+                    <p class="small">Get subsidies for water conservation equipment</p>
+                    <ul class="small">
+                        <li>PMKSY - Irrigation subsidy</li>
+                        <li>Micro Irrigation schemes</li>
+                        <li>Rainwater harvesting grants</li>
+                    </ul>
+                    <button class="btn btn-sm btn-outline-primary w-100">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTechniques();
+        });
+
+        document.getElementById('savingsCalculator').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                crop_type: document.getElementById('cropType').value,
+                farm_area: parseFloat(document.getElementById('farmArea').value),
+                irrigation_method: document.getElementById('irrigationMethod').value
+            };
+            
+            try {
+                const response = await fetch('/api/water/calculate-savings', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displaySavings(data);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Display mock data
+                displaySavings({
+                    water_savings: 50000,
+                    cost_savings: 8500,
+                    efficiency_gain: 45
+                });
+            }
+        });
+
+        function displaySavings(data) {
+            document.getElementById('savingsAmount').textContent = data.water_savings.toLocaleString() + ' L';
+            document.getElementById('costSavings').textContent = '₹' + data.cost_savings.toLocaleString();
+            document.getElementById('efficiencyGain').textContent = data.efficiency_gain + '%';
+            document.getElementById('savingsResult').style.display = 'block';
+        }
+
+        async function loadTechniques() {
+            try {
+                const response = await fetch('/api/water/techniques', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        crop_type: 'rice',
+                        soil_type: 'loamy'
+                    })
+                });
+                
+                const data = await response.json();
+                displayTechniques(data.techniques || getMockTechniques());
+            } catch (error) {
+                displayTechniques(getMockTechniques());
+            }
+        }
+
+        function getMockTechniques() {
+            return [
+                {
+                    name: 'Drip Irrigation System',
+                    description: 'Delivers water directly to plant roots',
+                    water_savings: '40-70%',
+                    cost: '₹40,000 - ₹80,000 per acre',
+                    roi: '2-3 years'
+                },
+                {
+                    name: 'Sprinkler System',
+                    description: 'Uniform water distribution over large areas',
+                    water_savings: '30-50%',
+                    cost: '₹25,000 - ₹50,000 per acre',
+                    roi: '2-4 years'
+                },
+                {
+                    name: 'Rainwater Harvesting',
+                    description: 'Collect and store rainwater',
+                    water_savings: '20-40%',
+                    cost: '₹15,000 - ₹30,000',
+                    roi: '1-2 years'
+                }
+            ];
+        }
+
+        function displayTechniques(techniques) {
+            const listDiv = document.getElementById('techniquesList');
+            listDiv.innerHTML = '';
+            
+            techniques.forEach(technique => {
+                listDiv.innerHTML += `
+                    <div class="technique-card">
+                        <h5>${technique.name}</h5>
+                        <p class="text-muted">${technique.description}</p>
+                        <div class="row small">
+                            <div class="col-4">
+                                <strong>Water Savings:</strong><br>${technique.water_savings}
+                            </div>
+                            <div class="col-4">
+                                <strong>Investment:</strong><br>${technique.cost}
+                            </div>
+                            <div class="col-4">
+                                <strong>ROI:</strong><br>${technique.roi}
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary mt-2">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </button>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

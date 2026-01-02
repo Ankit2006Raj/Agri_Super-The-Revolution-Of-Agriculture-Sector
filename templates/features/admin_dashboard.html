@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - AgriSuper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f4f6f9;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: #2c3e50;
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <h4 class="mb-4"><i class="fas fa-user-shield"></i> Admin Panel</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white active" href="#dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#users"><i class="fas fa-users"></i> Users</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#transactions"><i class="fas fa-exchange-alt"></i> Transactions</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#content"><i class="fas fa-file-alt"></i> Content Moderation</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#reports"><i class="fas fa-flag"></i> Reports</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-md-10 p-4">
+                <h1 class="mb-4">Admin Dashboard</h1>
+                
+                <!-- Key Metrics -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Total Users</p>
+                                    <div class="stat-number text-primary" id="totalUsers">0</div>
+                                </div>
+                                <i class="fas fa-users fa-3x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Active Listings</p>
+                                    <div class="stat-number text-success" id="activeListings">0</div>
+                                </div>
+                                <i class="fas fa-shopping-cart fa-3x text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Transactions</p>
+                                    <div class="stat-number text-warning" id="transactions">0</div>
+                                </div>
+                                <i class="fas fa-exchange-alt fa-3x text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1">Revenue</p>
+                                    <div class="stat-number text-info" id="revenue">₹0</div>
+                                </div>
+                                <i class="fas fa-rupee-sign fa-3x text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="row mt-4">
+                    <div class="col-md-8">
+                        <div class="chart-container">
+                            <h5>User Growth</h5>
+                            <canvas id="userGrowthChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="chart-container">
+                            <h5>User Distribution</h5>
+                            <canvas id="userDistChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Recent Users</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentUsers">
+                                        <tr><td colspan="4" class="text-center">Loading...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Pending Reports</h5>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Reporter</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pendingReports">
+                                        <tr><td colspan="4" class="text-center">No pending reports</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAnalytics();
+            loadRecentUsers();
+            loadPendingReports();
+        });
+
+        async function loadAnalytics() {
+            try {
+                const response = await fetch('/api/admin/analytics');
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateDashboard(data.analytics);
+                } else {
+                    updateDashboard(getMockData());
+                }
+            } catch (error) {
+                updateDashboard(getMockData());
+            }
+        }
+
+        function getMockData() {
+            return {
+                total_users: 15234,
+                active_listings: 3456,
+                total_transactions: 8901,
+                total_revenue: 25680000
+            };
+        }
+
+        function updateDashboard(data) {
+            document.getElementById('totalUsers').textContent = data.total_users.toLocaleString();
+            document.getElementById('activeListings').textContent = data.active_listings.toLocaleString();
+            document.getElementById('transactions').textContent = data.total_transactions.toLocaleString();
+            document.getElementById('revenue').textContent = '₹' + (data.total_revenue / 100000).toFixed(1) + 'L';
+        }
+
+        function loadRecentUsers() {
+            const users = [
+                {name: 'Rajesh Kumar', type: 'Farmer', status: 'Active'},
+                {name: 'Priya Sharma', type: 'Buyer', status: 'Active'},
+                {name: 'Amit Singh', type: 'Farmer', status: 'Pending'}
+            ];
+
+            const tbody = document.getElementById('recentUsers');
+            tbody.innerHTML = '';
+            users.forEach(user => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${user.name}</td>
+                        <td>${user.type}</td>
+                        <td><span class="badge bg-${user.status === 'Active' ? 'success' : 'warning'}">${user.status}</span></td>
+                        <td><button class="btn btn-sm btn-primary">View</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function loadPendingReports() {
+            // Mock implementation
+        }
+    </script>
+</body>
+</html>

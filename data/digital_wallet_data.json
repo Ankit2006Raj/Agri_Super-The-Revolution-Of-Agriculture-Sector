@@ -1,0 +1,62 @@
+{
+  "wallet_accounts": [
+    {
+      "wallet_id": "DW12345",
+      "farmer_id": "F12345",
+      "farmer_name": "Rajesh Singh",
+      "phone_number": "+919876543210",
+      "balance": 25000,
+      "kyc_status": "Completed",
+      "account_status": "Active",
+      "created_date": "2024-01-01",
+      "last_transaction": "2024-01-15"
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "TXN001",
+      "wallet_id": "DW12345",
+      "type": "Credit",
+      "amount": 50000,
+      "description": "Crop sale payment from ABC Traders",
+      "timestamp": "2024-01-15T10:30:00",
+      "status": "Completed",
+      "reference_id": "SALE001"
+    },
+    {
+      "transaction_id": "TXN002",
+      "wallet_id": "DW12345",
+      "type": "Debit",
+      "amount": 15000,
+      "description": "Fertilizer purchase from XYZ Agro",
+      "timestamp": "2024-01-16T14:20:00",
+      "status": "Completed",
+      "merchant_id": "M001"
+    }
+  ],
+  "payment_methods": [
+    {
+      "method": "UPI",
+      "upi_id": "farmer@paytm",
+      "status": "Active",
+      "daily_limit": 100000
+    },
+    {
+      "method": "Bank Transfer",
+      "account_number": "1234567890",
+      "ifsc": "SBIN0001234",
+      "status": "Active",
+      "daily_limit": 200000
+    }
+  ],
+  "merchant_network": [
+    {
+      "merchant_id": "M001",
+      "merchant_name": "Green Valley Agro Store",
+      "category": "Input Supplier",
+      "location": "Village Rampur",
+      "commission_rate": 1.5,
+      "settlement_cycle": "T+1"
+    }
+  ]
+}

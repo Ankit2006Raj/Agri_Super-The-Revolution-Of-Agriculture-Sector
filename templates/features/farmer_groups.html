@@ -1,0 +1,593 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section bg-gradient-info text-white p-4 rounded mb-4">
+                <h1 class="display-5 fw-bold mb-2">Farmer Groups & Cooperatives</h1>
+                <p class="lead mb-0">Join farming communities for collective strength and shared resources</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Navigation Tabs -->
+        <div class="col-12 mb-4">
+            <ul class="nav nav-tabs" id="groupTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="discover-tab" data-bs-toggle="tab" data-bs-target="#discover" type="button" role="tab" aria-controls="discover" aria-selected="true">
+                        <i class="fas fa-search me-2"></i>Discover Groups
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="my-groups-tab" data-bs-toggle="tab" data-bs-target="#my-groups" type="button" role="tab" aria-controls="my-groups" aria-selected="false">
+                        <i class="fas fa-users me-2"></i>My Groups
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="create-group-tab" data-bs-toggle="tab" data-bs-target="#create-group" type="button" role="tab" aria-controls="create-group" aria-selected="false">
+                        <i class="fas fa-plus me-2"></i>Create Group
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="activities-tab" data-bs-toggle="tab" data-bs-target="#activities" type="button" role="tab" aria-controls="activities" aria-selected="false">
+                        <i class="fas fa-calendar me-2"></i>Activities
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tab-content" id="groupTabContent">
+        <!-- Discover Groups Tab -->
+        <div class="tab-pane fade show active" id="discover" role="tabpanel">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            <h6 class="mb-0"><i class="fas fa-filter me-2"></i>Search Filters</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Group Type</label>
+                                <select class="form-select" id="groupTypeFilter" title="Filter by group type" aria-label="Filter groups by type">
+                                    <option value="">All Types</option>
+                                    <option value="cooperative">Cooperative</option>
+                                    <option value="self_help">Self Help Group</option>
+                                    <option value="producer_company">Producer Company</option>
+                                    <option value="water_user">Water User Association</option>
+                                    <option value="commodity">Commodity Group</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Focus Area</label>
+                                <select class="form-select" id="focusAreaFilter" title="Filter by focus area" aria-label="Filter groups by focus area">
+                                    <option value="">All Areas</option>
+                                    <option value="crop_production">Crop Production</option>
+                                    <option value="livestock">Livestock</option>
+                                    <option value="organic_farming">Organic Farming</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="credit">Credit & Finance</option>
+                                    <option value="technology">Technology</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" id="locationFilter" placeholder="Enter location">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Group Size</label>
+                                <select class="form-select" id="sizeFilter" title="Filter by group size" aria-label="Filter groups by member count">
+                                    <option value="">Any Size</option>
+                                    <option value="small">Small (5-20 members)</option>
+                                    <option value="medium">Medium (21-50 members)</option>
+                                    <option value="large">Large (50+ members)</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-info w-100" onclick="searchGroups()">Search Groups</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5>Available Groups <span class="badge bg-info" id="groupCount">0</span></h5>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-info btn-sm" onclick="sortGroups('members')">Most Members</button>
+                            <button class="btn btn-outline-info btn-sm" onclick="sortGroups('activity')">Most Active</button>
+                            <button class="btn btn-outline-info btn-sm" onclick="sortGroups('recent')">Recently Created</button>
+                        </div>
+                    </div>
+
+                    <div id="groupsContainer">
+                        <!-- Groups will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Groups Tab -->
+        <div class="tab-pane fade" id="my-groups" role="tabpanel">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">My Groups</h5>
+                            <button class="btn btn-info btn-sm" onclick="refreshMyGroups()">
+                                <i class="fas fa-sync-alt me-1"></i>Refresh
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="myGroupsContainer">
+                                <!-- My groups will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Group Tab -->
+        <div class="tab-pane fade" id="create-group" role="tabpanel">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="fas fa-plus me-2"></i>Create New Farmer Group</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="createGroupForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Group Name *</label>
+                                        <input type="text" class="form-control" id="groupName" required placeholder="Enter group name">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Group Type *</label>
+                                        <select class="form-select" id="groupType" required title="Select group type" aria-label="Type of farmer group">
+                                            <option value="">Select Type</option>
+                                            <option value="cooperative">Cooperative Society</option>
+                                            <option value="self_help">Self Help Group</option>
+                                            <option value="producer_company">Producer Company</option>
+                                            <option value="water_user">Water User Association</option>
+                                            <option value="commodity">Commodity Group</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Description *</label>
+                                    <textarea class="form-control" id="groupDescription" rows="3" required placeholder="Describe the purpose and goals of your group"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Focus Area *</label>
+                                        <select class="form-select" id="groupFocus" required title="Select group focus area" aria-label="Main focus area of the group">
+                                            <option value="">Select Focus</option>
+                                            <option value="crop_production">Crop Production</option>
+                                            <option value="livestock">Livestock</option>
+                                            <option value="organic_farming">Organic Farming</option>
+                                            <option value="marketing">Marketing</option>
+                                            <option value="credit">Credit & Finance</option>
+                                            <option value="technology">Technology</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Location *</label>
+                                        <input type="text" class="form-control" id="groupLocation" required placeholder="Village, District, State">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Membership Fee (₹)</label>
+                                        <input type="number" class="form-control" id="membershipFee" placeholder="0">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Maximum Members</label>
+                                        <input type="number" class="form-control" id="maxMembers" placeholder="50">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Group Rules & Guidelines</label>
+                                    <textarea class="form-control" id="groupRules" rows="3" placeholder="Define membership criteria, meeting schedules, contribution requirements, etc."></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="isPublic" checked>
+                                        <label class="form-check-label" for="isPublic">
+                                            Make this group publicly discoverable
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="fas fa-plus me-2"></i>Create Group
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activities Tab -->
+        <div class="tab-pane fade" id="activities" role="tabpanel">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h5 class="mb-0">Group Activities & Events</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="activitiesContainer">
+                                <!-- Activities will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Group Details Modal -->
+<div class="modal fade" id="groupModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="groupModalTitle">Group Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close details" title="Close"></button>
+            </div>
+            <div class="modal-body" id="groupModalBody">
+                <!-- Group details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" onclick="joinGroup()">Join Group</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let allGroups = [];
+let myGroups = [];
+let selectedGroupId = null;
+
+// Load groups
+async function loadGroups() {
+    try {
+        const response = await fetch('/api/farmer_groups/groups');
+        const data = await response.json();
+        allGroups = data.groups;
+        displayGroups(allGroups);
+        updateGroupCount(allGroups.length);
+    } catch (error) {
+        console.error('Error loading groups:', error);
+    }
+}
+
+// Display groups
+function displayGroups(groups) {
+    const container = document.getElementById('groupsContainer');
+    
+    if (groups.length === 0) {
+        container.innerHTML = '<div class="text-center text-muted py-4">No groups found</div>';
+        return;
+    }
+
+    container.innerHTML = groups.map(group => `
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-${getGroupTypeColor(group.type)} me-2">${group.type.replace('_', ' ').toUpperCase()}</span>
+                            <h5 class="mb-0">${group.name}</h5>
+                        </div>
+                        <p class="text-muted mb-2">${group.description}</p>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt me-1"></i>${group.location}<br>
+                                    <i class="fas fa-bullseye me-1"></i>${group.focus_area.replace('_', ' ')}
+                                </small>
+                            </div>
+                            <div class="col-sm-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-users me-1"></i>${group.member_count} members<br>
+                                    <i class="fas fa-calendar me-1"></i>Created ${group.created_date}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <div class="mb-2">
+                            <span class="badge bg-light text-dark">₹${group.membership_fee} fee</span>
+                        </div>
+                        <div class="mb-2">
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-info" style="width: ${(group.member_count / group.max_members) * 100}%"></div>
+                            </div>
+                            <small class="text-muted">${group.member_count}/${group.max_members} members</small>
+                        </div>
+                        <button class="btn btn-info btn-sm" onclick="showGroupDetails('${group.id}')">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Get group type color
+function getGroupTypeColor(type) {
+    const colors = {
+        'cooperative': 'primary',
+        'self_help': 'success',
+        'producer_company': 'warning',
+        'water_user': 'info',
+        'commodity': 'secondary'
+    };
+    return colors[type] || 'secondary';
+}
+
+// Search groups
+function searchGroups() {
+    const typeFilter = document.getElementById('groupTypeFilter').value;
+    const focusFilter = document.getElementById('focusAreaFilter').value;
+    const locationFilter = document.getElementById('locationFilter').value.toLowerCase();
+    const sizeFilter = document.getElementById('sizeFilter').value;
+
+    const filteredGroups = allGroups.filter(group => {
+        const sizeMatch = !sizeFilter || 
+            (sizeFilter === 'small' && group.member_count <= 20) ||
+            (sizeFilter === 'medium' && group.member_count > 20 && group.member_count <= 50) ||
+            (sizeFilter === 'large' && group.member_count > 50);
+
+        return (!typeFilter || group.type === typeFilter) &&
+               (!focusFilter || group.focus_area === focusFilter) &&
+               (!locationFilter || group.location.toLowerCase().includes(locationFilter)) &&
+               sizeMatch;
+    });
+
+    displayGroups(filteredGroups);
+    updateGroupCount(filteredGroups.length);
+}
+
+// Sort groups
+function sortGroups(sortBy) {
+    let sortedGroups = [...allGroups];
+    
+    switch(sortBy) {
+        case 'members':
+            sortedGroups.sort((a, b) => b.member_count - a.member_count);
+            break;
+        case 'activity':
+            sortedGroups.sort((a, b) => b.activity_score - a.activity_score);
+            break;
+        case 'recent':
+            sortedGroups.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+            break;
+    }
+    
+    displayGroups(sortedGroups);
+}
+
+// Show group details
+async function showGroupDetails(groupId) {
+    try {
+        const response = await fetch(`/api/farmer_groups/group/${groupId}`);
+        const group = await response.json();
+        selectedGroupId = groupId;
+        
+        document.getElementById('groupModalTitle').textContent = group.name;
+        document.getElementById('groupModalBody').innerHTML = `
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Group Information</h6>
+                    <table class="table table-sm">
+                        <tr><td><strong>Type:</strong></td><td><span class="badge bg-${getGroupTypeColor(group.type)}">${group.type.replace('_', ' ').toUpperCase()}</span></td></tr>
+                        <tr><td><strong>Focus:</strong></td><td>${group.focus_area.replace('_', ' ')}</td></tr>
+                        <tr><td><strong>Location:</strong></td><td>${group.location}</td></tr>
+                        <tr><td><strong>Members:</strong></td><td>${group.member_count}/${group.max_members}</td></tr>
+                        <tr><td><strong>Fee:</strong></td><td>₹${group.membership_fee}</td></tr>
+                        <tr><td><strong>Created:</strong></td><td>${group.created_date}</td></tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h6>Group Leader</h6>
+                    <table class="table table-sm">
+                        <tr><td><strong>Name:</strong></td><td>${group.leader_name}</td></tr>
+                        <tr><td><strong>Experience:</strong></td><td>${group.leader_experience} years</td></tr>
+                        <tr><td><strong>Contact:</strong></td><td>${group.leader_contact}</td></tr>
+                        <tr><td><strong>Rating:</strong></td><td>${'★'.repeat(group.leader_rating)}${'☆'.repeat(5-group.leader_rating)}</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-3">
+                <h6>Description</h6>
+                <p>${group.description}</p>
+            </div>
+            <div class="mt-3">
+                <h6>Rules & Guidelines</h6>
+                <p>${group.rules}</p>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>Recent Activities</h6>
+                    <ul class="list-unstyled">
+                        ${group.recent_activities.map(activity => `<li><small>• ${activity}</small></li>`).join('')}
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h6>Benefits</h6>
+                    <ul class="list-unstyled">
+                        ${group.benefits.map(benefit => `<li><small>• ${benefit}</small></li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+        
+        new bootstrap.Modal(document.getElementById('groupModal')).show();
+    } catch (error) {
+        console.error('Error loading group details:', error);
+    }
+}
+
+// Join group
+async function joinGroup() {
+    if (!selectedGroupId) return;
+    
+    try {
+        const response = await fetch(`/api/farmer_groups/join/${selectedGroupId}`, {
+            method: 'POST'
+        });
+        
+        if (response.ok) {
+            alert('Successfully joined the group!');
+            bootstrap.Modal.getInstance(document.getElementById('groupModal')).hide();
+            refreshMyGroups();
+        } else {
+            alert('Error joining group. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error joining group:', error);
+        alert('Error joining group. Please try again.');
+    }
+}
+
+// Create group
+document.getElementById('createGroupForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const groupData = {
+        name: document.getElementById('groupName').value,
+        type: document.getElementById('groupType').value,
+        description: document.getElementById('groupDescription').value,
+        focus_area: document.getElementById('groupFocus').value,
+        location: document.getElementById('groupLocation').value,
+        membership_fee: document.getElementById('membershipFee').value || 0,
+        max_members: document.getElementById('maxMembers').value || 50,
+        rules: document.getElementById('groupRules').value,
+        is_public: document.getElementById('isPublic').checked
+    };
+
+    try {
+        const response = await fetch('/api/farmer_groups/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(groupData)
+        });
+
+        if (response.ok) {
+            alert('Group created successfully!');
+            document.getElementById('createGroupForm').reset();
+            // Switch to My Groups tab
+            document.getElementById('my-groups-tab').click();
+            refreshMyGroups();
+        } else {
+            alert('Error creating group. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error creating group:', error);
+        alert('Error creating group. Please try again.');
+    }
+});
+
+// Load my groups
+async function refreshMyGroups() {
+    try {
+        const response = await fetch('/api/farmer_groups/my_groups');
+        const data = await response.json();
+        myGroups = data.groups;
+        displayMyGroups(myGroups);
+    } catch (error) {
+        console.error('Error loading my groups:', error);
+    }
+}
+
+// Display my groups
+function displayMyGroups(groups) {
+    const container = document.getElementById('myGroupsContainer');
+    
+    if (groups.length === 0) {
+        container.innerHTML = '<div class="text-center text-muted py-4">You are not a member of any groups yet</div>';
+        return;
+    }
+
+    container.innerHTML = groups.map(group => `
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-${getGroupTypeColor(group.type)} me-2">${group.type.replace('_', ' ').toUpperCase()}</span>
+                            <h6 class="mb-0">${group.name}</h6>
+                            ${group.role === 'leader' ? '<span class="badge bg-warning ms-2">Leader</span>' : ''}
+                        </div>
+                        <p class="mb-2">${group.description}</p>
+                        <small class="text-muted">
+                            <i class="fas fa-users me-1"></i>${group.member_count} members | 
+                            <i class="fas fa-calendar me-1"></i>Joined ${group.joined_date}
+                        </small>
+                    </div>
+                    <div class="text-end">
+                        <div class="btn-group-vertical btn-group-sm">
+                            <button class="btn btn-outline-info" onclick="viewGroupActivity('${group.id}')">View Activity</button>
+                            <button class="btn btn-outline-secondary" onclick="leaveGroup('${group.id}')">Leave Group</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Update group count
+function updateGroupCount(count) {
+    document.getElementById('groupCount').textContent = count;
+}
+
+// View group activity
+function viewGroupActivity(groupId) {
+    alert('Group activity view will be implemented');
+}
+
+// Leave group
+async function leaveGroup(groupId) {
+    if (confirm('Are you sure you want to leave this group?')) {
+        try {
+            const response = await fetch(`/api/farmer_groups/leave/${groupId}`, {
+                method: 'POST'
+            });
+            
+            if (response.ok) {
+                alert('Successfully left the group!');
+                refreshMyGroups();
+            } else {
+                alert('Error leaving group. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error leaving group:', error);
+            alert('Error leaving group. Please try again.');
+        }
+    }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    loadGroups();
+});
+</script>
+{% endblock %}

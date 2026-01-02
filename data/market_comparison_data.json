@@ -1,0 +1,51 @@
+{
+  "market_prices": [
+    {
+      "crop": "Rice",
+      "variety": "Basmati 1121",
+      "markets": [
+        {
+          "market_name": "Delhi Azadpur Mandi",
+          "location": "Delhi",
+          "price_per_quintal": 3800,
+          "quality_grade": "A",
+          "transportation_cost": 150,
+          "commission": 5,
+          "final_price": 3610,
+          "demand_level": "High",
+          "last_updated": "2024-01-15"
+        },
+        {
+          "market_name": "Karnal Rice Market",
+          "location": "Haryana",
+          "price_per_quintal": 3650,
+          "quality_grade": "A",
+          "transportation_cost": 80,
+          "commission": 4,
+          "final_price": 3494,
+          "demand_level": "Medium",
+          "last_updated": "2024-01-15"
+        }
+      ]
+    }
+  ],
+  "price_trends": [
+    {
+      "crop": "Wheat",
+      "last_30_days": [2200, 2180, 2250, 2300, 2280, 2320, 2350],
+      "seasonal_pattern": "Prices typically rise 15-20% during off-season",
+      "forecast_next_month": 2400,
+      "volatility_index": 0.12
+    }
+  ],
+  "arbitrage_opportunities": [
+    {
+      "crop": "Tomato",
+      "buy_market": "Nashik",
+      "sell_market": "Mumbai",
+      "profit_margin": 25,
+      "transportation_time": "4 hours",
+      "risk_level": "Medium"
+    }
+  ]
+}

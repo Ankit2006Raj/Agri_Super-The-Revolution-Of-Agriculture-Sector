@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Export Gateway - AgriSuper{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-globe me-2"></i>Global Export Gateway</h4>
+                    <p class="mb-0 opacity-75">Connect with international markets and streamline exports</p>
+                </div>
+                <div class="card-body">
+                    <!-- Export Opportunities -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">Export Opportunities</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card border-warning">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h6 class="text-warning">🇦🇪 UAE Market</h6>
+                                                            <p class="mb-1"><strong>Demand:</strong> Basmati Rice, Spices</p>
+                                                            <p class="mb-1"><strong>Price:</strong> ₹45/kg shipping</p>
+                                                            <p class="mb-0"><strong>Volume:</strong> 2,500 tons/month</p>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <span class="badge bg-success">High Demand</span>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="d-grid">
+                                                        <button class="btn btn-outline-warning btn-sm">View Details</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="card border-info">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h6 class="text-info">🇺🇸 USA Market</h6>
+                                                            <p class="mb-1"><strong>Demand:</strong> Organic Turmeric, Tea</p>
+                                                            <p class="mb-1"><strong>Price:</strong> ₹85/kg shipping</p>
+                                                            <p class="mb-0"><strong>Volume:</strong> 1,800 tons/month</p>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <span class="badge bg-warning">Premium Market</span>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="d-grid">
+                                                        <button class="btn btn-outline-info btn-sm">View Details</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Quick Export Check</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="exportForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Product</label>
+                                            <select class="form-select" id="product" title="Select export product" aria-label="Product for export">
+                                                <option value="">Select Product</option>
+                                                <option value="rice">Basmati Rice</option>
+                                                <option value="spices">Spices</option>
+                                                <option value="tea">Tea</option>
+                                                <option value="turmeric">Turmeric</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Quantity (tons)</label>
+                                            <input type="number" class="form-control" id="quantity" placeholder="Enter quantity">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Target Country</label>
+                                            <select class="form-select" id="country" title="Select target country" aria-label="Target country for export">
+                                                <option value="">Select Country</option>
+                                                <option value="uae">UAE</option>
+                                                <option value="usa">USA</option>
+                                                <option value="uk">UK</option>
+                                                <option value="germany">Germany</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">
+                                            <i class="fas fa-calculator me-2"></i>Calculate Export Cost
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documentation Center -->
+                    <div class="card border-secondary mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0">Documentation Center</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card border-success">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-certificate fa-2x text-success mb-3"></i>
+                                            <h6>Phytosanitary Certificate</h6>
+                                            <p class="text-muted small">Required for plant products</p>
+                                            <button class="btn btn-outline-success btn-sm">Generate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card border-warning">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-file-alt fa-2x text-warning mb-3"></i>
+                                            <h6>Certificate of Origin</h6>
+                                            <p class="text-muted small">Proves product origin</p>
+                                            <button class="btn btn-outline-warning btn-sm">Generate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card border-info">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-receipt fa-2x text-info mb-3"></i>
+                                            <h6>Commercial Invoice</h6>
+                                            <p class="text-muted small">Detailed transaction record</p>
+                                            <button class="btn btn-outline-info btn-sm">Generate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Partners -->
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Verified Shipping Partners</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Company</th>
+                                            <th>Services</th>
+                                            <th>Coverage</th>
+                                            <th>Rating</th>
+                                            <th>Contact</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>Global Cargo Express</strong><br>
+                                                <small class="text-muted">International freight specialist</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-primary me-1">Air Freight</span>
+                                                <span class="badge bg-info me-1">Sea Freight</span>
+                                                <span class="badge bg-success">Door-to-Door</span>
+                                            </td>
+                                            <td>Asia, Europe, Americas</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="text-warning me-1">★★★★★</span>
+                                                    <small>4.5</small>
+                                                </div>
+                                            </td>
+                                            <td>+91-9876543210</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">Get Quote</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>AgriShip International</strong><br>
+                                                <small class="text-muted">Agricultural products specialist</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-warning me-1">Refrigerated</span>
+                                                <span class="badge bg-secondary me-1">Bulk Cargo</span>
+                                                <span class="badge bg-danger">Express</span>
+                                            </td>
+                                            <td>Middle East, Africa, Europe</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="text-warning me-1">★★★★☆</span>
+                                                    <small>4.2</small>
+                                                </div>
+                                            </td>
+                                            <td>+91-9876543211</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">Get Quote</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('exportForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const product = document.getElementById('product').value;
+    const quantity = document.getElementById('quantity').value;
+    const country = document.getElementById('country').value;
+    
+    if (!product || !quantity || !country) {
+        alert('Please fill all fields');
+        return;
+    }
+    
+    // Simulate cost calculation
+    const shippingRate = country === 'uae' ? 45 : 85;
+    const totalCost = quantity * 1000 * shippingRate;
+    const processingTime = country === 'uae' ? '5-7 days' : '10-14 days';
+    
+    alert(`Export Cost Estimate:\nProduct: ${product}\nQuantity: ${quantity} tons\nDestination: ${country.toUpperCase()}\nShipping Cost: ₹${totalCost.toLocaleString()}\nProcessing Time: ${processingTime}`);
+});
+</script>
+{% endblock %}

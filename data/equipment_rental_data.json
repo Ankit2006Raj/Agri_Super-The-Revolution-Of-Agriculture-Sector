@@ -1,0 +1,90 @@
+{
+  "equipment_categories": [
+    {
+      "id": 1,
+      "name": "Tractors",
+      "subcategories": ["Compact Tractors", "Utility Tractors", "Row Crop Tractors", "Specialty Tractors"],
+      "total_listings": 1250
+    },
+    {
+      "id": 2,
+      "name": "Harvesters",
+      "subcategories": ["Combine Harvesters", "Forage Harvesters", "Potato Harvesters", "Cotton Pickers"],
+      "total_listings": 890
+    },
+    {
+      "id": 3,
+      "name": "Planting Equipment",
+      "subcategories": ["Seed Drills", "Planters", "Transplanters", "Broadcasting Equipment"],
+      "total_listings": 675
+    },
+    {
+      "id": 4,
+      "name": "Irrigation Systems",
+      "subcategories": ["Sprinkler Systems", "Drip Irrigation", "Center Pivot", "Portable Pumps"],
+      "total_listings": 540
+    }
+  ],
+  "rental_listings": [
+    {
+      "id": 1,
+      "equipment_name": "John Deere 5075E Tractor",
+      "category": "Tractors",
+      "owner_name": "Rajesh Kumar",
+      "location": "Punjab, India",
+      "hourly_rate": 800,
+      "daily_rate": 6000,
+      "weekly_rate": 35000,
+      "availability": "Available",
+      "rating": 4.8,
+      "total_bookings": 156,
+      "specifications": {
+        "horsepower": "75 HP",
+        "fuel_type": "Diesel",
+        "transmission": "Manual",
+        "pto": "540/1000 RPM"
+      },
+      "images": ["/images/tractor1.jpg", "/images/tractor1_side.jpg"],
+      "description": "Well-maintained tractor suitable for all farming operations. Includes basic implements."
+    },
+    {
+      "id": 2,
+      "equipment_name": "Mahindra ARJUN 605 DI",
+      "category": "Tractors",
+      "owner_name": "Suresh Patel",
+      "location": "Gujarat, India",
+      "hourly_rate": 750,
+      "daily_rate": 5500,
+      "weekly_rate": 32000,
+      "availability": "Booked until 15th",
+      "rating": 4.6,
+      "total_bookings": 203,
+      "specifications": {
+        "horsepower": "60 HP",
+        "fuel_type": "Diesel",
+        "transmission": "Synchromesh",
+        "pto": "540 RPM"
+      },
+      "images": ["/images/mahindra_tractor.jpg"],
+      "description": "Reliable tractor with excellent fuel efficiency. Perfect for medium-scale farming."
+    }
+  ],
+  "booking_history": [
+    {
+      "booking_id": "BK001",
+      "equipment_id": 1,
+      "renter_name": "Amit Singh",
+      "rental_period": "2024-01-15 to 2024-01-20",
+      "total_cost": 30000,
+      "status": "Completed",
+      "rating_given": 5,
+      "review": "Excellent equipment, well-maintained and delivered on time."
+    }
+  ],
+  "popular_locations": [
+    { "state": "Punjab", "equipment_count": 2340, "avg_rate": 750 },
+    { "state": "Haryana", "equipment_count": 1890, "avg_rate": 720 },
+    { "state": "Uttar Pradesh", "equipment_count": 3200, "avg_rate": 680 },
+    { "state": "Maharashtra", "equipment_count": 2100, "avg_rate": 800 }
+  ]
+}

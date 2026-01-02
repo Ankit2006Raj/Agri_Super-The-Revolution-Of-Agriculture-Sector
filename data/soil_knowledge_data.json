@@ -1,0 +1,65 @@
+{
+  "soil_types": [
+    {
+      "soil_type": "Alluvial",
+      "characteristics": {
+        "texture": "Loamy to clayey",
+        "drainage": "Good to moderate",
+        "fertility": "High",
+        "ph_range": "6.5-7.5",
+        "organic_matter": "1.5-2.5%"
+      },
+      "suitable_crops": [
+        {
+          "crop": "Rice",
+          "suitability_score": 9,
+          "yield_potential": "High",
+          "special_care": "Ensure proper drainage during non-rice seasons"
+        },
+        {
+          "crop": "Wheat",
+          "suitability_score": 8,
+          "yield_potential": "High",
+          "special_care": "Avoid waterlogging"
+        }
+      ],
+      "nutrient_management": {
+        "nitrogen": "Apply in split doses",
+        "phosphorus": "Basal application recommended",
+        "potassium": "Moderate requirement",
+        "micronutrients": "Zinc deficiency common"
+      }
+    }
+  ],
+  "soil_tests": [
+    {
+      "test_id": "ST001",
+      "farmer_id": "F12345",
+      "location": "Village Rampur, District Meerut",
+      "test_date": "2024-01-10",
+      "results": {
+        "ph": 7.2,
+        "organic_carbon": 0.58,
+        "nitrogen": 245,
+        "phosphorus": 15.2,
+        "potassium": 180,
+        "zinc": 0.8,
+        "iron": 12.5
+      },
+      "recommendations": [
+        "Apply 2 tonnes of farmyard manure per acre",
+        "Use zinc sulfate @ 25 kg per acre",
+        "Maintain soil pH between 6.5-7.5"
+      ]
+    }
+  ],
+  "improvement_techniques": [
+    {
+      "technique": "Organic Matter Addition",
+      "materials": ["Farmyard manure", "Compost", "Green manure"],
+      "benefits": ["Improves soil structure", "Increases water holding capacity", "Enhances microbial activity"],
+      "application_rate": "5-10 tonnes per hectare",
+      "cost_per_acre": 8000
+    }
+  ]
+}
